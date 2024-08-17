@@ -17,6 +17,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
+    volumes:
+      - /:/host-root:ro
     container_name: backend
     networks:
       - web

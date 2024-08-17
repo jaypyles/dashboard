@@ -1,0 +1,7 @@
+host:
+  name: localhost
+  port: 22
+commands:
+  - command: "ls"
+    args:
+      - flag: "-a"

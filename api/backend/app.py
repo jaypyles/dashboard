@@ -5,6 +5,9 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from api.backend.systems.runner import MachineRunner
+
+
 LOG = logging.getLogger(__name__)
 
 app = FastAPI(title="api")
@@ -20,4 +23,6 @@ app.add_middleware(
 
 @app.get("/api/endpoint")
 async def test_endpoint():
+    machine_runner = MachineRunner()
+    machine_runner.read_config("./configs/self.yml")
     return "Hello World!"

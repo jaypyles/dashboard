@@ -9,6 +9,7 @@ RUN pdm config python.use_venv false
 
 COPY pyproject.toml pdm.lock /project/
 COPY ./api /project/api/
+COPY ./configs /project/configs/
 
 RUN pdm install
 
