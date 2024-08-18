@@ -39,7 +39,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# lib/
 lib64/
 parts/
 sdist/
@@ -186,3 +186,5 @@ cython_debug/
 .pdm-python
 
 .next
+
+configs/*

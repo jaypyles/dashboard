@@ -12,10 +12,21 @@ class Arg:
     def __repr__(self):
         return f"flag: {self.flag}, value: {self.value}"
 
+    @override
+    def __str__(self):
+        if self.value:
+            return f"{self.flag}={self.value}"
+
+        return self.flag
+
     @staticmethod
     def __build_arg(schema_arg: SchemaArg):
         return Arg(schema_arg.flag, schema_arg.value)
 
     @staticmethod
-    def build_args(args: list[SchemaArg]):
+    def build_args(args: Optional[list[SchemaArg]]):
+        if not args:
+            arg_list: list[Arg] = []
+            return arg_list
+
         return [Arg.__build_arg(arg) for arg in args]

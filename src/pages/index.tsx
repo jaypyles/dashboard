@@ -1,4 +1,5 @@
 import React from "react";
+import Dashboard from "../components/dashboard/dashboard";
 
 const fetchDataFromFastAPI = async () => {
   try {
@@ -13,7 +14,7 @@ const fetchDataFromFastAPI = async () => {
 const Home = () => {
   return (
     <>
-      <h1>Webapp</h1>
+      <Dashboard></Dashboard>
     </>
   );
 };

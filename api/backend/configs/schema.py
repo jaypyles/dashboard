@@ -4,7 +4,10 @@ from pydantic import BaseModel
 
 class Host(BaseModel):
     name: str
+    hostname: str
     port: int
+    username: str
+    password: str
 
 
 class Arg(BaseModel):
@@ -13,8 +16,9 @@ class Arg(BaseModel):
 
 
 class Command(BaseModel):
+    name: str
     command: str
-    args: list[Arg]
+    args: Optional[list[Arg]] = None
 
 
 class Schema(BaseModel):

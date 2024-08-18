@@ -9,18 +9,20 @@ RUN pdm config python.use_venv false
 
 COPY pyproject.toml pdm.lock /project/
 COPY ./api /project/api/
-COPY ./configs /project/configs/
 
 RUN pdm install
 
 # Create final image
 FROM python:3.10-slim
 
+RUN apt update && apt install -y ssh
+
 WORKDIR /project
 
 COPY --from=pybuilder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY --from=pybuilder /project/ /project/
 COPY --from=pybuilder /usr/local/bin /usr/local/bin
+COPY ./configs /project/configs/
 
 EXPOSE 8000
 
