@@ -1,7 +1,12 @@
-from typing import Optional
-from api.backend.configs.schema import Command as SchemaCommand
-from api.backend.systems.arg import Arg
+# STL
+from typing import Union, Literal, Optional
+
+# PDM
 from typing_extensions import override
+
+# LOCAL
+from api.backend.systems.arg import Arg
+from api.backend.configs.schema import Command as SchemaCommand
 
 
 class CommandNotFoundError(Exception):
@@ -15,6 +20,7 @@ class Command:
         self.name = name
         self.command = command
         self.args = args
+        self.type: Union[Literal["user"], Literal["system"]] = "user"
 
     @override
     def __repr__(self):

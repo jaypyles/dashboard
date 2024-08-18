@@ -7,8 +7,31 @@
   --dark-bg-color: #121212;
 }
 
-html,
-body {
+html {
   height: 100vh;
   width: 100vw;
+}
+
+body,
+#__next,
+.mainWrapper {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.is-row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.is-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.MuiTableContainer-root {
+  padding: 0;
 }

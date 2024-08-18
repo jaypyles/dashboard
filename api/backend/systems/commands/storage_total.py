@@ -8,3 +8,4 @@ class StorageMetric(Command):
         self.command = "df"
         self.args = [Arg(flag="-h", value=None)]
         super().__init__(self.name, self.command, self.args)
+        self.type = "system"

@@ -1,5 +1,6 @@
-from api.backend.systems.command import Command
+# LOCAL
 from api.backend.systems.arg import Arg
+from api.backend.systems.command import Command
 
 
 class Uptime(Command):
@@ -10,3 +11,4 @@ class Uptime(Command):
         """
         self.args: list[Arg] = []
         super().__init__(self.name, self.command, self.args)
+        self.type = "system"

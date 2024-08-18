@@ -1,7 +1,11 @@
+# STL
 from abc import ABC
-import api.backend.systems.utils as utils
+
+# PDM
 import paramiko
 
+# LOCAL
+import api.backend.systems.utils as utils
 from api.backend.systems.command import Command, CommandNotFoundError
 from api.backend.systems.commands import SYSTEM_COMMANDS_MAP
 
@@ -45,9 +49,10 @@ class Runner(ABC):
 
     def dispatch(self, command_name: str):
         print(self.commands)
-        command = self.commands[command_name]
 
-        if not command:
+        try:
+            command = self.commands[command_name]
+        except KeyError:
             raise CommandNotFoundError
 
         self.__connect()

@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import React, { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider, CssBaseline, Container, Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../styles/themes";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
@@ -16,7 +16,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       setIsDarkMode(savedTheme === "dark");
     } else {
       const prefersDarkMode = window.matchMedia(
-        "(prefers-color-scheme: dark)",
+        "(prefers-color-scheme: dark)"
       ).matches;
       setIsDarkMode(prefersDarkMode);
     }
@@ -35,7 +35,12 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       </Head>
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <Box
+          className="mainWrapper"
+          sx={{ bgcolor: "background.default", margin: 0, padding: 0 }}
+        >
+          <Component {...pageProps} />
+        </Box>
       </ThemeProvider>
     </>
   );
