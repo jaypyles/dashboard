@@ -21,3 +21,9 @@ export const fetchAndSetWithPayload = async (
   console.log(json);
   setter(json);
 };
+
+export const getCommandQueue = async (host: string) => {
+  const response = await fetch(`/api/${host}/command/command-queue`);
+  const json = await response.json();
+  return json["jobs"];
+};

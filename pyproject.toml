@@ -10,6 +10,8 @@ dependencies = [
     "fastapi>=0.111.0",
     "typing-extensions>=4.12.2",
     "paramiko>=3.4.1",
+    "pymongo>=4.8.0",
+    "motor>=3.5.1",
 ]
 requires-python = ">=3.10"
 readme = "README.md"

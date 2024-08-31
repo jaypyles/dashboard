@@ -34,6 +34,14 @@ class Command:
 
         return f"Command: {self.command}\nArgs: {arg_string}"
 
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "command": self.command,
+            "args": [arg.to_dict() for arg in self.args] if self.args else [],
+            "type": type,
+        }
+
     @override
     def __str__(self):
         if not self.args:

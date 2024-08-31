@@ -1,0 +1,22 @@
+.status {
+  padding: 4px;
+  border-radius: 4px;
+  text-align: center;
+  width: 50%;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.done {
+  background-color: var(--completed);
+}
+
+.queued {
+  background-color: var(--queued);
+}
+
+.running {
+  background-color: var(--running);
+}

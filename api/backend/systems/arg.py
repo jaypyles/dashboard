@@ -1,6 +1,11 @@
-from api.backend.configs.schema import Arg as SchemaArg
+# STL
 from typing import Optional
+
+# PDM
 from typing_extensions import override
+
+# LOCAL
+from api.backend.configs.schema import Arg as SchemaArg
 
 
 class Arg:
@@ -18,6 +23,9 @@ class Arg:
             return f"{self.flag}={self.value}"
 
         return self.flag
+
+    def to_dict(self):
+        return {"flag": self.flag, "value": self.value}
 
     @staticmethod
     def __build_arg(schema_arg: SchemaArg):

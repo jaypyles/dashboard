@@ -5,6 +5,10 @@
 :root {
   --light-bg-color: #ffffff;
   --dark-bg-color: #121212;
+  --completed: rgba(48, 254, 2, 0.25);
+  --running: rgba(2, 52, 254, 0.25);
+  --queued: rgba(238, 255, 0, 0.25);
+  font-size: 20px;
 }
 
 html {
@@ -26,6 +30,10 @@ body,
   gap: 0.5rem;
 }
 
+.half {
+  width: 50%;
+}
+
 .is-col {
   display: flex;
   flex-direction: column;
@@ -34,4 +42,8 @@ body,
 
 .MuiTableContainer-root {
   padding: 0;
+}
+
+.full {
+  width: 100%;
 }

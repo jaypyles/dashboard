@@ -17,9 +17,18 @@ services:
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
+    command: pdm run python -m uvicorn api.backend.app:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - /:/host-root:ro
     container_name: backend
+    networks:
+      - web
+  worker:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    command: pdm run python -m api.backend.command_worker.worker
+    container_name: worker
     networks:
       - web
   traefik:
@@ -38,6 +47,17 @@ services:
       # - "./dynamic_conf.yaml:/etc/traefik/dynamic_conf.yaml"
       # - "/etc/letsencrypt/live/domain/fullchain.pem:/etc/certs/ssl-cert.pem"
       # - "/etc/letsencrypt/live/domain/privkey.pem:/etc/certs/ssl-cert.key"
+    networks:
+      - web
+  mongo:
+    container_name: manager-mongo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - 27017:27017
     networks:
       - web
 networks:

@@ -1,0 +1,19 @@
+.terminal {
+  background-color: #000;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  height: 40rem;
+  overflow-y: auto;
+}
+
+.terminal pre {
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin: 0;
+}

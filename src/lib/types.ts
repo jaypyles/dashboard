@@ -7,9 +7,24 @@ export type Arg = {
   value?: string;
 };
 
+type CommandOutput = {
+  stderr: string;
+  stdout: string;
+};
+
 export type Command = {
   name: string;
   command: string;
   args: Arg[];
   type: string;
+  status: string;
+  result?: CommandOutput;
+};
+
+export type QueuedCommand = {
+  host: string;
+  commands: Command[];
+  status: "queued" | "running" | "done";
+  time_created: string;
+  output: Map<string, CommandOutput>;
 };

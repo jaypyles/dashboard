@@ -1,7 +1,19 @@
+import classes from "./command.module.css";
 import React from "react";
+import { Paper, PaperProps } from "@mui/material";
 
-const Command = () => {
-    return <h1>Command</h1>
+interface CommandProps extends PaperProps {
+  commandOutput?: string;
 }
 
-export default Command;
+const Options = ({ commandOutput, ...rest }: CommandProps): JSX.Element => {
+  return (
+    <Paper {...rest}>
+      <div className={classes.terminal}>
+        <pre>{commandOutput}</pre>
+      </div>
+    </Paper>
+  );
+};
+
+export default Options;

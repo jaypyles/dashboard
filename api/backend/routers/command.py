@@ -1,36 +1,42 @@
 # STL
 import logging
 from typing import Any
+from datetime import datetime
 
 # PDM
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 
 # LOCAL
-from api.backend.models import CommandChain
+from api.backend.models import Job, CommandChain
 from api.backend.host_manager import HOST_MAP
 from api.backend.systems.command import CommandNotFoundError
+from api.backend.database.database_functions import insert_job, retrieve_jobs
 
 LOG = logging.getLogger(__name__)
 
 command_router = APIRouter()
 
 
+@command_router.get("/api/{host_name}/command/command-queue")
+async def get_queue(host_name: str):
+    return await retrieve_jobs(host_name)
+
+
 @command_router.get("/api/{host_name}/command/{command_name}")
 async def run_command(host_name: str, command_name: str):
     host = HOST_MAP[host_name]
-    print(f"Commands for runner: {host.runner.commands}")
+    command = host.runner.commands[command_name]
 
-    try:
-        out, err = host.runner.dispatch(command_name)
-        return JSONResponse(
-            {
-                "stdout": "".join(out),
-                "stderr": "".join(err),
-            }
-        )
-    except CommandNotFoundError:
-        return JSONResponse({"message": "Command not found."}, status_code=404)
+    job = Job(
+        host=host_name,
+        commands=[command.to_dict()],
+        time_created=datetime.now(),
+        status="queued",
+        output=None,
+    )
+
+    await insert_job(job)
 
 
 @command_router.post("/api/{host_name}/command-chain")
