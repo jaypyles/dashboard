@@ -22,7 +22,6 @@ WORKDIR /project
 COPY --from=pybuilder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY --from=pybuilder /project/ /project/
 COPY --from=pybuilder /usr/local/bin /usr/local/bin
-COPY ./configs /project/configs/
 
 EXPOSE 8000
 
