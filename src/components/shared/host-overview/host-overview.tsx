@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { fetchAndSetWithPayload } from "../../../lib/utils";
-import { Typography, Button, Card, CardContent } from "@mui/material";
+import {
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardProps,
+} from "@mui/material";
 import classes from "./host-overview.module.css";
 import LinearProgressWithLabel from "../linear-progress-with-label/linearProgressWithLabel";
 import { usePathname } from "next/navigation";
@@ -26,7 +32,7 @@ interface HostStatistics {
   uptime: string;
 }
 
-const HostOverview = ({ host }: HostProps) => {
+const HostOverview = ({ className, host, ...rest }: HostProps & CardProps) => {
   const [statistics, setStatistics] = useState<HostStatistics | null>({
     storage: [],
     usage: "",
@@ -53,7 +59,7 @@ const HostOverview = ({ host }: HostProps) => {
   return (
     <>
       {statistics && (
-        <Card>
+        <Card className={className} {...rest}>
           <CardContent className={classes["host-card"]}>
             <div>
               <Typography variant="h6" component="div">

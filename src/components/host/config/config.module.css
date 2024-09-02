@@ -1,0 +1,8 @@
+.config {
+  display: flex;
+  flex-direction: column;
+}
+
+.configOption {
+  margin-bottom: 1rem;
+}

@@ -58,10 +58,10 @@ class Runner(ABC):
         self.__connect()
 
         _, ssh_stdout, ssh_stderr = self.client.exec_command(str(command))
-        out = utils.remove_terminal_characters(ssh_stdout)
+        out = "".join(utils.remove_terminal_characters(ssh_stdout))
 
         stdout = out
-        stderr = ssh_stderr.read().decode("utf-8").splitlines()
+        stderr = ssh_stderr.read().decode("utf-8")
 
         self.client.close()
 

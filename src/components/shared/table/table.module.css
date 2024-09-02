@@ -6,3 +6,54 @@
 .header {
   font-weight: bold;
 }
+
+.responsive-table {
+  min-width: 650px;
+}
+
+.hover-row:hover {
+  background-color: var(--paper-hover-color);
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .responsive-table {
+    display: block;
+    overflow-x: auto;
+    min-width: 0;
+    max-width: 20rem;
+  }
+
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block;
+  }
+
+  .responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .responsive-table tr {
+    border: 1px solid #ccc;
+  }
+
+  .responsive-table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .responsive-table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 6px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+}

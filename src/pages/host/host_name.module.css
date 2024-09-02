@@ -11,3 +11,24 @@
 .gridWrapper div {
   flex: 1;
 }
+
+.buttons {
+  display: flex;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  gap: 1rem;
+}
+
+.topRow {
+  gap: 1rem;
+  display: flex;
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+  }
+}
+
+.hostOverview {
+  background-color: var(--overview-bg);
+  margin-top: 1rem;
+}

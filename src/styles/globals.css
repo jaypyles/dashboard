@@ -5,10 +5,17 @@
 :root {
   --light-bg-color: #ffffff;
   --dark-bg-color: #121212;
+  --paper-hover-color: #403d3d;
+  --overview-bg: #1a1919;
   --completed: rgba(48, 254, 2, 0.25);
   --running: rgba(2, 52, 254, 0.25);
   --queued: rgba(238, 255, 0, 0.25);
   font-size: 20px;
+}
+
+.Toastify__toast-icon {
+  width: 80px !important;
+  height: 80px !important;
 }
 
 html {

@@ -6,6 +6,8 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { ThemeProvider, CssBaseline, Container, Box } from "@mui/material";
 import { darkTheme, lightTheme } from "../styles/themes";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -39,6 +41,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
           className="mainWrapper"
           sx={{ bgcolor: "background.default", margin: 0, padding: 0 }}
         >
+          <ToastContainer />
           <Component {...pageProps} />
         </Box>
       </ThemeProvider>

@@ -25,3 +25,7 @@ class BuildConfigFile(BaseModel):
 
 class CommandChain(BaseModel):
     commands: list[str]
+
+
+class AddCommand(BaseModel):
+    command: Command

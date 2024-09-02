@@ -13,7 +13,6 @@ from api.backend.database.database_functions import (
 async def main():
     while True:
         job = await get_queued_job()
-        print(job)
 
         if job:
             host = HOST_MAP[job["host"]]
@@ -22,7 +21,7 @@ async def main():
                 print("running")
                 stdout, stderr = host.runner.dispatch(command["name"])
                 await update_job_status(job["id"], "done")
-                await update_job(
+                _ = await update_job(
                     job["id"],
                     command["name"],
                     {"stdout": stdout, "stderr": stderr},

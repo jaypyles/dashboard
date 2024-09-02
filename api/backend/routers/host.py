@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse
 
 # LOCAL
 from api.backend.host_manager import HOST_MAP
+from api.backend.database.database_functions import delete_job
 
 LOG = logging.getLogger(__name__)
 
@@ -29,6 +30,11 @@ async def get_hosts():
 async def get_host_commands(request: Request, host_name: str):
     host = HOST_MAP[host_name]
     return list(host.runner.commands.values())
+
+@host_router.delete("/api/{host_name}/job/{id}")
+async def delete_single_job(id: str):
+    _ = await delete_job(id)
+    return JSONResponse({"status": "success", "reason": "Job successfully deleted."})
 
 
 @host_router.get("/api/{host_name}/stats")

@@ -1,0 +1,25 @@
+.terminal {
+  background-color: #1e1e1e; /* Dark background similar to terminal */
+  color: #d4d4d4; /* Light text color */
+  padding: 20px; /* Padding inside the terminal */
+  border-radius: 5px; /* Rounded corners */
+  font-family: "Courier New", Courier, monospace; /* Monospace font */
+  font-size: 14px; /* Font size */
+  line-height: 1.5; /* Line height for better readability */
+  overflow: auto; /* Scrollable if content overflows */
+}
+
+.terminal pre {
+  white-space: pre-wrap; /* Wrap text preserving whitespace */
+  word-wrap: break-word; /* Break long words if necessary */
+  margin: 0; /* Remove default margin */
+}
+
+.addCommand {
+  display: flex;
+  flex-direction: column;
+}
+
+.commandOption {
+  margin-bottom: 1rem;
+}

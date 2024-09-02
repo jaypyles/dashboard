@@ -4,7 +4,7 @@
 }
 
 .host-card {
-  min-height: 150px;
+  min-height: 12.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

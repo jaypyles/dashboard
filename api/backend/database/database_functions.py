@@ -117,6 +117,7 @@ async def retrieve_jobs(host: str):
 
     async for job in collection.find({"host": host}):
         job_model = Job(
+            id=job["id"],
             host=job["host"],
             status=job["status"],
             time_created=job["time_created"],
@@ -134,3 +135,8 @@ async def retrieve_jobs(host: str):
     ]
 
     return JSONResponse(content={"jobs": jobs_as_dicts})
+
+async def delete_job(id: str):
+    collection = await get_job_collection()
+    print(f"Deleting job with id: {id}")
+    _ = await collection.delete_many({"id": id})

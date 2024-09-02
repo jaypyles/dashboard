@@ -24,6 +24,7 @@ export default function CustomTable({
   const label = title ? (
     <Typography className={classes.title}>{title}</Typography>
   ) : undefined;
+
   return (
     <Paper>
       {label}
@@ -31,7 +32,11 @@ export default function CustomTable({
         <Table
           stickyHeader
           aria-label="simple table"
-          sx={{ minWidth: 650, tableLayout: "fixed", border: "2px solid black"}}
+          className={classes["responsive-table"]}
+          sx={{
+            tableLayout: "fixed",
+            border: "2px solid black",
+          }}
         >
           <TableHead>
             <TableRow>
@@ -42,7 +47,13 @@ export default function CustomTable({
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{children}</TableBody>
+          <TableBody>
+            {React.Children.map(children, (child) =>
+              React.cloneElement(child as React.ReactElement, {
+                className: `${classes["zebra-stripe"]} ${classes["hover-row"]}`,
+              })
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </Paper>

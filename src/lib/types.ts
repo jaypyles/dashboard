@@ -13,18 +13,36 @@ type CommandOutput = {
 };
 
 export type Command = {
+  id?: string;
   name: string;
   command: string;
   args: Arg[];
   type: string;
-  status: string;
+  status?: string;
   result?: CommandOutput;
 };
 
 export type QueuedCommand = {
+  id?: string;
   host: string;
   commands: Command[];
   status: "queued" | "running" | "done";
   time_created: string;
   output: Map<string, CommandOutput>;
+};
+
+export type Config = {
+  host: {
+    name: string;
+    port: number;
+    hostname: string;
+    username: string;
+    password: string;
+  };
+  commands: Command[];
+};
+
+export type AddCommand = {
+  host: string;
+  command: Command;
 };

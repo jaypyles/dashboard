@@ -20,7 +20,7 @@ const Dashboard = () => {
         <Grid container spacing={3}>
           {hosts.map((host) => (
             <Grid item xs={12} sm={6} md={4} key={host}>
-              <HostOverview host={host} />
+              <HostOverview host={host} className={classes.overview} />
             </Grid>
           ))}
         </Grid>
