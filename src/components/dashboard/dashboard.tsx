@@ -3,13 +3,19 @@ import { fetchAndSet } from "../../lib/utils";
 import { Container, Grid, Typography } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "../shared/host-overview/host-overview";
+import { useRouter } from "next/router";
 
 const Dashboard = () => {
+  const router = useRouter();
   const [hosts, setHosts] = useState<string[]>([]);
 
   useEffect(() => {
     fetchAndSet("/api/getHosts", setHosts);
   }, []);
+
+  const handleClick = (host: string) => {
+    router.push(`/host/${host}`);
+  };
 
   return (
     <>
@@ -20,7 +26,11 @@ const Dashboard = () => {
         <Grid container spacing={3}>
           {hosts.map((host) => (
             <Grid item xs={12} sm={6} md={4} key={host}>
-              <HostOverview host={host} className={classes.overview} />
+              <HostOverview
+                host={host}
+                onClick={() => handleClick(host)}
+                className={classes.overview}
+              />
             </Grid>
           ))}
         </Grid>

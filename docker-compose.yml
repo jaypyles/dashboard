@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: jpyles0524/webapp-template:latest
+    image: jpyles0524/server-dashboard:latest
     build:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
@@ -14,22 +14,25 @@ services:
     networks:
       - web
   backend:
+    image: jpyles0524/server-dashboard-api:latest
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     command: pdm run python -m uvicorn api.backend.app:app --reload --host 0.0.0.0 --port 8000
     volumes:
-      - /:/host-root:ro
       - ./configs:/project/configs
     container_name: backend
     networks:
       - web
   worker:
+    image: jpyles0524/server-dashboard-api:latest
     build:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     command: pdm run python -m api.backend.command_worker.worker
     container_name: worker
+    volumes:
+      - ./configs:/project/configs
     networks:
       - web
   traefik:

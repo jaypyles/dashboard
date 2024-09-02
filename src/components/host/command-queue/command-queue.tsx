@@ -107,6 +107,7 @@ export const CommandQueue = ({
             <TableCell component="th" scope="row">
               <IconButton
                 color="primary"
+                disabled={command.status !== "done"}
                 onClick={() => {
                   const combinedOutput = Object.values(command.output).reduce(
                     (accumulator, current) => {

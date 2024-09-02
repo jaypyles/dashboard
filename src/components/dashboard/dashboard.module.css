@@ -2,3 +2,7 @@
   padding: 20px;
 }
 
+.overview:hover {
+  background-color: var(--paper-hover-color);
+  cursor: pointer;
+}

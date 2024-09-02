@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 
 type HostProps = {
   host: string;
+  onClick?: () => void;
 };
 
 interface Storage {
@@ -32,7 +33,12 @@ interface HostStatistics {
   uptime: string;
 }
 
-const HostOverview = ({ className, host, ...rest }: HostProps & CardProps) => {
+const HostOverview = ({
+  className,
+  onClick,
+  host,
+  ...rest
+}: HostProps & CardProps) => {
   const [statistics, setStatistics] = useState<HostStatistics | null>({
     storage: [],
     usage: "",
@@ -41,7 +47,6 @@ const HostOverview = ({ className, host, ...rest }: HostProps & CardProps) => {
     uptime: "",
   });
 
-  const router = useRouter();
   const pathname = usePathname();
   const isHostPage = pathname.includes("host");
 
@@ -59,7 +64,7 @@ const HostOverview = ({ className, host, ...rest }: HostProps & CardProps) => {
   return (
     <>
       {statistics && (
-        <Card className={className} {...rest}>
+        <Card className={className} onClick={onClick} {...rest}>
           <CardContent className={classes["host-card"]}>
             <div>
               <Typography variant="h6" component="div">
@@ -94,16 +99,6 @@ const HostOverview = ({ className, host, ...rest }: HostProps & CardProps) => {
                   ></LinearProgressWithLabel>
                 </div>
               ))}
-              {!isHostPage && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  className={classes["manage-button"]}
-                  onClick={() => router.push(`/host/${host}`)}
-                >
-                  Manage
-                </Button>
-              )}
             </div>
           </CardContent>
         </Card>
