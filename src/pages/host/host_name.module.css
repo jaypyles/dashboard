@@ -29,6 +29,6 @@
 }
 
 .hostOverview {
-  background-color: var(--overview-bg);
+  background-color: var(--overview-bg) !important;
   margin-top: 1rem;
 }
