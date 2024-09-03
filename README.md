@@ -13,7 +13,11 @@ Docker app integrations, with an API for easily building custom widgets.
 - View CPU usage and storage usage
 - Run commands on multiple hosts
 
+![main_page](https://github.com/jaypyles/dashboard/blob/master/docs/main_page.png)
+
 ### Server Page
+
+![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
 
 - Queue remote commands
 - Save command outputs for viewing
