@@ -17,12 +17,12 @@ Docker app integrations, with an API for easily building custom widgets.
 
 ### Server Page
 
-![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
-
 - Queue remote commands
 - Save command outputs for viewing
 - Add new commands
 - Change configuration in app
+
+![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
 
 ## Adding Configs
 
