@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
     container_name: frontend
+    command: ["npm", "run", "start"]
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"
