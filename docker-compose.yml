@@ -4,8 +4,10 @@ services:
     build:
       context: .
       dockerfile: ./docker/frontend/Dockerfile
-    container_name: frontend
+    container_name: server-dashboard
     command: ["npm", "run", "start"]
+    ports:
+      - 3030:3000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"
@@ -22,7 +24,7 @@ services:
     command: pdm run python -m uvicorn api.backend.app:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./configs:/project/configs
-    container_name: backend
+    container_name: server-dashboard-api
     networks:
       - web
   worker:
@@ -31,7 +33,7 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     command: pdm run python -m api.backend.command_worker.worker
-    container_name: worker
+    container_name: server-dashboard-worker
     volumes:
       - ./configs:/project/configs
     networks:

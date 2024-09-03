@@ -1,5 +1,5 @@
 const Constants = {
-  DOMAIN: "http://backend:8000",
+  DOMAIN: "http://server-dashboard-api:8000",
 };
 
 export default Constants;

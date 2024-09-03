@@ -14,5 +14,3 @@ COPY next.config.mjs /app/next.config.mjs
 COPY postcss.config.js /app/postcss.config.js
 
 RUN npm run build
-
-

@@ -1,68 +1,43 @@
-# Webapp Template
+# Server Manager
 
-Template designed to quickly build full stack apps.
+Custom built server manager/dashboard. Easily configure hosts and commands using `.yaml` files.
 
-Utilizes Github Actions and Ansible to build Docker images to quickly deploy onto an AWS EC2 Debian instance.
+## Coming Soon
 
-## Technologies
+Docker app integrations, with an API for easily building custom widgets.
 
-- Containerization: Docker/Docker Compose
+## Features
 
-- Frontend: React/Next.js
+### Dashboard
 
-- Backend: FastAPI
+- View CPU usage and storage usage
+- Run commands on multiple hosts
 
-- Frameworks/Libraries: PDM, TailwindCSS
+### Server Page
 
-## Prerequisites
+- Queue remote commands
+- Save command outputs for viewing
+- Add new commands
+- Change configuration in app
 
-- Install Ansible
+## Adding Configs
 
-- Create a Dockerhub account/repo and fill out the Github repo environmental variables:
+Configs must be placed underneath `/dashboard/configs` with the name `<hostname>.yaml`
 
-  - DOCKERHUB_TOKEN
-  - DOCKERHUB_USERNAME
-  - DOCKERHUB_REPO
-
-- Complete the `config.yaml` and the `inventory.yaml` in the `ansible` directory
-
-  - `github_repo`: Github repo clone address
-  - `deploy_path`: Path where to clone the repo to on the server
-  - `deploy_command`: `Make` command to run to deploy on the server
-
-- Add your domain in HOSTNAME_PROD in the `Makefile`
-
-## Deployment
-
-### Local Deployment
-
-Uses `make` to quickly dispatch `docker-compose` commands.
-
-- `deps`: rebuilds the frontend to deploy statically using the api
-
-- `build`: builds the container using `docker-compose build `
-
-- `up-prd`: ups the container using `docker-compose -f docker-compose.yml up`
-
-- `up-dev`: ups the container using `docker-compose -f docker-compose.yml -f docker-compose.dev.yml up`
-  which will deploy with local volumes.
-
-Ex: `make deps build up-dev`
-
-### Server Deployment
-
-Easy deployment using `make setup deploy` after completing the required config files.
-
-- `setup`: Install dependencies and clone repo onto server
-
-- `deploy`: Deploy on server
-
-To use a SSL certificate, uncomment the volumes under the `traefik` service. Add your own certificates for use in Traefik.
+Example config:
 
 ```yaml
-volumes:
-  - "/var/run/docker.sock:/var/run/docker.sock:ro"
-  - "./dynamic_conf.yaml:/etc/traefik/dynamic_conf.yaml"
-  - "/etc/letsencrypt/live/domain/fullchain.pem:/etc/certs/ssl-cert.pem"
-  - "/etc/letsencrypt/live/domain/privkey.pem:/etc/certs/ssl-cert.key"
+host:
+  name: server
+  hostname: 127.0.0.1
+  port: 22
+  username: user
+  password: password
+
+commands:
+  - name: "view app logs"
+    command: "docker logs server-dashboard"
+    args: # args is optional
+      - flag: "-n"
+        value: "100"
 ```
