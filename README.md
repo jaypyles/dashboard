@@ -26,7 +26,7 @@ Docker app integrations, with an API for easily building custom widgets.
 
 ## Adding Configs
 
-Configs must be placed underneath `/dashboard/configs` with the name `<hostname>.yaml`
+Configs must be placed underneath `/dashboard/configs` with the name `<name>.yaml`
 
 Example config:
 
