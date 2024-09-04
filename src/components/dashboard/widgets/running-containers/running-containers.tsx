@@ -6,7 +6,7 @@ import classes from "./running-containers.module.css";
 
 type RunningContainersProps = {
   host: string;
-  className: string;
+  className?: string;
 };
 
 export const RunningContainers = ({
