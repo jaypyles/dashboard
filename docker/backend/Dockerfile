@@ -3,7 +3,7 @@ FROM python:3.10-slim AS pybuilder
 
 WORKDIR /project
 
-RUN apt update && apt install -y uvicorn
+RUN apt update && apt install -y uvicorn docker.io
 RUN python -m pip --no-cache-dir install pdm
 RUN pdm config python.use_venv false
 

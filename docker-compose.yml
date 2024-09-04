@@ -24,6 +24,7 @@ services:
     command: pdm run python -m uvicorn api.backend.app:app --reload --host 0.0.0.0 --port 8000
     volumes:
       - ./configs:/project/configs
+      - /var/run/docker.sock:/var/run/docker.sock
     container_name: server-dashboard-api
     networks:
       - web

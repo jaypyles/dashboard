@@ -16,7 +16,7 @@ const HostManager = () => {
   const router = useRouter();
   const { host_name } = router.query;
   const [commandQueueOutput, setCommandQueueOutput] = useState<QueuedCommand[]>(
-    []
+    [],
   );
   const [viewedResult, setViewedResult] = useState<string>("");
   const [terminalOpen, setTerminalOpen] = useState<boolean>(false);

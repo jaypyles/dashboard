@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { fetchAndSetWithPayload } from "../../../lib/utils";
-import {
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  CardProps,
-} from "@mui/material";
+import { fetchAndSet, fetchAndSetWithPayload } from "../../../lib/utils";
+import { Typography, Card, CardContent, CardProps } from "@mui/material";
 import classes from "./host-overview.module.css";
 import LinearProgressWithLabel from "../linear-progress-with-label/linearProgressWithLabel";
-import { usePathname } from "next/navigation";
+import { CommandOutput } from "../../../lib/types";
+import { RunningContainers } from "../../dashboard/widgets/running-containers/running-containers";
 
 type HostProps = {
   host: string;
@@ -39,6 +33,7 @@ const HostOverview = ({
   host,
   ...rest
 }: HostProps & CardProps) => {
+  const [containerCount, setContainerCount] = useState<CommandOutput>();
   const [statistics, setStatistics] = useState<HostStatistics | null>({
     storage: [],
     usage: "",
@@ -47,19 +42,16 @@ const HostOverview = ({
     uptime: "",
   });
 
-  const pathname = usePathname();
-  const isHostPage = pathname.includes("host");
-
   useEffect(() => {
     fetchAndSetWithPayload(`/api/${host}/stats`, setStatistics, {
       paths: ["/home", "/", "/mnt/nas"],
     });
-  }, [host]);
 
-  useEffect(() => {
-    console.log(statistics);
-    console.log(isHostPage);
-  }, [statistics, isHostPage]);
+    fetchAndSet(
+      `/api/${host}/command/run-command/count-containers`,
+      setContainerCount,
+    );
+  }, [host]);
 
   return (
     <>
@@ -99,6 +91,7 @@ const HostOverview = ({
                   ></LinearProgressWithLabel>
                 </div>
               ))}
+              <RunningContainers host={host} />
             </div>
           </CardContent>
         </Card>

@@ -20,7 +20,7 @@ class Command:
         self.name = name
         self.command = command
         self.args = args
-        self.type: Union[Literal["user"], Literal["system"]] = "user"
+        self.type: Union[Literal["user"], Literal["system"], Literal["docker"]] = "user"
 
     @override
     def __repr__(self):

@@ -7,7 +7,7 @@ import paramiko
 # LOCAL
 import api.backend.systems.utils as utils
 from api.backend.systems.command import Command, CommandNotFoundError
-from api.backend.systems.commands import SYSTEM_COMMANDS_MAP
+from api.backend.systems.commands import DOCKER_COMMANDS_MAP, SYSTEM_COMMANDS_MAP
 
 
 class Runner(ABC):
@@ -72,6 +72,7 @@ class MachineRunner(Runner):
     def __init__(self) -> None:
         super().__init__()
         self.commands.update(SYSTEM_COMMANDS_MAP)
+        self.commands.update(DOCKER_COMMANDS_MAP)
 
 
 class DockerRunner(Runner):

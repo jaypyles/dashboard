@@ -9,7 +9,7 @@ export const fetchAndSet = async (url: string, setter: (arg: any) => void) => {
 export const fetchAndSetWithPayload = async (
   url: string,
   setter: (arg: any) => void,
-  payload: any
+  payload: any,
 ) => {
   console.log(payload);
   const response = await fetch(url, {
@@ -67,6 +67,12 @@ export const deleteJob = async (host: string, id: string) => {
   const response = await fetch(`/api/${host}/job/${id}`, {
     method: "DELETE",
   });
+  const json = await response.json();
+  return json;
+};
+
+export const getContainerCount = async (host: string) => {
+  const response = await fetch(`/api/${host}/docker/containers`);
   const json = await response.json();
   return json;
 };

@@ -7,7 +7,7 @@ export type Arg = {
   value?: string;
 };
 
-type CommandOutput = {
+export type CommandOutput = {
   stderr: string;
   stdout: string;
 };

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Constants from "../../../../constants";
+import Constants from "../../../../../constants";
 
 type ResponseData = {
   message?: string;
@@ -17,10 +17,10 @@ export default async function handler(
 
   try {
     const response = await fetch(
-      `${domain}/api/${host_name}/command/${command}`,
+      `${domain}/api/${host_name}/run-command/${command}`,
     );
     const json = await response.json();
-    res.status(200).json(json);
+    res.status(200).json({ stdout: json[0], stderr: json[1] });
   } catch (error) {
     console.error("Error in API handler:", error);
     res.status(500).json({ message: "Internal server error" });
