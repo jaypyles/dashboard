@@ -13,6 +13,8 @@ Docker app integrations, with an API for easily building custom widgets.
 - View CPU usage and storage usage
 - Run commands on multiple hosts
 
+![main_page](https://github.com/jaypyles/dashboard/blob/master/docs/main_page.png)
+
 ### Server Page
 
 - Queue remote commands
@@ -20,9 +22,11 @@ Docker app integrations, with an API for easily building custom widgets.
 - Add new commands
 - Change configuration in app
 
+![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
+
 ## Adding Configs
 
-Configs must be placed underneath `/dashboard/configs` with the name `<hostname>.yaml`
+Configs must be placed underneath `/dashboard/configs` with the name `<name>.yaml`
 
 Example config:
 
