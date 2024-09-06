@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { JellyfinData } from "../../../../lib/services/external-integrations/jellyfin/jellyfin.types";
 import { JellyfinIntegration } from "./jellyfin-integration/jellyfin-integration";
 
@@ -9,7 +10,7 @@ type IntegrationPropsMap = {
 
 type ExternalIntegrationProps<T extends Integration> = {
   integration: T;
-  callApi: () => IntegrationPropsMap[T];
+  callApi: () => Promise<IntegrationPropsMap[T]>;
 };
 
 const integrations: {
@@ -26,7 +27,21 @@ export const ExternalIntegration = <T extends Integration>({
     data: IntegrationPropsMap[T];
   }>;
 
-  const data = callApi();
+  // Initialize state for apiData
+  const [apiData, setApiData] = useState<IntegrationPropsMap[T] | null>(null);
 
-  return <Component data={data} />;
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await callApi();
+        setApiData(data);
+      } catch (error) {
+        console.error("Failed to fetch data", error);
+      }
+    };
+
+    getData();
+  }, [callApi]);
+
+  return apiData ? <Component data={apiData} /> : <div>Loading...</div>;
 };

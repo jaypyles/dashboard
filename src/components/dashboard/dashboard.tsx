@@ -4,7 +4,8 @@ import { Container, Grid, Typography } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "../shared/host-overview/host-overview";
 import { useRouter } from "next/router";
-import { Page } from "./widgets/external-integrations/external-integration";
+import { ExternalIntegration } from "./widgets/external-integrations/external-integration";
+import externalIntegrations from "../../lib/services/external-integrations/external-integrations";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -16,6 +17,27 @@ const Dashboard = () => {
 
   const handleClick = (host: string) => {
     router.push(`/host/${host}`);
+  };
+
+  const apiCall = async () => {
+    const apiKey = process.env.NEXT_PUBLIC_JELLYFIN_API_KEY!;
+    const apiUrl = process.env.NEXT_PUBLIC_JELLYFIN_URL;
+
+    const counts = await externalIntegrations.jellyfin.counts(apiKey, apiUrl!);
+    const sessions = await externalIntegrations.jellyfin.sessions(
+      apiKey,
+      apiUrl!
+    );
+
+    console.log(counts);
+    console.log(sessions);
+
+    const data = {
+      ...counts,
+      sessions: sessions,
+    };
+
+    return data;
   };
 
   return (
@@ -35,7 +57,7 @@ const Dashboard = () => {
             </Grid>
           ))}
         </Grid>
-        <Page />
+        <ExternalIntegration integration="jellyfin" callApi={apiCall} />
       </Container>
     </>
   );

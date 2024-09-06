@@ -6,5 +6,6 @@ type JellyfinIntegrationProps = {
 };
 
 export const JellyfinIntegration = ({ data }: JellyfinIntegrationProps) => {
-  return <h1>Jellyfin</h1>;
+  console.log(data);
+  return <p>{JSON.stringify(data)}</p>;
 };
