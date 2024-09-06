@@ -1,29 +1,32 @@
-import externalIntegrations from "../../../../lib/services/external-integrations/external-integrations";
-import { useState, useEffect } from "react";
+import { JellyfinData } from "../../../../lib/services/external-integrations/jellyfin/jellyfin.types";
+import { JellyfinIntegration } from "./jellyfin-integration/jellyfin-integration";
 
-export const Page = () => {
-  const [data, setData] = useState(null);
-  const apiUrl = process.env.NEXT_PUBLIC_JELLYFIN_URL;
-  const apiKey = process.env.NEXT_PUBLIC_JELLYFIN_API_KEY;
+type Integration = "jellyfin";
 
-  const callJelly = async () => {
-    try {
-      const j = await externalIntegrations.jellyfin.sessions(apiKey!, apiUrl!);
-      return j;
-    } catch (error) {
-      console.error("Failed to fetch Jellyfin sessions:", error);
-      return null;
-    }
-  };
+type IntegrationPropsMap = {
+  jellyfin: JellyfinData;
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await callJelly();
-      setData(result);
-    };
+type ExternalIntegrationProps<T extends Integration> = {
+  integration: T;
+  callApi: () => IntegrationPropsMap[T];
+};
 
-    fetchData();
-  }, []);
+const integrations: {
+  [K in Integration]: React.FC<{ data: IntegrationPropsMap[K] }>;
+} = {
+  jellyfin: JellyfinIntegration,
+};
 
-  return <div>{JSON.stringify(data)}</div>;
+export const ExternalIntegration = <T extends Integration>({
+  integration,
+  callApi,
+}: ExternalIntegrationProps<T>) => {
+  const Component = integrations[integration] as React.FC<{
+    data: IntegrationPropsMap[T];
+  }>;
+
+  const data = callApi();
+
+  return <Component data={data} />;
 };
