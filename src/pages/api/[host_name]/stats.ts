@@ -30,6 +30,8 @@ export default async function handler(
     const response = await fetch(`${domain}/api/${host_name}/stats`);
     const json = await response.json();
 
+    console.log(json);
+
     const uptimeRegex = new RegExp(`(\\d+\\s+days,\\s+(?:\\d+:\\d+|\\d+))`);
     const uptimeMatch = json.uptime.match(uptimeRegex);
 

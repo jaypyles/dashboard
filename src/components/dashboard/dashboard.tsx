@@ -4,6 +4,7 @@ import { Container, Grid, Typography } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "../shared/host-overview/host-overview";
 import { useRouter } from "next/router";
+import { Page } from "./widgets/external-integrations/external-integration";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -34,6 +35,7 @@ const Dashboard = () => {
             </Grid>
           ))}
         </Grid>
+        <Page />
       </Container>
     </>
   );
