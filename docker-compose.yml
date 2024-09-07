@@ -6,9 +6,10 @@ services:
       dockerfile: ./docker/frontend/Dockerfile
     container_name: server-dashboard
     command: ["npm", "run", "start"]
-    env_file: ".env"
     ports:
       - 3030:3000
+    environment:
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"

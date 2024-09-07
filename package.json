@@ -15,6 +15,7 @@
     "framer-motion": "^4.1.17",
     "next": "^14.2.4",
     "puppeteer": "^23.2.1",
+    "qbittorrent-api-v2": "^1.2.2",
     "react": "^18.3.1",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^18.3.1",
@@ -24,6 +25,7 @@
     "react-router-dom": "^6.14.1",
     "react-scripts": "^5.0.1",
     "react-toastify": "^10.0.5",
+    "ts-node": "^10.9.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -31,7 +33,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "serve": "serve -s ./dist"
+    "serve": "serve -s ./dist",
+    "docs": "ts-node ./docs/takeDocsPhotos.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/qbittorrent-api-v2": "^1.2.3",
     "tailwindcss": "^3.3.5"
   },
   "overrides": {

@@ -1,3 +1,5 @@
 export type JellyfinData = {
-  data: any;
+  MovieCount: number;
+  SeriesCount: number;
+  EpisodeCount: number;
 };

@@ -1,5 +1,5 @@
-# Build next dependencies
-FROM node:latest as jsbuilder
+FROM jpyles0524/doppler-node:latest
+
 WORKDIR /app
 
 COPY package*.json ./

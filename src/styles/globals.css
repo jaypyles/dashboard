@@ -10,6 +10,7 @@
   --completed: rgba(48, 254, 2, 0.25);
   --running: rgba(2, 52, 254, 0.25);
   --queued: rgba(238, 255, 0, 0.25);
+  --integration-bg-color: rgba(125, 125, 121, 0.284);
   font-size: 20px;
 }
 
