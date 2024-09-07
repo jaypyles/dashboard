@@ -12,9 +12,6 @@ const getJellyfinData = async () => {
     apiUrl!
   );
 
-  console.log(counts);
-  console.log(sessions);
-
   const data: JellyfinData = {
     ...counts,
     sessions: sessions,

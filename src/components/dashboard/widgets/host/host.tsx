@@ -39,10 +39,6 @@ const HostWidget = ({ host }: HostProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(statistics);
-  }, [statistics]);
-
   return (
     <>
       {statistics && (

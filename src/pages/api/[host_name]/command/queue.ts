@@ -18,7 +18,6 @@ export default async function handler(
   try {
     const response = await fetch(`${domain}/api/${host_name}/command/queue`);
     const json = await response.json();
-    console.log(json);
     res.status(200).json(json);
   } catch (error) {
     console.error("Error in API handler:", error);

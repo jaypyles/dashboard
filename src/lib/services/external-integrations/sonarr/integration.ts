@@ -5,8 +5,6 @@ export const getShows = async (): Promise<RadarrResponseType> => {
     method: "GET",
   });
 
-  console.log(response);
-
   if (!response.ok) {
     throw new Error(`Failed to fetch transfer info: ${response.status}`);
   }

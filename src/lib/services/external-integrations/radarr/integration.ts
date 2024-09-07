@@ -8,8 +8,6 @@ export const getMovies = async (): Promise<Movie[]> => {
     method: "GET",
   });
 
-  console.log(response);
-
   if (!response.ok) {
     throw new Error(`Failed to fetch transfer info: ${response.status}`);
   }

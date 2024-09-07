@@ -17,7 +17,6 @@ export const fetchAndSetWithPayload = async (
   setter: (arg: any) => void,
   payload: any
 ) => {
-  console.log(payload);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -26,7 +25,6 @@ export const fetchAndSetWithPayload = async (
     body: JSON.stringify(payload),
   });
   const json = await response.json();
-  console.log(json);
   setter(json);
 };
 

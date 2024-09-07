@@ -7,7 +7,6 @@ type SonarrIntegrationProps = {
 };
 
 export const SonarrIntegration = ({ data }: SonarrIntegrationProps) => {
-  console.log(`data: ${JSON.stringify(data)}`);
   return (
     <Integration
       title="sonarr"

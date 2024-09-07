@@ -15,7 +15,6 @@ export default async function handler(
 ) {
   try {
     const body = JSON.parse(req.body);
-    console.log(body);
     const response = await fetch(`${domain}/api/config`, {
       method: "POST",
       headers: {
