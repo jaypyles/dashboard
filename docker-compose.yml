@@ -10,12 +10,6 @@ services:
       - 3030:3000
     environment:
       - DOPPLER_TOKEN=${DOPPLER_TOKEN}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"
-      - "traefik.http.routers.frontend.entrypoints=websecure"
-      - "traefik.http.services.frontend.loadbalancer.server.port=8000"
-      - "traefik.http.routers.frontend.tls=true"
     networks:
       - web
   backend:
@@ -39,24 +33,6 @@ services:
     container_name: server-dashboard-worker
     volumes:
       - ./configs:/project/configs
-    networks:
-      - web
-  traefik:
-    image: traefik:latest
-    container_name: traefik
-    command:
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      # - "--providers.file.filename=/etc/traefik/dynamic_conf.yaml"
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      # - "./dynamic_conf.yaml:/etc/traefik/dynamic_conf.yaml"
-      # - "/etc/letsencrypt/live/domain/fullchain.pem:/etc/certs/ssl-cert.pem"
-      # - "/etc/letsencrypt/live/domain/privkey.pem:/etc/certs/ssl-cert.key"
     networks:
       - web
   mongo:
