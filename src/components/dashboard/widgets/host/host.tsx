@@ -39,48 +39,52 @@ const HostWidget = ({ host }: HostProps) => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(statistics);
-  }, [statistics]);
-
   return (
-    <Card className={classes["host-card"]}>
-      <CardContent>
-        <div>
-          <Typography variant="h6" component="div">
-            {host}
-          </Typography>
-          <div className="is-row">
-            <Typography color="text.secondary" component="p">
-              CPU Usage
-            </Typography>
-            <LinearProgressWithLabel
-              value={Number(statistics.usage.replace("%", ""))}
-            ></LinearProgressWithLabel>
-          </div>
-          <Typography variant="body2" color="text.secondary">
-            Uptime: {statistics.uptime}
-          </Typography>
-          {statistics.storage.map((storage) => (
-            <div className="is-row">
-              <Typography variant="body2" color="text.secondary" component="p">
-                {storage.mountedOn}
+    <>
+      {statistics && (
+        <Card className={classes["host-card"]}>
+          <CardContent>
+            <div>
+              <Typography variant="h6" component="div">
+                {host}
               </Typography>
-              <LinearProgressWithLabel
-                value={Number(storage.usePercent.replace("%", ""))}
-              ></LinearProgressWithLabel>
+              <div className="is-row">
+                <Typography color="text.secondary" component="p">
+                  CPU Usage
+                </Typography>
+                <LinearProgressWithLabel
+                  value={Number(statistics.usage.replace("%", ""))}
+                ></LinearProgressWithLabel>
+              </div>
+              <Typography variant="body2" color="text.secondary">
+                Uptime: {statistics.uptime}
+              </Typography>
+              {statistics.storage.map((storage) => (
+                <div className="is-row">
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    component="p"
+                  >
+                    {storage.mountedOn}
+                  </Typography>
+                  <LinearProgressWithLabel
+                    value={Number(storage.usePercent.replace("%", ""))}
+                  ></LinearProgressWithLabel>
+                </div>
+              ))}
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes["manage-button"]}
+              >
+                Manage
+              </Button>
             </div>
-          ))}
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes["manage-button"]}
-          >
-            Manage
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 };
 

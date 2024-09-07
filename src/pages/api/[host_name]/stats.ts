@@ -17,8 +17,6 @@ export default async function handler(
     const { host_name } = req.query;
     const data = req.body;
 
-    console.log(`data: ${JSON.stringify(data)}`);
-
     if (!data?.paths || data.paths.length === 0) {
       return res
         .status(400)
@@ -59,7 +57,6 @@ export default async function handler(
     });
 
     json.storage = storage;
-    console.log(json.storage);
 
     res.status(200).json(json);
   } catch (error) {

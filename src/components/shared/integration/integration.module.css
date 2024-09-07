@@ -1,0 +1,32 @@
+.integration {
+  padding: 1rem;
+  width: 10rem;
+  height: 15rem;
+  gap: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.integration:hover {
+  background-color: var(--paper-hover-color);
+}
+
+.title {
+  font-family: monospace;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.data {
+  background-color: var(--integration-bg-color);
+  padding: 0.125rem;
+  border-radius: 0.125rem;
+
+  width: 100%;
+  text-align: center;
+}

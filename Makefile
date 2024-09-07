@@ -1,3 +1,5 @@
+export DOPPLER_TOKEN=$(shell doppler configs tokens create dev --plain --max-age=900s)
+
 .DEFAULT_GOAL := help
 
 COMPOSE_DEV = docker compose -f docker-compose.yml -f docker-compose.dev.yml
@@ -6,7 +8,7 @@ COMPOSE_PROD = docker compose -f docker-compose.yml
 HOSTNAME_PROD = "localhost"
 HOSTNAME_DEV = "localhost"
 
-.PHONY: help deps build pull up-prod up-dev down setup deploy
+.PHONY: help deps build pull up-prod up-dev down setup deploy docs
 
 help:
 	@echo "Usage:"
@@ -19,6 +21,7 @@ help:
 	@echo "  make down    - Stop and remove containers, networks, images, and volumes"
 	@echo "  make setup   - Setup server with dependencies and clone repo"
 	@echo "  make deploy  - Deploy site onto server"
+	@echo "  make docs    - Use puppeteer to take docs screenshots"
 	@echo ""
 
 logs:
@@ -30,18 +33,18 @@ deps:
 	npm run build
 
 build:
-	$(COMPOSE_DEV) build
+	doppler run -- $(COMPOSE_DEV) build
 
 pull:
 	docker compose pull
 
 up-prd:
 	export HOSTNAME=$(HOSTNAME_PROD) && \
-	$(COMPOSE_PROD) up -d --force-recreate
+	doppler run -- $(COMPOSE_PROD) up -d --force-recreate
 
 up-dev:
 	export HOSTNAME=$(HOSTNAME_DEV) && \
-	$(COMPOSE_DEV) up -d --force-recreate
+	doppler run -- $(COMPOSE_DEV) up -d --force-recreate
 
 down:
 	$(COMPOSE_DEV) down
@@ -52,3 +55,6 @@ setup:
 
 deploy:
 	ansible-playbook -i ./ansible/inventory.yaml ./ansible/deploy_site.yaml -v
+
+docs:
+	npm run docs

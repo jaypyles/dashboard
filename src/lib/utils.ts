@@ -1,5 +1,11 @@
 import { AddCommand, Config } from "./types";
 
+export const apiGet = async (url: string, options?: object) => {
+  const response = await fetch(url, options);
+  const json = await response.json();
+  return json;
+};
+
 export const fetchAndSet = async (url: string, setter: (arg: any) => void) => {
   const response = await fetch(url);
   const json = await response.json();
@@ -9,9 +15,8 @@ export const fetchAndSet = async (url: string, setter: (arg: any) => void) => {
 export const fetchAndSetWithPayload = async (
   url: string,
   setter: (arg: any) => void,
-  payload: any,
+  payload: any
 ) => {
-  console.log(payload);
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -20,7 +25,6 @@ export const fetchAndSetWithPayload = async (
     body: JSON.stringify(payload),
   });
   const json = await response.json();
-  console.log(json);
   setter(json);
 };
 

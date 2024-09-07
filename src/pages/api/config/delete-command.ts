@@ -34,8 +34,6 @@ export default async function handler(
       res.status(500).json(json);
     }
 
-    console.log(res.statusCode);
-
     res.status(200).json(json);
   } catch (error) {
     console.error("Error in API handler:", error);

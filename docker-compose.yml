@@ -8,6 +8,8 @@ services:
     command: ["npm", "run", "start"]
     ports:
       - 3030:3000
+    environment:
+      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"
