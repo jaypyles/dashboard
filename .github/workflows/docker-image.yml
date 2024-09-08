@@ -37,8 +37,7 @@ jobs:
           file: ./docker/frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{secrets.DOCKERHUB_REPO}}:latest
-        env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          build-args: DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN }}
 
       - name: Build and push api image
         uses: docker/build-push-action@v5
@@ -47,5 +46,4 @@ jobs:
           file: ./docker/backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{secrets.DOCKERHUB_API_REPO}}:latest
-        env:
-          DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
+          build-args: DOPPLER_TOKEN=${{ secrets.DOPPLER_TOKEN }}
