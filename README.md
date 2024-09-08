@@ -1,17 +1,14 @@
 # Server Manager
 
-Custom built server manager/dashboard. Easily configure hosts and commands using `.yaml` files.
-
-## Coming Soon
-
-Docker app integrations, with an API for easily building custom widgets.
+Custom built server manager/dashboard. Easily configure hosts and commands using `.yaml` files. Integrates with self-hosted app integrations such as: Arr stack, Jellyfin, etc.
 
 ## Features
 
 ### Dashboard
 
-- View CPU usage and storage usage
+- View CPU usage, storage usage, and running container counts
 - Run commands on multiple hosts
+- Docker app integrations
 
 ![main_page](https://github.com/jaypyles/dashboard/blob/master/docs/main_page.png)
 
