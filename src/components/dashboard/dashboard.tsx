@@ -42,6 +42,7 @@ const Dashboard = () => {
           <ExternalIntegration integration="qbittorrent" />
           <ExternalIntegration integration="radarr" />
           <ExternalIntegration integration="sonarr" />
+          <ExternalIntegration integration="uptimeKuma" />
         </div>
       </Container>
     </>

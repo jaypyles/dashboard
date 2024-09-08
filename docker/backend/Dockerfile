@@ -13,7 +13,9 @@ COPY ./api /project/api/
 RUN pdm install
 
 # Create final image
-FROM python:3.10-slim
+FROM jpyles0524/doppler-python
+
+ARG DOPPLER_TOKEN
 
 RUN apt update && apt install -y ssh
 
@@ -26,4 +28,4 @@ COPY --from=pybuilder /usr/local/bin /usr/local/bin
 EXPOSE 8000
 
 
-CMD [ "pdm", "run", "python", "-m", "uvicorn", "api.backend.app:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["doppler", "run", "-t", "$DOPPLER_TOKEN", "--", "pdm", "run", "python", "-m", "uvicorn", "api.backend.app:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]

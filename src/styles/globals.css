@@ -12,6 +12,10 @@
   --queued: rgba(238, 255, 0, 0.25);
   --integration-bg-color: rgba(125, 125, 121, 0.284);
   --blue-highlight: rgba(38, 31, 168, 0.714);
+  --kuma-status-up: rgba(48, 254, 2, 0.497);
+  --kuma-status-down: rgba(254, 2, 2, 0.497);
+  --kuma-status-up-circle: rgba(14, 46, 6, 0.497);
+  --kuma-status-up-down: rgba(46, 6, 6, 0.497);
   font-size: 20px;
 }
 
@@ -31,7 +35,11 @@ body,
   height: 100%;
   width: 100%;
   overflow-y: scroll;
-  background: linear-gradient(to top, rgba(0, 0, 112, 0.5), rgba(11, 8, 20, 0.734));
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 112, 0.5),
+    rgba(11, 8, 20, 0.734)
+  );
 }
 
 .is-row {

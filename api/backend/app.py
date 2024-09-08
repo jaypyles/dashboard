@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.backend.routers.host import host_router
 from api.backend.routers.config import config_router
 from api.backend.routers.command import command_router
+from api.backend.routers.integration import integration_router
 
 LOG = logging.getLogger(__name__)
 
@@ -25,3 +26,4 @@ app.add_middleware(
 app.include_router(host_router)
 app.include_router(config_router)
 app.include_router(command_router)
+app.include_router(integration_router)

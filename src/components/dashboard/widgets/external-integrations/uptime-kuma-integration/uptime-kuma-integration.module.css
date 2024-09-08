@@ -1,0 +1,33 @@
+.uptime {
+  display: flex;
+  padding: 0.3rem;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background-color: var(--kuma-status-up);
+}
+
+.circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.up {
+  background-color: var(--kuma-status-up);
+}
+
+.up .circle {
+  background: var(--kuma-status-up-circle);
+}
+
+.down {
+  background-color: var(--kuma-status-down);
+}
+
+.down .circle {
+  background: var(--kuma-status-up-circle);
+}
