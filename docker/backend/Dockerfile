@@ -15,8 +15,6 @@ RUN pdm install
 # Create final image
 FROM jpyles0524/doppler-python
 
-ARG DOPPLER_TOKEN
-
 RUN apt update && apt install -y ssh
 
 WORKDIR /project
@@ -27,5 +25,6 @@ COPY --from=pybuilder /usr/local/bin /usr/local/bin
 
 EXPOSE 8000
 
+ARG DOPPLER_TOKEN
 
 CMD ["doppler", "run", "-t", "$DOPPLER_TOKEN", "--", "pdm", "run", "python", "-m", "uvicorn", "api.backend.app:app", "--reload", "--host", "0.0.0.0", "--port", "8000"]
