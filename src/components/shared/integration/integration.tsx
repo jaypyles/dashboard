@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import classes from "./integration.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -8,25 +8,30 @@ import { clsx } from "clsx";
 type IntegrationProps = {
   icon?: string;
   title: string;
-  data: string[];
+  data?: string[];
   link?: string;
+  children?: React.ReactNode;
 };
 
-const Integration = ({ icon, title, data, link }: IntegrationProps) => {
+const Integration = ({
+  icon,
+  title,
+  data,
+  link,
+  children,
+}: IntegrationProps) => {
   const router = useRouter();
 
   const handleNavigate = () => {
-    router.push(link!);
+    if (link) {
+      router.push(link);
+    }
   };
 
   return (
     <Paper
       className={clsx(classes.integration, { [classes.link]: link })}
-      onClick={() => {
-        if (link) {
-          handleNavigate();
-        }
-      }}
+      onClick={handleNavigate}
     >
       {icon && (
         <Image
@@ -39,9 +44,13 @@ const Integration = ({ icon, title, data, link }: IntegrationProps) => {
         />
       )}
       <Typography className={classes.title}>{title}</Typography>
-      {data.map((item) => (
-        <Typography className={classes.data}>{item}</Typography>
-      ))}
+      {data &&
+        data.map((item, index) => (
+          <Typography key={index} className={classes.data}>
+            {item}
+          </Typography>
+        ))}
+      {children}
     </Paper>
   );
 };

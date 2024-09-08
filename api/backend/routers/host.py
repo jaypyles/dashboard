@@ -27,7 +27,7 @@ async def get_hosts():
 
 
 @host_router.get("/api/{host_name}/commands")
-async def get_host_commands(request: Request, host_name: str):
+async def get_host_commands(_: Request, host_name: str):
     host = HOST_MAP[host_name]
     return list(host.runner.commands.values())
 

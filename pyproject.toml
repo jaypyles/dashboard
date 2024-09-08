@@ -13,6 +13,7 @@ dependencies = [
     "pymongo>=4.8.0",
     "motor>=3.5.1",
     "docker>=7.1.0",
+    "uptime-kuma-api>=1.2.1",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -35,6 +36,8 @@ stubPath = ""
 reportMissingImports = true
 reportMissingTypeStubs = false
 reportAny = false
+reportUnknownVariableType = false
+reportUnknownMemberType = false
 
 pythonVersion = "3.9"
 pythonPlatform = "Linux"

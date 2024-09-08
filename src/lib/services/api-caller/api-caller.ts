@@ -36,9 +36,15 @@ const getSonarrData = async () => {
   return sonarrData;
 };
 
+const getUptimeKumaData = async () => {
+  const uptimeRes = await externalIntegrations.uptimeKuma.uptime();
+  return uptimeRes;
+};
+
 export const apiCaller = {
   jellyfin: getJellyfinData,
   qbittorrent: getQbittorrrentData,
   radarr: getRadarrData,
   sonarr: getSonarrData,
+  uptimeKuma: getUptimeKumaData,
 };
