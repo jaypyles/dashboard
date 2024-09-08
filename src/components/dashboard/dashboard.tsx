@@ -39,7 +39,7 @@ const Dashboard = () => {
         </div>
         <div className={classes.integrations}>
           <ExternalIntegration integration="jellyfin" />
-          <ExternalIntegration integration="qbittorrent" />
+          <ExternalIntegration integration="qbittorrent" polling />
           <ExternalIntegration integration="radarr" />
           <ExternalIntegration integration="sonarr" />
           <ExternalIntegration integration="uptimeKuma" />
