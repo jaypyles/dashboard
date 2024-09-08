@@ -33,7 +33,6 @@ const HostOverview = ({
   host,
   ...rest
 }: HostProps & CardProps) => {
-  const [containerCount, setContainerCount] = useState<CommandOutput>();
   const [statistics, setStatistics] = useState<HostStatistics | null>({
     storage: [],
     usage: "",
@@ -47,10 +46,13 @@ const HostOverview = ({
       paths: ["/home", "/", "/mnt/nas"],
     });
 
-    fetchAndSet(
-      `/api/${host}/command/run-command/count-containers`,
-      setContainerCount
-    );
+    const interval = setInterval(() => {
+      fetchAndSetWithPayload(`/api/${host}/stats`, setStatistics, {
+        paths: ["/home", "/", "/mnt/nas"],
+      });
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, [host]);
 
   return (

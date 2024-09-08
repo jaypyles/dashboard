@@ -28,6 +28,7 @@ type IntegrationPropsMap = {
 
 type ExternalIntegrationProps<T extends Integration> = {
   integration: T;
+  polling?: boolean;
 };
 
 const integrations: {
@@ -42,6 +43,7 @@ const integrations: {
 
 export const ExternalIntegration = <T extends Integration>({
   integration,
+  polling = false,
 }: ExternalIntegrationProps<T>) => {
   const Component = integrations[integration] as React.FC<{
     data: IntegrationPropsMap[T];
@@ -53,6 +55,20 @@ export const ExternalIntegration = <T extends Integration>({
   useEffect(() => {
     const getData = async () => {
       try {
+        if (polling) {
+          const data = (await apiCaller[
+            integration
+          ]()) as IntegrationPropsMap[T];
+          setApiData(data);
+          const interval = setInterval(async () => {
+            const data = (await apiCaller[
+              integration
+            ]()) as IntegrationPropsMap[T];
+            setApiData(data);
+          }, 10000); // 10 seconds
+          return () => clearInterval(interval); // Clear interval on component unmount
+        }
+
         const data = (await apiCaller[integration]()) as IntegrationPropsMap[T];
         setApiData(data);
       } catch (error) {
