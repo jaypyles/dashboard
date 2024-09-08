@@ -7,7 +7,7 @@ services:
       args:
         DOPPLER_TOKEN: ${DOPPLER_TOKEN}
     container_name: server-dashboard
-    command: ["npm", "run", "start"]
+    command: doppler run -- npm run start
     ports:
       - 3030:3000
     environment:
