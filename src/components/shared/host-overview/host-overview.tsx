@@ -49,7 +49,7 @@ const HostOverview = ({
 
     fetchAndSet(
       `/api/${host}/command/run-command/count-containers`,
-      setContainerCount,
+      setContainerCount
     );
   }, [host]);
 
@@ -63,7 +63,7 @@ const HostOverview = ({
                 {host}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Uptime: {statistics.uptime}
+                <b>Uptime:</b> {statistics.uptime}
               </Typography>
               <div className="is-row">
                 <Typography
@@ -71,7 +71,7 @@ const HostOverview = ({
                   color="text.secondary"
                   component="p"
                 >
-                  CPU Usage
+                  <b>CPU Usage</b>
                 </Typography>
                 <LinearProgressWithLabel
                   value={Number(statistics.usage.replace("%", ""))}
@@ -84,7 +84,7 @@ const HostOverview = ({
                     color="text.secondary"
                     component="p"
                   >
-                    {storage.mountedOn}
+                    <b>{storage.mountedOn}</b>
                   </Typography>
                   <LinearProgressWithLabel
                     value={Number(storage.usePercent.replace("%", ""))}

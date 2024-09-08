@@ -3,6 +3,7 @@ import { CommandOutput } from "../../../../lib/types";
 import React, { useState, useEffect } from "react";
 import { fetchAndSet } from "../../../../lib/utils";
 import classes from "./running-containers.module.css";
+import DirectionsBoatIcon from "@mui/icons-material/DirectionsBoat";
 
 type RunningContainersProps = {
   host: string;
@@ -18,7 +19,7 @@ export const RunningContainers = ({
   useEffect(() => {
     fetchAndSet(
       `/api/${host}/command/run-command/count-containers`,
-      setContainerCount,
+      setContainerCount
     );
   }, [host]);
 
@@ -26,7 +27,17 @@ export const RunningContainers = ({
     <>
       {containerCount && (
         <div className={`${classes.runningContainers} ${className}`}>
-          <Typography variant="body2" color="text.secondary" component="p">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            component="p"
+            className={classes.containerCount}
+            display="inline"
+          >
+            <DirectionsBoatIcon
+              fontSize="inherit"
+              className={classes.shipIcon}
+            />
             {containerCount.stdout} running containers
           </Typography>
         </div>
