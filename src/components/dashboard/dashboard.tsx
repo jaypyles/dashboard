@@ -21,9 +21,6 @@ const Dashboard = () => {
   return (
     <>
       <Container maxWidth="lg" className={classes["server-manager-container"]}>
-        <Typography variant="h4" gutterBottom>
-          Welcome
-        </Typography>
         <div className={classes.servers}>
           <Grid container spacing={3}>
             {hosts.map((host) => (

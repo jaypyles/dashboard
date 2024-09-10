@@ -11,12 +11,13 @@ import { Button, IconButton, Paper } from "@mui/material";
 import AddCommand from "../../components/host/add-command/add-command";
 import { QueuedCommand } from "../../lib/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { clsx } from "clsx";
 
 const HostManager = () => {
   const router = useRouter();
   const { host_name } = router.query;
   const [commandQueueOutput, setCommandQueueOutput] = useState<QueuedCommand[]>(
-    [],
+    []
   );
   const [viewedResult, setViewedResult] = useState<string>("");
   const [terminalOpen, setTerminalOpen] = useState<boolean>(false);
@@ -56,7 +57,7 @@ const HostManager = () => {
         <>
           <div className={`${classes.gridWrapper} is-col`}>
             <div className={classes.topRow}>
-              <Paper className="h-full w-full">
+              <Paper className={clsx(classes.overview, "h-full w-full")}>
                 <div>
                   <IconButton
                     onClick={() => {

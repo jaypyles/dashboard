@@ -48,8 +48,6 @@ export const ExternalIntegration = <T extends Integration>({
   const Component = integrations[integration] as React.FC<{
     data: IntegrationPropsMap[T];
   }>;
-
-  // Initialize state for apiData
   const [apiData, setApiData] = useState<IntegrationPropsMap[T] | null>(null);
 
   useEffect(() => {
@@ -65,8 +63,8 @@ export const ExternalIntegration = <T extends Integration>({
               integration
             ]()) as IntegrationPropsMap[T];
             setApiData(data);
-          }, 10000); // 10 seconds
-          return () => clearInterval(interval); // Clear interval on component unmount
+          }, 10000);
+          return () => clearInterval(interval);
         }
 
         const data = (await apiCaller[integration]()) as IntegrationPropsMap[T];

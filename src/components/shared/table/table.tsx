@@ -8,17 +8,20 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 import classes from "./table.module.css";
+import { clsx } from "clsx";
 
 interface CustomTableProps {
   headers: string[];
   children: React.ReactNode;
   title?: string;
+  className?: string;
 }
 
 export default function CustomTable({
   headers,
   children,
   title,
+  className,
   ...restProps
 }: CustomTableProps & TableProps) {
   const label = title ? (
@@ -26,7 +29,7 @@ export default function CustomTable({
   ) : undefined;
 
   return (
-    <Paper>
+    <Paper className={clsx(classes.customTable, className)}>
       {label}
       <TableContainer component={Paper} {...restProps} sx={{ maxHeight: 400 }}>
         <Table

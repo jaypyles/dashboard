@@ -5,6 +5,7 @@ import classes from "./host-overview.module.css";
 import LinearProgressWithLabel from "../linear-progress-with-label/linearProgressWithLabel";
 import { CommandOutput } from "../../../lib/types";
 import { RunningContainers } from "../../dashboard/widgets/running-containers/running-containers";
+import { clsx } from "clsx";
 
 type HostProps = {
   host: string;
@@ -58,7 +59,11 @@ const HostOverview = ({
   return (
     <>
       {statistics && (
-        <Card className={className} onClick={onClick} {...rest}>
+        <Card
+          className={clsx(classes.card, className)}
+          onClick={onClick}
+          {...rest}
+        >
           <CardContent className={classes["host-card"]}>
             <div>
               <Typography variant="h6" component="div">

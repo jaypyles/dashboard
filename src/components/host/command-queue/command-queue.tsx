@@ -73,7 +73,7 @@ export const CommandQueue = ({
   }, [host]);
 
   return (
-    <Paper {...rest}>
+    <Paper className={classes.previousCommands} {...rest}>
       <CustomTable
         headers={["name", "command", "time_created", "status", "result"]}
         className="full"

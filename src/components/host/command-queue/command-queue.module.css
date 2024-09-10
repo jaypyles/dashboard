@@ -1,3 +1,7 @@
+.previousCommands {
+  background-color: var(--paper-opaque-dark);
+}
+
 .status {
   padding: 4px;
   border-radius: 4px;
