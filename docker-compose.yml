@@ -13,7 +13,7 @@ services:
     environment:
       - DOPPLER_TOKEN=${DOPPLER_TOKEN}
     networks:
-      - web
+      - webservice-network
   backend:
     image: jpyles0524/server-dashboard-api:latest
     build:
@@ -29,7 +29,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     container_name: server-dashboard-api
     networks:
-      - web
+      - webservice-network
   worker:
     image: jpyles0524/server-dashboard-api:latest
     build:
@@ -40,7 +40,7 @@ services:
     volumes:
       - ./configs:/project/configs
     networks:
-      - web
+      - webservice-network
   mongo:
     container_name: manager-mongo
     image: mongo
@@ -51,6 +51,8 @@ services:
     ports:
       - 27017:27017
     networks:
-      - web
+      - webservice-network
 networks:
-  web:
+  webservice-network:
+    external:
+      name: webservice-network
