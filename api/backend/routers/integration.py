@@ -6,13 +6,23 @@ from fastapi import APIRouter
 
 # LOCAL
 from api.backend.constants import KUMA_SITES
-from api.backend.integrations import get_uptime
+from api.backend.integrations import get_uptime, get_jellyfin_data, get_transfer_info
 
 LOG = logging.getLogger(__name__)
 
 integration_router = APIRouter()
 
-@integration_router.get('/api/integrations/uptime')
+
+@integration_router.get("/api/integrations/uptime")
 async def get_site_uptime():
     return {val: get_uptime(key) for key, val in KUMA_SITES.items()}
 
+
+@integration_router.get("/api/integrations/transfer_info")
+async def get_qb_transfer_info():
+    return get_transfer_info()
+
+
+@integration_router.get("/api/integrations/jellyfin/media_count")
+async def get_jellyfin_media_count():
+    return await get_jellyfin_data()

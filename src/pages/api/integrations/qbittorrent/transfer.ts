@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import api from "qbittorrent-api-v2";
 import { TransferInfoResponseType } from "./qbittorrent.types";
+import Constants from "../../../../constants";
 
 function formatBytes(bytes: number) {
   const sizes = ["B/s", "KB/s", "MB/s", "GB/s", "TB/s"];
@@ -13,28 +14,14 @@ export default async function handler(
   _: NextApiRequest,
   res: NextApiResponse<TransferInfoResponseType>
 ) {
-  api
-    .connect(
-      process.env.NEXT_PUBLIC_QB_URL!,
-      process.env.QB_USER!,
-      process.env.QB_PASS!
-    )
-    .then((qbt) => {
-      qbt
-        .transferInfo()
-        .then((info) => {
-          return res.json({
-            transferInfo: {
-              uploadSpeed: formatBytes(info.up_info_speed),
-              downloadSpeed: formatBytes(info.dl_info_speed),
-            },
-          });
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const response = await fetch(
+    `${Constants.DOMAIN}/api/integrations/transfer_info`
+  );
+  const json = await response.json();
+  return res.json({
+    transferInfo: {
+      uploadSpeed: formatBytes(json.up_info_speed),
+      downloadSpeed: formatBytes(json.dl_info_speed),
+    },
+  });
 }

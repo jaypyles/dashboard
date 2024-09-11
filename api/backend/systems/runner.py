@@ -48,8 +48,6 @@ class Runner(ABC):
             print(e)
 
     def dispatch(self, command_name: str):
-        print(self.commands)
-
         try:
             command = self.commands[command_name]
         except KeyError:

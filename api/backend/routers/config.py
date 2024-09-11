@@ -48,7 +48,6 @@ async def add_command(add_command: AddCommand, host_name: str):
 async def remove_command(add_command: AddCommand, host_name: str):
     res = yaml_utils.remove_command_from_config(host_name, add_command.command)
     host = HOST_MAP[host_name]
-    print(res)
 
     if res["status"] == "failure":
         return JSONResponse(status_code=500, content=res)

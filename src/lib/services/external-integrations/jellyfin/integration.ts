@@ -1,27 +1,11 @@
 import { apiGet } from "../../../utils";
 
-const callJellyfinApi = async (
-  jellyfinApiKey: string,
-  jellyfinUrl: string,
-  endpoint: string
-) => {
-  const data = await apiGet(`${jellyfinUrl}/${endpoint}`, {
-    headers: { "X-Emby-Token": jellyfinApiKey },
-  });
+export const getMedia = async () => {
+  const media = await apiGet("/api/integrations/jellyfin/media_count");
 
-  return data;
-};
-
-export const getSessions = async (
-  jellyfinApiKey: string,
-  jellyfinUrl: string
-) => {
-  return await callJellyfinApi(jellyfinApiKey, jellyfinUrl, "Sessions");
-};
-
-export const getCounts = async (
-  jellyfinApiKey: string,
-  jellyfinUrl: string
-) => {
-  return await callJellyfinApi(jellyfinApiKey, jellyfinUrl, "Items/Counts");
+  return {
+    MovieCount: media.MovieCount,
+    SeriesCount: media.SeriesCount,
+    EpisodeCount: media.EpisodeCount,
+  };
 };
