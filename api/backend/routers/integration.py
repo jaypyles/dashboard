@@ -6,7 +6,13 @@ from fastapi import APIRouter
 
 # LOCAL
 from api.backend.constants import KUMA_SITES
-from api.backend.integrations import get_uptime, get_jellyfin_data, get_transfer_info
+from api.backend.integrations import (
+    get_shows,
+    get_movies,
+    get_uptime,
+    get_jellyfin_data,
+    get_transfer_info,
+)
 
 LOG = logging.getLogger(__name__)
 
@@ -26,3 +32,13 @@ async def get_qb_transfer_info():
 @integration_router.get("/api/integrations/jellyfin/media_count")
 async def get_jellyfin_media_count():
     return await get_jellyfin_data()
+
+
+@integration_router.get("/api/integrations/radarr/movies")
+async def get_radarr_movie_count():
+    return await get_movies()
+
+
+@integration_router.get("/api/integrations/sonarr/shows")
+async def get_sonarr_show_count():
+    return await get_shows()

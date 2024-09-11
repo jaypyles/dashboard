@@ -9,6 +9,6 @@ export const getShows = async (): Promise<RadarrResponseType> => {
     throw new Error(`Failed to fetch transfer info: ${response.status}`);
   }
 
-  const json: RadarrResponseType = await response.json();
-  return { shows: json.shows };
+  const json = await response.json();
+  return { shows: json };
 };

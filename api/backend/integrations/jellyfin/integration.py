@@ -2,14 +2,8 @@
 import os
 from typing import Any
 
-# PDM
-import aiohttp
-
-
-async def fetch(url: str, headers: dict[str, Any]):
-    async with aiohttp.ClientSession(headers=headers) as session:
-        async with session.get(url) as response:
-            return await response.json()
+# LOCAL
+from api.backend.utils import fetch
 
 
 async def call_jellyfin_api(jellyfin_api_key: str, jellyfin_url: str, endpoint: str):
@@ -24,7 +18,6 @@ async def get_sessions(jellyfin_api_key: str, jellyfin_url: str) -> dict[str, An
 
 async def get_counts(jellyfin_api_key: str, jellyfin_url: str) -> dict[str, Any]:
     counts = await call_jellyfin_api(jellyfin_api_key, jellyfin_url, "Items/Counts")
-    print(counts)
     return counts
 
 
