@@ -1,16 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { MovieResponseType } from "./radarr.types";
+import Constants from "../../../../constants";
 
 export default async function handler(
   _: NextApiRequest,
   res: NextApiResponse<MovieResponseType>
 ) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_RADARR_URL!}/api/v3/movie?apikey=${
-      process.env.RADARR_KEY
-    }`
+    `${Constants.DOMAIN}/api/integrations/radarr/movies`
   );
-
   const json = await response.json();
-  return res.json({ movies: json });
+
+  return res.json(json);
 }

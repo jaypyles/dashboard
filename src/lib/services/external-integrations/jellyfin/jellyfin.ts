@@ -1,8 +1,7 @@
-import { getCounts, getSessions } from "./integration";
+import { getMedia } from "./integration";
 
 const Jellyfin = {
-  sessions: getSessions,
-  counts: getCounts,
+  media: getMedia,
 };
 
 export default Jellyfin;
