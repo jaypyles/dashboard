@@ -1,0 +1,13 @@
+.host {
+  background-color: var(--paper-opaque-bg);
+  min-height: 12.25rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skeleton {
+  width: 100%;
+  height: 12.25rem;
+}

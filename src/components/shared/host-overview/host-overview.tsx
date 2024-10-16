@@ -6,6 +6,7 @@ import LinearProgressWithLabel from "../linear-progress-with-label/linearProgres
 import { CommandOutput } from "../../../lib/types";
 import { RunningContainers } from "../../dashboard/widgets/running-containers/running-containers";
 import { clsx } from "clsx";
+import { HostLoader } from "../../dashboard/widgets/skeletons";
 
 type HostProps = {
   host: string;
@@ -42,15 +43,32 @@ const HostOverview = ({
     uptime: "",
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    fetchAndSetWithPayload(`/api/${host}/stats`, setStatistics, {
-      paths: ["/home", "/", "/mnt/nas"],
-    });
+    setIsLoading(true);
+    fetchAndSetWithPayload(
+      `/api/${host}/stats`,
+      (data) => {
+        setStatistics(data);
+        setIsLoading(false);
+      },
+      {
+        paths: ["/home", "/", "/mnt/nas"],
+      }
+    );
 
     const interval = setInterval(() => {
-      fetchAndSetWithPayload(`/api/${host}/stats`, setStatistics, {
-        paths: ["/home", "/", "/mnt/nas"],
-      });
+      fetchAndSetWithPayload(
+        `/api/${host}/stats`,
+        (data) => {
+          setStatistics(data);
+          setIsLoading(false);
+        },
+        {
+          paths: ["/home", "/", "/mnt/nas"],
+        }
+      );
     }, 60000);
 
     return () => clearInterval(interval);
@@ -58,7 +76,9 @@ const HostOverview = ({
 
   return (
     <>
-      {statistics && (
+      {isLoading ? (
+        <HostLoader />
+      ) : (
         <Card
           className={clsx(classes.card, className)}
           onClick={onClick}
@@ -70,7 +90,7 @@ const HostOverview = ({
                 {host}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                <b>Uptime:</b> {statistics.uptime}
+                <b>Uptime:</b> {statistics?.uptime}
               </Typography>
               <div className="is-row">
                 <Typography
@@ -81,10 +101,10 @@ const HostOverview = ({
                   <b>CPU Usage</b>
                 </Typography>
                 <LinearProgressWithLabel
-                  value={Number(statistics.usage.replace("%", ""))}
+                  value={Number(statistics?.usage.replace("%", ""))}
                 ></LinearProgressWithLabel>
               </div>
-              {statistics.storage.map((storage) => (
+              {statistics?.storage.map((storage) => (
                 <div className="is-row">
                   <Typography
                     variant="body2"

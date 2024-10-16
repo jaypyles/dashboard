@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { JellyfinData } from "../../../../lib/services/external-integrations/jellyfin/jellyfin.types";
 import { JellyfinIntegration } from "./jellyfin-integration/jellyfin-integration";
+import { IntegrationLoader } from "../../widgets/skeletons";
 import { apiCaller } from "../../../../lib/services/api-caller/api-caller";
 import { QbittorrentData } from "../../../../lib/services/external-integrations/qbittorrent/qbittorrent.types";
 import { QbittorrentIntegration } from "./qbittorrent-integration/qbittorrent-integration";
@@ -77,5 +78,5 @@ export const ExternalIntegration = <T extends Integration>({
     getData();
   }, []);
 
-  return apiData ? <Component data={apiData} /> : <div>Loading...</div>;
+  return apiData ? <Component data={apiData} /> : <IntegrationLoader />;
 };

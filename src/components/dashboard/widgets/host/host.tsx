@@ -3,6 +3,7 @@ import { fetchAndSetWithPayload } from "../../../../lib/utils";
 import { Typography, Button, Card, CardContent } from "@mui/material";
 import classes from "./host.module.css";
 import LinearProgressWithLabel from "../../../shared/linear-progress-with-label/linearProgressWithLabel";
+import { HostLoader } from "../skeletons";
 
 type HostProps = {
   host: string;
@@ -32,16 +33,20 @@ const HostWidget = ({ host }: HostProps) => {
     threads: "",
     uptime: "",
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchAndSetWithPayload(`/api/${host}/stats`, setStatistics, {
       paths: ["/home", "/", "/mnt/nas"],
     });
+    setIsLoading(false);
   }, []);
 
   return (
     <>
-      {statistics && (
+      {isLoading ? (
+        <HostLoader />
+      ) : (
         <Card className={classes["host-card"]}>
           <CardContent>
             <div>
