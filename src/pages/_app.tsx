@@ -38,7 +38,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Managerr</title>
+        <title>Dashboard</title>
       </Head>
 
       <StyledEngineProvider injectFirst>

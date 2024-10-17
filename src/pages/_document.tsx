@@ -6,7 +6,8 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta charSet="utf-8" />
-        <meta name="description" content="Webapp Template" />
+        <meta name="description" content="Dashboard" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
       </Head>
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
