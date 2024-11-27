@@ -11,7 +11,7 @@ export const SonarrIntegration = ({ data }: SonarrIntegrationProps) => {
     <Integration
       title="sonarr"
       data={[`${data.shows?.length} shows`]}
-      icon="https://static-00.iconduck.com/assets.00/sonarr-icon-2046x2048-jr5zhoo0.png"
+      icon="/icons/sonarr.png"
       link={process.env.NEXT_PUBLIC_SONARR_URL}
     />
   );

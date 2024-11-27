@@ -31,6 +31,7 @@ async def get_host_commands(_: Request, host_name: str):
     host = HOST_MAP[host_name]
     return list(host.runner.commands.values())
 
+
 @host_router.delete("/api/{host_name}/job/{id}")
 async def delete_single_job(id: str):
     _ = await delete_job(id)
@@ -46,6 +47,7 @@ async def get_stats(host_name: str):
         cores = "".join(host.runner.dispatch("cpu_cores")[0])
         threads = "".join(host.runner.dispatch("cpu_threads")[0])
         uptime = "".join(host.runner.dispatch("uptime")[0])
+        ram_usage = "".join(host.runner.dispatch("ram_usage")[0])
 
         return JSONResponse(
             {
@@ -54,6 +56,7 @@ async def get_stats(host_name: str):
                 "cores": cores,
                 "threads": threads,
                 "uptime": uptime,
+                "ram_usage": ram_usage,
             }
         )
     except Exception:

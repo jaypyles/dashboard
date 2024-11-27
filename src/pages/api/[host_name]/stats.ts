@@ -29,9 +29,14 @@ export default async function handler(
     const json = await response.json();
 
     const uptimeRegex = new RegExp(`(\\d+\\s+days,\\s+(?:\\d+:\\d+|\\d+))`);
-    const uptimeMatch = json.uptime.match(uptimeRegex);
 
-    json.uptime = `${uptimeMatch[1]} min`;
+    if (json.uptime) {
+      const uptimeMatch = json.uptime.match(uptimeRegex);
+
+      if (uptimeMatch) {
+        json.uptime = `${uptimeMatch[1]} min`;
+      }
+    }
 
     let storage: object[] = [];
 
@@ -41,22 +46,30 @@ export default async function handler(
         "m"
       );
 
-      const match = json.storage.match(storageSizeRegex);
+      if (json.storage) {
+        const match = json.storage.match(storageSizeRegex);
 
-      if (match) {
-        const storageParts = {
-          mountedOn: path,
-          size: match[2],
-          used: match[3],
-          available: match[4],
-          usePercent: match[5],
-        };
+        if (match) {
+          const storageParts = {
+            mountedOn: path,
+            size: match[2],
+            used: match[3],
+            available: match[4],
+            usePercent: match[5],
+          };
 
-        storage.push(storageParts);
+          storage.push(storageParts);
+        }
       }
     });
 
     json.storage = storage;
+
+    const ramParts = json.ram_usage.split("\n");
+    json.ram_usage = `${(
+      (Number(ramParts[0]) / Number(ramParts[1])) *
+      100
+    ).toFixed(2)}%`;
 
     res.status(200).json(json);
   } catch (error) {

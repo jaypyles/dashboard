@@ -34,7 +34,7 @@ export const UptimeKumaIntegration = ({ data }: UptimeKumaIntegrationProps) => {
   return (
     <Integration
       title="uptime-kuma"
-      icon="https://homegrowntechie.com/wp-content/uploads/2021/11/icon.png"
+      icon="/icons/kuma.png"
       link={process.env.NEXT_PUBLIC_UPTIME_KUMA_URL}
     >
       <Uptimes />

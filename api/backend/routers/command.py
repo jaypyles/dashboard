@@ -40,7 +40,7 @@ async def dispatch_command(host_name: str, command_name: str):
 
 
 @command_router.get("/api/{host_name}/run-command/{command_name}")
-async def run_command(host_name: str, command_name: str):
+async def count_containers(host_name: str):
     host = HOST_MAP[host_name]
     output = host.runner.dispatch("count-containers")
     return JSONResponse(output)

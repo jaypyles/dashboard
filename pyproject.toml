@@ -40,6 +40,7 @@ reportMissingTypeStubs = false
 reportAny = false
 reportUnknownVariableType = false
 reportUnknownMemberType = false
+reportExplicitAny = false
 
 pythonVersion = "3.9"
 pythonPlatform = "Linux"

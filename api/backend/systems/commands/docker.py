@@ -1,8 +1,12 @@
+# PDM
+from typing_extensions import final
+
+# LOCAL
+from api.backend.systems.arg import Arg
 from api.backend.systems.command import Command
 
-from api.backend.systems.arg import Arg
 
-
+@final
 class ContainerCount(Command):
     def __init__(self) -> None:
         self.name = "count-containers"

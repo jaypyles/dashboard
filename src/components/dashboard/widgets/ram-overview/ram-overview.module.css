@@ -1,0 +1,17 @@
+.overview {
+  width: fit-content;
+  height: fit-content;
+
+  padding: 0.25rem;
+  border-radius: 0.125rem;
+  margin-top: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.memoryIcon {
+  font-size: 1rem;
+  margin-right: 0.125rem;
+}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { fetchAndSet, fetchAndSetWithPayload } from "../../../lib/utils";
+import { fetchAndSetWithPayload } from "../../../lib/utils";
 import { Typography, Card, CardContent, CardProps } from "@mui/material";
 import classes from "./host-overview.module.css";
 import LinearProgressWithLabel from "../linear-progress-with-label/linearProgressWithLabel";
-import { CommandOutput } from "../../../lib/types";
 import { RunningContainers } from "../../dashboard/widgets/running-containers/running-containers";
 import { clsx } from "clsx";
 import { HostLoader } from "../../dashboard/widgets/skeletons";
+import { RamOverview } from "../../dashboard/widgets/ram-overview";
 
 type HostProps = {
   host: string;
@@ -27,6 +27,7 @@ interface HostStatistics {
   cores: string;
   threads: string;
   uptime: string;
+  ram_usage: string;
 }
 
 const HostOverview = ({
@@ -41,6 +42,7 @@ const HostOverview = ({
     cores: "",
     threads: "",
     uptime: "",
+    ram_usage: "",
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -118,7 +120,10 @@ const HostOverview = ({
                   ></LinearProgressWithLabel>
                 </div>
               ))}
-              <RunningContainers host={host} />
+              <div className={classes.tags}>
+                <RunningContainers host={host} />
+                <RamOverview usage={statistics?.ram_usage} />
+              </div>
             </div>
           </CardContent>
         </Card>

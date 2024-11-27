@@ -16,10 +16,12 @@ class CommandNotFoundError(Exception):
 
 
 class Command:
+    """A command to be run on a host"""
+
     def __init__(self, name: str, command: str, args: Optional[list[Arg]]) -> None:
-        self.name = name
-        self.command = command
-        self.args = args
+        self.name: str = name
+        self.command: str = command
+        self.args: Optional[list[Arg]] = args
         self.type: Union[Literal["user"], Literal["system"], Literal["docker"]] = "user"
 
     @override
