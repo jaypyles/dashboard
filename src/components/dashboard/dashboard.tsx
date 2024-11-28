@@ -4,11 +4,16 @@ import { Container, Grid, Typography } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "../shared/host-overview/host-overview";
 import { useRouter } from "next/router";
-import { ExternalIntegration } from "./widgets/external-integrations/external-integration";
+import {
+  ExternalIntegration,
+  Integration,
+} from "./widgets/external-integrations/external-integration";
+import useGetIntegrations from "@/lib/hooks/useGetIntegrations";
 
 const Dashboard = () => {
   const router = useRouter();
   const [hosts, setHosts] = useState<string[]>([]);
+  const integrations = useGetIntegrations();
 
   useEffect(() => {
     fetchAndSet("/api/getHosts", setHosts);
@@ -35,11 +40,12 @@ const Dashboard = () => {
           </Grid>
         </div>
         <div className={classes.integrations}>
-          <ExternalIntegration integration="jellyfin" />
-          <ExternalIntegration integration="qbittorrent" polling />
-          <ExternalIntegration integration="radarr" />
-          <ExternalIntegration integration="sonarr" />
-          <ExternalIntegration integration="uptimeKuma" />
+          {integrations.map((integration) => (
+            <ExternalIntegration
+              integration={integration as Integration}
+              polling={integration === "qbittorrent"}
+            />
+          ))}
         </div>
       </Container>
     </>

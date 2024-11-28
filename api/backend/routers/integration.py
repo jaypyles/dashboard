@@ -7,6 +7,7 @@ from fastapi import APIRouter
 # LOCAL
 from api.backend.constants import KUMA_SITES
 from api.backend.integrations import (
+    INTEGRATIONS,
     get_shows,
     get_movies,
     get_uptime,
@@ -17,6 +18,11 @@ from api.backend.integrations import (
 LOG = logging.getLogger(__name__)
 
 integration_router = APIRouter()
+
+
+@integration_router.get("/api/integrations")
+async def get_integrations():
+    return [integration.name for integration in INTEGRATIONS]
 
 
 @integration_router.get("/api/integrations/uptime")

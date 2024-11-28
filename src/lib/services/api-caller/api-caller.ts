@@ -1,3 +1,4 @@
+import { apiGet } from "@/lib/utils";
 import externalIntegrations from "../external-integrations/external-integrations";
 import { RadarrData } from "../external-integrations/radarr/radarr.types";
 
@@ -26,10 +27,17 @@ const getUptimeKumaData = async () => {
   return uptimeRes;
 };
 
+const getIntegrationsData = async () => {
+  const data = await apiGet("/api/integrations");
+  console.log(data);
+  return data;
+};
+
 export const apiCaller = {
   jellyfin: getJellyfinData,
   qbittorrent: getQbittorrrentData,
   radarr: getRadarrData,
   sonarr: getSonarrData,
-  uptimeKuma: getUptimeKumaData,
+  kuma: getUptimeKumaData,
+  integrations: getIntegrationsData,
 };

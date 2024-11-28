@@ -1,14 +1,22 @@
-# STL
-import os
 from typing import Any
 
 # PDM
 from uptime_kuma_api import UptimeKumaApi
 
+from api.backend.integrations.integration import INTEGRATIONS
+
+kuma_integration = next(
+    (integration for integration in INTEGRATIONS if integration.name == "kuma"),
+    None,
+)
 
 def get_api():
-    api = UptimeKumaApi(os.environ["UPTIME_KUMA_URL"])
-    _ = api.login(os.environ["UPTIME_KUMA_USERNAME"], os.environ["UPTIME_KUMA_PASSWORD"])
+    assert kuma_integration is not None
+
+    api = UptimeKumaApi(kuma_integration.config["url"])
+    _ = api.login(
+        kuma_integration.config["username"], kuma_integration.config["password"]
+    )
     return api
 
 

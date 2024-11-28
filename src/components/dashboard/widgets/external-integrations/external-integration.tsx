@@ -12,19 +12,19 @@ import { SonarrIntegration } from "./sonarr-integration/sonarr-integration";
 import { UptimeKumaData } from "../../../../lib/services/external-integrations/uptime-kuma/uptime-kuma.types";
 import { UptimeKumaIntegration } from "./uptime-kuma-integration/uptime-kuma-integration";
 
-type Integration =
+export type Integration =
   | "jellyfin"
   | "qbittorrent"
   | "radarr"
   | "sonarr"
-  | "uptimeKuma";
+  | "kuma";
 
 type IntegrationPropsMap = {
   jellyfin: JellyfinData;
   qbittorrent: QbittorrentData;
   radarr: RadarrData;
   sonarr: SonarrData;
-  uptimeKuma: UptimeKumaData;
+  kuma: UptimeKumaData;
 };
 
 type ExternalIntegrationProps<T extends Integration> = {
@@ -39,7 +39,7 @@ const integrations: {
   qbittorrent: QbittorrentIntegration,
   radarr: RadarrIntegration,
   sonarr: SonarrIntegration,
-  uptimeKuma: UptimeKumaIntegration,
+  kuma: UptimeKumaIntegration,
 };
 
 export const ExternalIntegration = <T extends Integration>({

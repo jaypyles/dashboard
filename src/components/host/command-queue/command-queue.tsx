@@ -6,7 +6,7 @@ import { Button, TableRow, TableCell } from "@mui/material";
 import { Command, QueuedCommand } from "../../../lib/types";
 import { clsx } from "clsx";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { useContextMenu } from "../../hooks/useContextMenu";
+import { useContextMenu } from "../../../lib/hooks/useContextMenu";
 import { deleteJob } from "../../../lib/utils";
 import { toast } from "react-toastify";
 import ContextMenu from "../../shared/context-menu/context-menu";

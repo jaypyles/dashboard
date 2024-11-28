@@ -5,9 +5,9 @@ import CustomTable from "../../table/table";
 import { Button, TableRow, TableCell } from "@mui/material";
 import classes from "./command-table.module.css";
 import ContextMenu from "../../context-menu/context-menu";
-import { useContextMenu } from "../../../hooks/useContextMenu";
+import { useContextMenu } from "../../../../lib/hooks/useContextMenu";
 import { toast } from "react-toastify";
-import { useToast } from "../../../hooks/useToast";
+import { useToast } from "../../../../lib/hooks/useToast";
 
 interface CommandTableProps {
   host: string;

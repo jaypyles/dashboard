@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 import React, { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
@@ -6,13 +6,14 @@ import Head from "next/head";
 import {
   ThemeProvider,
   CssBaseline,
-  Container,
   Box,
   StyledEngineProvider,
 } from "@mui/material";
 import { darkTheme, lightTheme } from "../styles/themes";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+import { store } from "@/app";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -41,18 +42,20 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <title>Dashboard</title>
       </Head>
 
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-          <CssBaseline />
-          <Box
-            className="mainWrapper"
-            sx={{ bgcolor: "background.default", margin: 0, padding: 0 }}
-          >
-            <ToastContainer />
-            <Component {...pageProps} />
-          </Box>
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <Provider store={store}>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+            <CssBaseline />
+            <Box
+              className="mainWrapper"
+              sx={{ bgcolor: "background.default", margin: 0, padding: 0 }}
+            >
+              <ToastContainer />
+              <Component {...pageProps} />
+            </Box>
+          </ThemeProvider>
+        </StyledEngineProvider>
+      </Provider>
     </>
   );
 };
