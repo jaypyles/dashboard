@@ -1,5 +1,5 @@
 const Constants = {
-  DOMAIN: "http://server-dashboard-api:8000",
+  DOMAIN: process.env.API_URL,
 };
 
 export default Constants;
