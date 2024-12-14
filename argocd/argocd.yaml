@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://raw.githubusercontent.com/jaypyles/helm-charts/main  
+    repoURL: https://raw.githubusercontent.com/jaypyles/helm-charts/main/charts/dashboard
     chart: dashboard
     targetRevision: ">=1.0.0"
   destination:
