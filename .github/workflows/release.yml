@@ -21,4 +21,4 @@ jobs:
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           dockerhub_repo: ${{ secrets.DOCKERHUB_REPO }}
           dockerhub_api_repo: ${{ secrets.DOCKERHUB_API_REPO }}
-
+          helm_url: ${{ secrets.HELM_URL }} 

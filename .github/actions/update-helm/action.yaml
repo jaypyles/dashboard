@@ -21,6 +21,9 @@ inputs:
   dockerhub_api_repo:
     description: The Docker Hub API repo
     required: true  
+  helm_url:
+    description: The Helm URL
+    required: true
 
 runs:
   using: composite
@@ -107,12 +110,7 @@ runs:
     - name: Update version in Chart.yaml and values.yaml
       run: |
         sed -i "s/^version:.*/version: ${{ env.VERSION }}/" charts/dashboard/Chart.yaml
-
-        if [[ "${{ needs.check-changes.outputs.docker }}" == "false" ]]; then
-          sed -i "s/APP_VERSION:.*/APP_VERSION: latest/" charts/dashboard/values.yaml
-        else
-          sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ env.VERSION }}/" charts/dashboard/values.yaml
-        fi
+        sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ env.VERSION }}/" charts/dashboard/values.yaml
       shell: bash
 
     - name: Package Helm Chart
@@ -124,12 +122,12 @@ runs:
 
     - name: Update Helm repo index
       run: |
-        helm repo index artifacts/ --url ${{ secrets.HELM_URL}}/main/charts/dashboard
+        helm repo index artifacts/ --url ${{ inputs.helm_url }}/main/charts/dashboard
       shell: bash
 
     - name: Commit and push changes to GitHub Helm repo
       run: |
-        git clone https://${{ secrets.GPAT_TOKEN }}@github.com/jaypyles/helm-charts.git
+        git clone https://${{ inputs.gpat_token }}@github.com/jaypyles/helm-charts.git
         cd helm-charts
         git config user.name "GitHub Actions"
         git config user.email "github-actions@github.com"
