@@ -35,3 +35,7 @@
 .hostOverview {
   margin-top: 1rem;
 }
+
+.tags {
+  width: 50%;
+}

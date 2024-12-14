@@ -1,0 +1,20 @@
+app:
+  APP_VERSION: 1.0.0
+  replicas: 1
+  revisionHistoryLimit: 1
+  metadata:
+    name: dashboard
+  name: dashboard
+  frontendImage: jpyles0524/server-dashboard
+  backendImage: jpyles0524/server-dashboard-api
+  backendServiceName: dashboard-backend-service
+  backendPort: 8000
+
+claim:
+  name: nfs-pvc
+  storage: 50Gi
+
+doppler:
+  secret: dashboard-doppler-secret
+  tokenSecret: dashboard-doppler
+  namespace: doppler-operator-system

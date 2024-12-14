@@ -11,6 +11,7 @@ import { RamOverview } from "../../dashboard/widgets/ram-overview";
 type HostProps = {
   host: string;
   onClick?: () => void;
+  tagClassName?: string;
 };
 
 interface Storage {
@@ -33,6 +34,7 @@ interface HostStatistics {
 const HostOverview = ({
   className,
   onClick,
+  tagClassName,
   host,
   ...rest
 }: HostProps & CardProps) => {
@@ -120,7 +122,7 @@ const HostOverview = ({
                   ></LinearProgressWithLabel>
                 </div>
               ))}
-              <div className={classes.tags}>
+              <div className={clsx(classes.tags, tagClassName)}>
                 <RunningContainers host={host} />
                 <RamOverview usage={statistics?.ram_usage} />
               </div>

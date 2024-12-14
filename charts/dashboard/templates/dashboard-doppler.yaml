@@ -1,0 +1,12 @@
+apiVersion: secrets.doppler.com/v1alpha1
+kind: DopplerSecret
+metadata:
+  name: {{ .Values.doppler.secret }}
+  namespace: {{ .Values.doppler.namespace }}
+spec:
+  tokenSecret:
+    name: {{ .Values.doppler.tokenSecret }}
+  managedSecret:
+    name: {{ .Values.doppler.secret }}
+    namespace: default
+    type: Opaque

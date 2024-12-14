@@ -54,68 +54,64 @@ const HostManager = () => {
   return (
     <>
       {host_name && (
-        <>
-          <div className={`${classes.gridWrapper} is-col`}>
-            <div className={classes.topRow}>
-              <Paper className={clsx(classes.overview, "h-full w-full")}>
-                <div>
-                  <IconButton
-                    onClick={() => {
-                      router.push("/");
-                    }}
-                  >
-                    <ArrowBackIcon />
-                  </IconButton>
-                </div>
-                <HostOverview
-                  host={host_name as string}
-                  className={classes.hostOverview}
-                />
-                <div className={classes.buttons}>
-                  <Button onClick={handleConfigOpen}>Open Config</Button>
-                  <Button
-                    onClick={() => {
-                      setCommandOpen(true);
-                    }}
-                  >
-                    Add Command
-                  </Button>
-                </div>
-                <Config
-                  host={host_name as string}
-                  open={configOpen}
-                  handleClose={handleConfigClose}
-                />
-                <AddCommand
-                  host={host_name as string}
-                  open={commandOpen}
-                  handleClose={() => {
-                    setCommandOpen(false);
+        <div className={`${classes.gridWrapper} is-col`}>
+          <div className={classes.topRow}>
+            <Paper className={clsx(classes.overview, "h-full w-full")}>
+              <div>
+                <IconButton
+                  onClick={() => {
+                    router.push("/");
                   }}
-                />
-              </Paper>
-              <CommandTable
+                >
+                  <ArrowBackIcon />
+                </IconButton>
+              </div>
+              <HostOverview
                 host={host_name as string}
-                refreshQueue={getQueue}
+                className={classes.hostOverview}
+                tagClassName={classes.tags}
               />
-            </div>
-            <div className="is-col">
-              <CommandQueue
-                commands={commandQueueOutput}
-                setViewedResult={setViewedResult}
+              <div className={classes.buttons}>
+                <Button onClick={handleConfigOpen}>Open Config</Button>
+                <Button
+                  onClick={() => {
+                    setCommandOpen(true);
+                  }}
+                >
+                  Add Command
+                </Button>
+              </div>
+              <Config
                 host={host_name as string}
-                refreshQueue={getQueue}
-                setOpen={handleTerminalOpen}
-                setCommands={setCommandQueueOutput}
+                open={configOpen}
+                handleClose={handleConfigClose}
               />
-              <Terminal
-                open={terminalOpen}
-                handleClose={handleTerminalClose}
-                output={viewedResult}
+              <AddCommand
+                host={host_name as string}
+                open={commandOpen}
+                handleClose={() => {
+                  setCommandOpen(false);
+                }}
               />
-            </div>
+            </Paper>
+            <CommandTable host={host_name as string} refreshQueue={getQueue} />
           </div>
-        </>
+          <div className="is-col">
+            <CommandQueue
+              commands={commandQueueOutput}
+              setViewedResult={setViewedResult}
+              host={host_name as string}
+              refreshQueue={getQueue}
+              setOpen={handleTerminalOpen}
+              setCommands={setCommandQueueOutput}
+            />
+            <Terminal
+              open={terminalOpen}
+              handleClose={handleTerminalClose}
+              output={viewedResult}
+            />
+          </div>
+        </div>
       )}
     </>
   );

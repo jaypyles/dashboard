@@ -136,6 +136,7 @@ async def retrieve_jobs(host: str):
 
     return JSONResponse(content={"jobs": jobs_as_dicts})
 
+
 async def delete_job(id: str):
     collection = await get_job_collection()
     print(f"Deleting job with id: {id}")

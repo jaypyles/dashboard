@@ -1,0 +1,22 @@
+name: Release
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build and push Helm charts
+        uses: ./.github/actions/update-helm
+        with:
+          gpat_token: ${{ secrets.GPAT_TOKEN }}
+          doppler_token: ${{ secrets.DOPPLER_TOKEN }}
+          dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+          dockerhub_repo: ${{ secrets.DOCKERHUB_REPO }}
+          dockerhub_api_repo: ${{ secrets.DOCKERHUB_API_REPO }}
+

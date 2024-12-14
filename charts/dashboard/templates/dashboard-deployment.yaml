@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.metadata.name }}
+spec:
+  replicas: {{ .Values.app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.metadata.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.metadata.name }}
+    spec:
+      containers:
+        - name: {{ .Values.app.metadata.name }}
+          image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
+          command: ["npm", "run", "start"]
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: dashboard-doppler-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.app.metadata.name }}
+spec:
+  selector:
+    app: {{ .Values.app.metadata.name }}
+  ports:
+    - protocol: TCP
+      port: 3030
+      targetPort: 3000
+      nodePort: 32021
+
+
+  type: NodePort
+

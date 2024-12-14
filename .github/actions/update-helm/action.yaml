@@ -1,0 +1,169 @@
+name: Update Helm
+
+description: Update Helm charts with the latest Docker images
+
+inputs: 
+  doppler_token:
+    description: The Doppler token
+    required: true
+  gpat_token:
+    description: The GitHub PAT token
+    required: true
+  dockerhub_username:
+    description: The Docker Hub username
+    required: true
+  dockerhub_token:
+    description: The Docker Hub token
+    required: true  
+  dockerhub_repo:
+    description: The Docker Hub repo
+    required: true
+  dockerhub_api_repo:
+    description: The Docker Hub API repo
+    required: true  
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.gpat_token }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "21"
+
+    - name: Cache Node.js dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Cache Helm dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/helm
+        key: ${{ runner.os }}-helm-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-helm-
+
+    - name: Setup helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      shell: bash
+
+    - name: Get short SHA
+      id: vars
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Cache semantic-release dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules/semantic-release
+          node_modules/@semantic-release/*
+        key: ${{ runner.os }}-semantic-release-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-semantic-release-
+
+    - name: Install dependencies for semantic-release
+      run: npm install semantic-release @semantic-release/git @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog
+      shell: bash
+
+    - name: Get semantic version
+      id: semantic_version
+      run: |
+        VERSION=$(npx semantic-release | grep 'The next release version is' | sed 's/^.*is //')
+        echo "VERSION=$VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.gpat_token }}
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ inputs.dockerhub_username }}
+        password: ${{ inputs.dockerhub_token }}
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Update version in Chart.yaml and values.yaml
+      run: |
+        sed -i "s/^version:.*/version: ${{ env.VERSION }}/" charts/dashboard/Chart.yaml
+
+        if [[ "${{ needs.check-changes.outputs.docker }}" == "false" ]]; then
+          sed -i "s/APP_VERSION:.*/APP_VERSION: latest/" charts/dashboard/values.yaml
+        else
+          sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ env.VERSION }}/" charts/dashboard/values.yaml
+        fi
+      shell: bash
+
+    - name: Package Helm Chart
+      run: |
+        helm package ./charts/dashboard
+        mkdir -p artifacts
+        mv *.tgz artifacts/
+      shell: bash
+
+    - name: Update Helm repo index
+      run: |
+        helm repo index artifacts/ --url ${{ secrets.HELM_URL}}/main/charts/dashboard
+      shell: bash
+
+    - name: Commit and push changes to GitHub Helm repo
+      run: |
+        git clone https://${{ secrets.GPAT_TOKEN }}@github.com/jaypyles/helm-charts.git
+        cd helm-charts
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        mkdir -p charts/dashboard
+        cp ../artifacts/*.tgz charts/dashboard/
+        cp ../artifacts/index.yaml charts/dashboard/
+        git add charts/
+        git commit -m "Add new dashboard chart version and update index.yaml"
+        git push origin main
+      shell: bash
+
+    - name: Commit version changes to repo
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        git add charts/dashboard/Chart.yaml charts/dashboard/values.yaml
+        git commit -m "Update version to ${{ env.VERSION }} [skip ci]"
+        git push origin master
+      shell: bash
+
+    - name: Build and push frontend image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/frontend/Dockerfile
+        push: true
+        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ env.VERSION }}
+        build-args: DOPPLER_TOKEN=${{ inputs.doppler_token }}
+
+    - name: Build and push api image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/backend/Dockerfile
+        push: true
+        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_api_repo}}:${{ env.VERSION }}
+        build-args: DOPPLER_TOKEN=${{ inputs.doppler_token }}
