@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { cacheApi } from "@/lib/services/api";
+import api from "@/lib/services/api";
 
 type ResponseData = {
   message?: string;
@@ -13,7 +13,7 @@ export default async function handler(
 ) {
   const { host_name } = req.query;
   try {
-    const response = await cacheApi.get<ResponseData>(`/${host_name}/commands`);
+    const response = await api.get<ResponseData>(`/${host_name}/commands`);
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Error in API handler:", error);

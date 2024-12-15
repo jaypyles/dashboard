@@ -54,71 +54,73 @@ const HostManager = () => {
   return (
     <>
       {host_name && (
-        <Container className={classes.container} maxWidth="lg">
-          <div className={`${classes.gridWrapper}`}>
-            <div className={classes.topRow}>
-              <Paper className={clsx(classes.overview, "h-full w-full")}>
-                <div>
-                  <IconButton
-                    onClick={() => {
-                      router.push("/");
+        <>
+          <IconButton
+            className={classes.backButton}
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <Container className={classes.container} maxWidth="lg">
+            <div className={`${classes.gridWrapper}`}>
+              <div className={classes.topRow}>
+                <Paper className={clsx(classes.overview, "h-full w-full")}>
+                  <div></div>
+                  <HostOverview
+                    host={host_name as string}
+                    className={classes.hostOverview}
+                    tagClassName={classes.tags}
+                  />
+                  <div className={classes.buttons}>
+                    <Button onClick={handleConfigOpen}>Open Config</Button>
+                    <Button
+                      onClick={() => {
+                        setCommandOpen(true);
+                      }}
+                    >
+                      Add Command
+                    </Button>
+                  </div>
+                  <Config
+                    host={host_name as string}
+                    open={configOpen}
+                    handleClose={handleConfigClose}
+                  />
+                  <AddCommand
+                    host={host_name as string}
+                    open={commandOpen}
+                    handleClose={() => {
+                      setCommandOpen(false);
                     }}
-                  >
-                    <ArrowBackIcon />
-                  </IconButton>
-                </div>
-                <HostOverview
-                  host={host_name as string}
-                  className={classes.hostOverview}
-                  tagClassName={classes.tags}
-                />
-                <div className={classes.buttons}>
-                  <Button onClick={handleConfigOpen}>Open Config</Button>
-                  <Button
-                    onClick={() => {
-                      setCommandOpen(true);
-                    }}
-                  >
-                    Add Command
-                  </Button>
-                </div>
-                <Config
-                  host={host_name as string}
-                  open={configOpen}
-                  handleClose={handleConfigClose}
-                />
-                <AddCommand
-                  host={host_name as string}
-                  open={commandOpen}
-                  handleClose={() => {
-                    setCommandOpen(false);
-                  }}
-                />
-              </Paper>
-            </div>
-            <CommandTable
-              host={host_name as string}
-              refreshQueue={getQueue}
-              className={classes.commandTable}
-            />
-            <div className={classes.commandQueue}>
-              <CommandQueue
-                commands={commandQueueOutput}
-                setViewedResult={setViewedResult}
+                  />
+                </Paper>
+              </div>
+              <CommandTable
                 host={host_name as string}
                 refreshQueue={getQueue}
-                setOpen={handleTerminalOpen}
-                setCommands={setCommandQueueOutput}
-                className={classes.commandQueue}
+                className={classes.commandTable}
               />
-              <Terminal
-                open={terminalOpen}
-                handleClose={handleTerminalClose}
-                output={viewedResult}
-              />
+              <div className={classes.commandQueue}>
+                <CommandQueue
+                  commands={commandQueueOutput}
+                  setViewedResult={setViewedResult}
+                  host={host_name as string}
+                  refreshQueue={getQueue}
+                  setOpen={handleTerminalOpen}
+                  setCommands={setCommandQueueOutput}
+                  className={classes.commandQueue}
+                />
+                <Terminal
+                  open={terminalOpen}
+                  handleClose={handleTerminalClose}
+                  output={viewedResult}
+                />
+              </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </>
       )}
     </>
   );
