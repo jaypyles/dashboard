@@ -17,6 +17,7 @@ spec:
           image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
           command: ["bash", "/start.sh"]
           imagePullPolicy: Always
+          revisionHistoryLimit: 1
           volumeMounts:
             - mountPath: /project/configs
               name: config-volume

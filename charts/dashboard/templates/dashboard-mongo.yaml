@@ -15,6 +15,7 @@ spec:
       containers:
         - name: mongo
           image: mongo
+          revisionHistoryLimit: 1
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               value: root
