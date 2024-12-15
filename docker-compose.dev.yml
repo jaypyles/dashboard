@@ -1,11 +1,10 @@
-version: "3"
 services:
   frontend:
     volumes:
       - "$PWD/src:/app/src"
     ports:
       - "3000:3000"
-    command: ["doppler", "run", "--", "npm", "run", "dev"]
+    command: doppler run -- npm run dev
   backend:
     ports:
       - "8000:8000"

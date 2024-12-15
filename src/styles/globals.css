@@ -18,12 +18,17 @@
   --kuma-status-up-down: rgba(46, 6, 6, 0.497);
   --paper-opaque-bg: rgba(33, 29, 29, 0.608);
   --paper-opaque-dark: rgba(0, 0, 0, 0.5);
+  --paper-hover-color: rgba(61, 61, 61);
   font-size: 20px;
 }
 
 .Toastify__toast-icon {
-  width: 80px !important;
-  height: 80px !important;
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.Toastify__toast-body {
+  font-size: 0.75rem !important;
 }
 
 html {

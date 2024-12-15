@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Constants from "../../../../constants";
+import { cacheApi } from "@/lib/services/api";
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
-  const response = await fetch(`${Constants.DOMAIN}/api/integrations/uptime`);
-  const json = await response.json();
-
-  return res.json({ uptime: json });
+  const response = await cacheApi.get("/integrations/uptime");
+  res.status(200).json({ uptime: response.data });
 }

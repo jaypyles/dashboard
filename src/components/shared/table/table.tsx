@@ -31,7 +31,7 @@ export default function CustomTable({
   return (
     <Paper className={clsx(classes.customTable, className)}>
       {label}
-      <TableContainer component={Paper} {...restProps} sx={{ maxHeight: 400 }}>
+      <TableContainer component={Paper} {...restProps}>
         <Table
           stickyHeader
           aria-label="simple table"

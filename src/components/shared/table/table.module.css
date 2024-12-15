@@ -16,9 +16,6 @@
   cursor: pointer;
 }
 
-.customTable {
-  background-color: var(--paper-opaque-dark);
-}
 
 @media (max-width: 600px) {
   .responsive-table {

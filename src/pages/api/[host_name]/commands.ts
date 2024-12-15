@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Constants from "../../../constants";
+import { cacheApi } from "@/lib/services/api";
 
 type ResponseData = {
   message?: string;
@@ -7,17 +7,14 @@ type ResponseData = {
   [key: string]: any;
 };
 
-const domain = Constants.DOMAIN;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   const { host_name } = req.query;
   try {
-    const response = await fetch(`${domain}/api/${host_name}/commands`);
-    const json = await response.json();
-    res.status(200).json(json);
+    const response = await cacheApi.get<ResponseData>(`/${host_name}/commands`);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Error in API handler:", error);
     res.status(500).json({ message: "Internal server error" });

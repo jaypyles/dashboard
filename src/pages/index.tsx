@@ -1,6 +1,5 @@
 import React from "react";
 import Dashboard from "@/components/dashboard/dashboard";
-import api from "@/lib/services/api";
 import { store } from "@/app";
 import { setIntegrations } from "@/lib/slices/integrations";
 import { apiCaller } from "@/lib/services/api-caller";
@@ -12,11 +11,7 @@ const Home = () => {
     });
   }, []);
 
-  return (
-    <>
-      <Dashboard></Dashboard>
-    </>
-  );
+  return <Dashboard />;
 };
 
 export default Home;

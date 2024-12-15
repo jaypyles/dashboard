@@ -1,12 +1,24 @@
+import axios from "axios";
+import { setupCache, buildWebStorage } from "axios-cache-interceptor";
 import { AddCommand, Config } from "./types";
-
+import { AxiosCacheInstance } from "axios-cache-interceptor";
 export const apiGet = async (url: string, options?: object) => {
   const response = await fetch(url, options);
   const json = await response.json();
   return json;
 };
 
-export const fetchAndSet = async (url: string, setter: (arg: any) => void) => {
+export const fetchAndSet = async (
+  url: string,
+  setter: (arg: any) => void,
+  axios?: AxiosCacheInstance
+) => {
+  if (axios) {
+    const response = await axios.get(url);
+    setter(response.data);
+    return;
+  }
+
   const response = await fetch(url);
   const json = await response.json();
   setter(json);
@@ -15,8 +27,15 @@ export const fetchAndSet = async (url: string, setter: (arg: any) => void) => {
 export const fetchAndSetWithPayload = async (
   url: string,
   setter: (arg: any) => void,
-  payload: any
+  payload: any,
+  axios?: AxiosCacheInstance
 ) => {
+  if (axios) {
+    const response = await axios.get(url);
+    setter(response.data);
+    return;
+  }
+
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -79,4 +98,26 @@ export const getContainerCount = async (host: string) => {
   const response = await fetch(`/api/${host}/docker/containers`);
   const json = await response.json();
   return json;
+};
+
+export const createClientSideCacheApi = (name?: string) => {
+  let cacheName = "axios-cache:";
+
+  if (name) {
+    cacheName = `${name}-${cacheName} `;
+  }
+
+  return setupCache(
+    axios.create({
+      baseURL: `/api`,
+      timeout: 20000,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }),
+    {
+      ttl: 30 * 1000,
+      storage: buildWebStorage(localStorage, cacheName),
+    }
+  );
 };

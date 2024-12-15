@@ -1,6 +1,6 @@
 import React from "react";
-import Integration from "../../../../shared/integration/integration";
-import { UptimeKumaData } from "../../../../../lib/services/external-integrations/uptime-kuma/uptime-kuma.types";
+import Integration from "@/components/shared/integration/integration";
+import { UptimeKumaData } from "@/lib/services/external-integrations/uptime-kuma/uptime-kuma.types";
 import { Tooltip, Typography } from "@mui/material";
 import classes from "./uptime-kuma-integration.module.css";
 import { clsx } from "clsx";
@@ -14,9 +14,8 @@ export const UptimeKumaIntegration = ({ data }: UptimeKumaIntegrationProps) => {
     return (
       <>
         {Object.keys(data.uptime).map((key) => (
-          <Tooltip title={key} placement="top">
+          <Tooltip title={key} placement="top" key={key}>
             <div
-              key={key}
               className={clsx(classes.uptime, {
                 [classes.up]: data.uptime[key].msg.includes("200"),
                 [classes.down]: !data.uptime[key].msg.includes("200"),

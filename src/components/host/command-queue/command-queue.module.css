@@ -1,5 +1,14 @@
+.row {
+  cursor: pointer;
+}
+
+.row:hover {
+  background-color: var(--paper-hover-color);
+}
+
 .previousCommands {
   background-color: var(--paper-opaque-dark);
+  padding: 0;
 }
 
 .status {

@@ -1,3 +1,11 @@
 .name {
   font-weight: bold;
 }
+
+.row {
+  cursor: pointer;
+}
+
+.row:hover {
+  background-color: var(--paper-hover-color);
+}

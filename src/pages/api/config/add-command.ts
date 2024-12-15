@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Constants from "../../../constants";
+import api from "@/lib/services/api";
 
 type ResponseData = {
   message?: string;
@@ -7,36 +7,29 @@ type ResponseData = {
   [key: string]: any;
 };
 
-const domain = Constants.DOMAIN;
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) {
   try {
     const body = JSON.parse(req.body);
-    const response = await fetch(
-      `${domain}/api/config/${body.host}/add-command`,
+    const response = await api.post<ResponseData>(
+      `/config/${body.host}/add-command`,
       {
-        method: "POST",
+        command: body.command,
+        host: body.host,
+      },
+      {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          host: body.host,
-          command: body.command,
-        }),
       }
     );
-    const json = await response.json();
-
-    if (response.status === 500) {
-      res.status(500).json(json);
-    }
-
-    res.status(200).json(json);
-  } catch (error) {
-    console.error("Error in API handler:", error);
+    res.status(200).json(response.data);
+  } catch (error: any) {
+    console.error(
+      `Error: ${JSON.stringify(error.response.data.detail, null, 4)}`
+    );
     res.status(500).json({ message: "Internal server error" });
   }
 }

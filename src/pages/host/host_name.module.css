@@ -12,10 +12,6 @@
   padding-right: 1rem;
 }
 
-.gridWrapper div {
-  flex: 1;
-}
-
 .buttons {
   display: flex;
   padding-top: 1rem;
@@ -26,6 +22,7 @@
 .topRow {
   gap: 1rem;
   display: flex;
+  width: 100%;
 
   @media screen and (max-width: 900px) {
     flex-direction: column;
@@ -37,5 +34,14 @@
 }
 
 .tags {
+  width: 75%;
+}
+
+.commandTable {
   width: 50%;
+}
+
+.commandQueue {
+  height: 100%;
+  overflow-y: auto;
 }

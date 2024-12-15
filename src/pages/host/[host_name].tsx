@@ -94,9 +94,13 @@ const HostManager = () => {
                 }}
               />
             </Paper>
-            <CommandTable host={host_name as string} refreshQueue={getQueue} />
+            <CommandTable
+              host={host_name as string}
+              refreshQueue={getQueue}
+              className={classes.commandTable}
+            />
           </div>
-          <div className="is-col">
+          <div className={classes.commandQueue}>
             <CommandQueue
               commands={commandQueueOutput}
               setViewedResult={setViewedResult}
@@ -104,6 +108,7 @@ const HostManager = () => {
               refreshQueue={getQueue}
               setOpen={handleTerminalOpen}
               setCommands={setCommandQueueOutput}
+              className={classes.commandQueue}
             />
             <Terminal
               open={terminalOpen}

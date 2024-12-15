@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import api from "qbittorrent-api-v2";
+import api from "@/lib/services/api";
 import { TransferInfoResponseType } from "./qbittorrent.types";
-import Constants from "../../../../constants";
 
 function formatBytes(bytes: number) {
   const sizes = ["B/s", "KB/s", "MB/s", "GB/s", "TB/s"];
@@ -10,18 +9,22 @@ function formatBytes(bytes: number) {
   return parseFloat((bytes / Math.pow(1024, i)).toFixed(2)) + " " + sizes[i];
 }
 
+export type ApiTransferInfoResponseType = {
+  up_info_speed: number;
+  dl_info_speed: number;
+};
+
 export default async function handler(
   _: NextApiRequest,
   res: NextApiResponse<TransferInfoResponseType>
 ) {
-  const response = await fetch(
-    `${Constants.DOMAIN}/api/integrations/transfer_info`
+  const response = await api.get<ApiTransferInfoResponseType>(
+    "/integrations/transfer_info"
   );
-  const json = await response.json();
-  return res.json({
+  res.status(200).json({
     transferInfo: {
-      uploadSpeed: formatBytes(json.up_info_speed),
-      downloadSpeed: formatBytes(json.dl_info_speed),
+      uploadSpeed: formatBytes(response.data.up_info_speed),
+      downloadSpeed: formatBytes(response.data.dl_info_speed),
     },
   });
 }

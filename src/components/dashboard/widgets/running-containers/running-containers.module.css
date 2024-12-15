@@ -1,6 +1,9 @@
 .runningContainers {
   display: flex;
   border-radius: 0.125rem;
+  width: fit-content;
+
+  flex: 0 !important;
 }
 
 .containerCount {
@@ -10,6 +13,7 @@
   padding: 0.25rem;
   border-radius: 0.125rem;
   margin-top: 0.5rem;
+  width: fit-content;
 
   background-color: var(--blue-highlight);
 }

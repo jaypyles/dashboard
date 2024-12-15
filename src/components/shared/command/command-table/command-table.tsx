@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { deleteCommand, fetchAndSet } from "../../../../lib/utils";
-import { Command } from "../../../../lib/types";
+import { deleteCommand, fetchAndSet } from "@/lib/utils";
+import { Command } from "@/lib/types";
 import CustomTable from "../../table/table";
-import { Button, TableRow, TableCell } from "@mui/material";
+import { TableRow, TableCell } from "@mui/material";
 import classes from "./command-table.module.css";
 import ContextMenu from "../../context-menu/context-menu";
-import { useContextMenu } from "../../../../lib/hooks/useContextMenu";
+import { useContextMenu } from "@/lib/hooks/useContextMenu";
 import { toast } from "react-toastify";
-import { useToast } from "../../../../lib/hooks/useToast";
+import { useToast } from "@/lib/hooks/useToast";
+import CursorTooltip from "@/components/shared/cursor-tooltip";
 
 interface CommandTableProps {
   host: string;
+  className?: string;
   refreshQueue: (host_name: string) => Promise<void>;
 }
 
-const CommandTable = ({ host, refreshQueue }: CommandTableProps) => {
+const CommandTable = ({ host, refreshQueue, className }: CommandTableProps) => {
+  const toast = useToast();
   const [commands, setCommands] = useState<Command[]>([]);
+  const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
   const { contextMenuState, showContextMenu, hideContextMenu } =
     useContextMenu();
-  const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
-  const { showToast } = useToast();
 
   const handleRightClick = (
     event: React.MouseEvent<HTMLTableRowElement>,
@@ -38,11 +40,17 @@ const CommandTable = ({ host, refreshQueue }: CommandTableProps) => {
             setCommands((prevCommands) =>
               prevCommands.filter((cmd) => cmd.name !== selectedCommand.name)
             );
-            toast.success(res.reason);
+            toast.showToast(res.reason, "success");
           }
         },
       },
     ]);
+  };
+
+  const handleCommandRun = async (command_name: string) => {
+    await fetch(`/api/${host}/command/${command_name}`);
+    await refreshQueue(host);
+    toast.showToast("Command added to queue successfully", "success");
   };
 
   useEffect(() => {
@@ -67,48 +75,40 @@ const CommandTable = ({ host, refreshQueue }: CommandTableProps) => {
     fetchAndSet(`/api/${host}/commands`, setCommands);
   }, [host]);
 
-  const handleCommandRun = async (command_name: string) => {
-    await fetch(`/api/${host}/command/${command_name}`);
-    await refreshQueue(host);
-  };
-
   return (
     <>
-      <CustomTable
-        headers={["name", "command", "args", "run"]}
-        title="Command Table"
-      >
+      <CustomTable headers={["name", "command", "args"]} className={className}>
         {commands
           .filter((command) => command.type !== "system")
           .map((command, index) => (
-            <TableRow
-              key={index}
-              onContextMenu={(event) => handleRightClick(event, command)}
-            >
-              <TableCell component="th" scope="row" className={classes.name}>
-                {command.name}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {command.command}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                {command.args.map((arg) => (
-                  <>
-                    <p>{arg.flag}</p>
-                    <p>{arg.value}</p>
-                  </>
-                ))}
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => handleCommandRun(command.name)}
-                >
-                  Run
-                </Button>
-              </TableCell>
-            </TableRow>
+            <CursorTooltip title="Run Command" key={`${command.name}-${index}`}>
+              <TableRow
+                key={index}
+                onContextMenu={(event) => handleRightClick(event, command)}
+                className={classes.row}
+                onClick={() => handleCommandRun(command.name)}
+              >
+                <TableCell component="th" scope="row" className={classes.name}>
+                  <a
+                    className={classes.command}
+                    onClick={() => handleCommandRun(command.name)}
+                  >
+                    {command.name}
+                  </a>
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {command.command}
+                </TableCell>
+                <TableCell component="th" scope="row">
+                  {command.args.map((arg) => (
+                    <>
+                      <p>{arg.flag}</p>
+                      <p>{arg.value}</p>
+                    </>
+                  ))}
+                </TableCell>
+              </TableRow>
+            </CursorTooltip>
           ))}
       </CustomTable>
       <ContextMenu

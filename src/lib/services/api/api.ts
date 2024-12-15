@@ -1,19 +1,25 @@
+import { setupCache } from "axios-cache-interceptor";
 import axios from "axios";
+
+const cacheApi = setupCache(
+  axios.create({
+    baseURL: `${process.env.API_URL}/api`,
+    timeout: 20000,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }),
+  {
+    ttl: 30 * 1000,
+  }
+);
 
 const api = axios.create({
   baseURL: `${process.env.API_URL}/api`,
-  timeout: 10000,
+  timeout: 20000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    console.error("API Error:", error.response || error.message);
-    return Promise.reject(error);
-  }
-);
-
-export default api;
+export { api, cacheApi };

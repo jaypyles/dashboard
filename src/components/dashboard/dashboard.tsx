@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { fetchAndSet } from "../../lib/utils";
-import { Container, Grid, Typography } from "@mui/material";
+import { fetchAndSet } from "@/lib/utils";
+import { Container, Grid } from "@mui/material";
 import classes from "./dashboard.module.css";
-import HostOverview from "../shared/host-overview/host-overview";
+import HostOverview from "@/components/shared/host-overview/host-overview";
 import { useRouter } from "next/router";
 import {
   ExternalIntegration,
   Integration,
-} from "./widgets/external-integrations/external-integration";
+} from "@/components/dashboard/widgets/external-integrations/external-integration";
 import useGetIntegrations from "@/lib/hooks/useGetIntegrations";
 
 const Dashboard = () => {
@@ -31,6 +31,7 @@ const Dashboard = () => {
             {hosts.map((host) => (
               <Grid item xs={12} sm={6} md={6} key={host}>
                 <HostOverview
+                  key={host}
                   host={host}
                   onClick={() => handleClick(host)}
                   className={classes.overview}
@@ -42,6 +43,7 @@ const Dashboard = () => {
         <div className={classes.integrations}>
           {integrations.map((integration) => (
             <ExternalIntegration
+              key={integration}
               integration={integration as Integration}
               polling={integration === "qbittorrent"}
             />

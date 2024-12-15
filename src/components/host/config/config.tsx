@@ -96,6 +96,7 @@ const Config = ({
                     display="flex"
                     alignItems="center"
                     className={classes.configOption}
+                    key={key}
                   >
                     <Typography
                       variant="body1"

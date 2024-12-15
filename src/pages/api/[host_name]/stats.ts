@@ -1,13 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import Constants from "../../../constants";
+import api from "@/lib/services/api";
 
 type ResponseData = {
   message?: string;
-  storage?: string;
+  storage?: string | object[];
   [key: string]: any;
 };
-
-const domain = Constants.DOMAIN;
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +13,7 @@ export default async function handler(
 ) {
   try {
     const { host_name } = req.query;
-    const data = req.body;
+    const data = { paths: ["/home", "/", "/mnt/nas"] };
 
     if (!data?.paths || data.paths.length === 0) {
       return res
@@ -25,8 +23,8 @@ export default async function handler(
 
     const paths = data.paths;
 
-    const response = await fetch(`${domain}/api/${host_name}/stats`);
-    const json = await response.json();
+    const response = await api.get<ResponseData>(`/${host_name}/stats`);
+    const json = await response.data;
 
     const uptimeRegex = new RegExp(`(\\d+\\s+days,\\s+(?:\\d+:\\d+|\\d+))`);
 
@@ -46,7 +44,7 @@ export default async function handler(
         "m"
       );
 
-      if (json.storage) {
+      if (typeof json.storage === "string") {
         const match = json.storage.match(storageSizeRegex);
 
         if (match) {
@@ -55,7 +53,7 @@ export default async function handler(
             size: match[2],
             used: match[3],
             available: match[4],
-            usePercent: match[5],
+            usePercent: Number(match[5].replace("%", "")),
           };
 
           storage.push(storageParts);
@@ -70,6 +68,7 @@ export default async function handler(
       (Number(ramParts[0]) / Number(ramParts[1])) *
       100
     ).toFixed(2)}%`;
+    json.usage = Number(json.usage.replace("%", ""));
 
     res.status(200).json(json);
   } catch (error) {

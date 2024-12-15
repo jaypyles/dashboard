@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
-import { CommandOutput } from "../../../../lib/types";
-import React, { useState, useEffect } from "react";
-import { fetchAndSet } from "../../../../lib/utils";
+import { CommandOutput } from "@/lib/types";
+import React, { useState, useEffect, useMemo } from "react";
+import { createClientSideCacheApi, fetchAndSet } from "@/lib/utils";
 import classes from "./running-containers.module.css";
 import DirectionsBoatIcon from "@mui/icons-material/DirectionsBoat";
 
@@ -15,11 +15,15 @@ export const RunningContainers = ({
   className,
 }: RunningContainersProps) => {
   const [containerCount, setContainerCount] = useState<CommandOutput>();
+  const cacheApi = useMemo(() => {
+    return createClientSideCacheApi();
+  }, []);
 
   useEffect(() => {
     fetchAndSet(
-      `/api/${host}/command/run-command/count-containers`,
-      setContainerCount
+      `/${host}/command/run-command/count-containers`,
+      setContainerCount,
+      cacheApi
     );
   }, [host]);
 
@@ -38,7 +42,7 @@ export const RunningContainers = ({
               fontSize="inherit"
               className={classes.shipIcon}
             />
-            {containerCount.stdout} running containers
+            {containerCount.stdout}
           </Typography>
         </div>
       )}
