@@ -15,7 +15,7 @@ spec:
       containers:
         - name: {{ .Values.app.metadata.name }}
           image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
-          command: bash /start.sh
+          command: ["bash", "/start.sh"]
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
