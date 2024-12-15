@@ -25,6 +25,13 @@ spec:
           envFrom:
             - secretRef:
                 name: dashboard-doppler-secret
+          volumeMounts:
+            - mountPath: /project/configs
+              name: config-volume
+      volumes:
+        - name: config-volume
+          persistentVolumeClaim:
+            claimName: nfs-pvc
 ---
 apiVersion: v1
 kind: Service
