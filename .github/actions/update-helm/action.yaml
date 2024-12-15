@@ -101,6 +101,14 @@ runs:
         restore-keys: |
           ${{ runner.os }}-buildx-
 
+    - name: Build and push image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/combined/Dockerfile
+        push: true
+        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ env.VERSION }}
+
     - name: Update version in Chart.yaml and values.yaml
       run: |
         sed -i "s/^version:.*/version: ${{ env.VERSION }}/" charts/dashboard/Chart.yaml
@@ -142,10 +150,3 @@ runs:
         git push origin master
       shell: bash
 
-    - name: Build and push image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./docker/combined/Dockerfile
-        push: true
-        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ env.VERSION }}
