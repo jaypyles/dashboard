@@ -7,9 +7,13 @@ import { clsx } from "clsx";
 
 type UptimeKumaIntegrationProps = {
   data: UptimeKumaData;
+  url: string;
 };
 
-export const UptimeKumaIntegration = ({ data }: UptimeKumaIntegrationProps) => {
+export const UptimeKumaIntegration = ({
+  data,
+  url,
+}: UptimeKumaIntegrationProps) => {
   const Uptimes = () => {
     return (
       <>
@@ -34,7 +38,7 @@ export const UptimeKumaIntegration = ({ data }: UptimeKumaIntegrationProps) => {
     <Integration
       title="uptime-kuma"
       icon="/icons/kuma.png"
-      link={process.env.NEXT_PUBLIC_UPTIME_KUMA_URL}
+      link={url}
     >
       <Uptimes />
     </Integration>

@@ -41,11 +41,12 @@ const Dashboard = () => {
           </Grid>
         </div>
         <div className={classes.integrations}>
-          {integrations.map((integration) => (
+          {Object.values(integrations).map((integration) => (
             <ExternalIntegration
-              key={integration}
-              integration={integration as Integration}
-              polling={integration === "qbittorrent"}
+              key={integration.name}
+              integration={integration.name as Integration}
+              polling={integration.name === "qbittorrent"}
+              url={integration.url}
             />
           ))}
         </div>

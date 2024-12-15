@@ -22,7 +22,10 @@ integration_router = APIRouter()
 
 @integration_router.get("/api/integrations")
 async def get_integrations():
-    return [integration.name for integration in INTEGRATIONS]
+    return [
+        {"name": integration.name, "url": integration.config["url"]}
+        for integration in INTEGRATIONS
+    ]
 
 
 @integration_router.get("/api/integrations/uptime")

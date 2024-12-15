@@ -4,9 +4,13 @@ import Integration from "../../../../shared/integration/integration";
 
 type JellyfinIntegrationProps = {
   data: JellyfinData;
+  url: string;
 };
 
-export const JellyfinIntegration = ({ data }: JellyfinIntegrationProps) => {
+export const JellyfinIntegration = ({
+  data,
+  url,
+}: JellyfinIntegrationProps) => {
   return (
     <Integration
       title="jellyfin"
@@ -16,7 +20,7 @@ export const JellyfinIntegration = ({ data }: JellyfinIntegrationProps) => {
         `${data.EpisodeCount} episodes`,
       ]}
       icon="/icons/jellyfin.png"
-      link={process.env.NEXT_PUBLIC_JELLYFIN_URL}
+      link={url}
     />
   );
 };

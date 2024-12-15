@@ -3,9 +3,6 @@ name: Update Helm
 description: Update Helm charts with the latest Docker images
 
 inputs: 
-  doppler_token:
-    description: The Doppler token
-    required: true
   gpat_token:
     description: The GitHub PAT token
     required: true
@@ -18,9 +15,6 @@ inputs:
   dockerhub_repo:
     description: The Docker Hub repo
     required: true
-  dockerhub_api_repo:
-    description: The Docker Hub API repo
-    required: true  
   helm_url:
     description: The Helm URL
     required: true
@@ -148,20 +142,10 @@ runs:
         git push origin master
       shell: bash
 
-    - name: Build and push frontend image
+    - name: Build and push image
       uses: docker/build-push-action@v5
       with:
         context: .
-        file: ./docker/frontend/Dockerfile
+        file: ./docker/combined/Dockerfile
         push: true
         tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ env.VERSION }}
-        build-args: DOPPLER_TOKEN=${{ inputs.doppler_token }}
-
-    - name: Build and push api image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: ./docker/backend/Dockerfile
-        push: true
-        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_api_repo}}:${{ env.VERSION }}
-        build-args: DOPPLER_TOKEN=${{ inputs.doppler_token }}

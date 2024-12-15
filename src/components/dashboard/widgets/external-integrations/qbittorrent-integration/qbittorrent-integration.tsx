@@ -4,10 +4,12 @@ import { TransferInfoResponseType } from "../../../../../pages/api/integrations/
 
 type QbittorrentIntegrationProps = {
   data: TransferInfoResponseType;
+  url: string;
 };
 
 export const QbittorrentIntegration = ({
   data,
+  url,
 }: QbittorrentIntegrationProps) => {
   return (
     <Integration
@@ -17,7 +19,7 @@ export const QbittorrentIntegration = ({
         `Download: ${data.transferInfo?.downloadSpeed}`,
       ]}
       icon="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/New_qBittorrent_Logo.svg/1200px-New_qBittorrent_Logo.svg.png"
-      link={process.env.NEXT_PUBLIC_QB_URL}
+      link={url}
     />
   );
 };

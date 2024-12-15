@@ -4,15 +4,16 @@ import { SonarrData } from "../../../../../lib/services/external-integrations/so
 
 type SonarrIntegrationProps = {
   data: SonarrData;
+  url: string;
 };
 
-export const SonarrIntegration = ({ data }: SonarrIntegrationProps) => {
+export const SonarrIntegration = ({ data, url }: SonarrIntegrationProps) => {
   return (
     <Integration
       title="sonarr"
       data={[`${data.shows?.length} shows`]}
       icon="/icons/sonarr.png"
-      link={process.env.NEXT_PUBLIC_SONARR_URL}
+      link={url}
     />
   );
 };

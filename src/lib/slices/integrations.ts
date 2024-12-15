@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Integration } from "@/lib/types";
 
 interface IntegrationsState {
-  integrations: string[];
+  integrations: Integration[];
 }
 
 const initialState: IntegrationsState = {
@@ -12,7 +13,7 @@ const integrationsSlice = createSlice({
   name: "integrations",
   initialState,
   reducers: {
-    setIntegrations: (state, action: PayloadAction<string[]>) => {
+    setIntegrations: (state, action: PayloadAction<Integration[]>) => {
       state.integrations = action.payload;
     },
   },

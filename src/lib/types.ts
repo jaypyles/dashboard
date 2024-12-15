@@ -46,3 +46,8 @@ export type AddCommand = {
   host: string;
   command: Command;
 };
+
+export type Integration = {
+  name: string;
+  url: string;
+};

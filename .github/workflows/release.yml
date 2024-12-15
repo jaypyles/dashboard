@@ -17,9 +17,7 @@ jobs:
         uses: ./.github/actions/update-helm
         with:
           gpat_token: ${{ secrets.GPAT_TOKEN }}
-          doppler_token: ${{ secrets.DOPPLER_TOKEN }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           dockerhub_repo: ${{ secrets.DOCKERHUB_REPO }}
-          dockerhub_api_repo: ${{ secrets.DOCKERHUB_API_REPO }}
           helm_url: ${{ secrets.HELM_URL }} 

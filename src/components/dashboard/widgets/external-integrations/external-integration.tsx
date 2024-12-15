@@ -30,10 +30,11 @@ type IntegrationPropsMap = {
 type ExternalIntegrationProps<T extends Integration> = {
   integration: T;
   polling?: boolean;
+  url: string;
 };
 
 const integrations: {
-  [K in Integration]: React.FC<{ data: IntegrationPropsMap[K] }>;
+  [K in Integration]: React.FC<{ data: IntegrationPropsMap[K]; url: string }>;
 } = {
   jellyfin: JellyfinIntegration,
   qbittorrent: QbittorrentIntegration,
@@ -45,9 +46,11 @@ const integrations: {
 export const ExternalIntegration = <T extends Integration>({
   integration,
   polling = false,
+  url,
 }: ExternalIntegrationProps<T>) => {
   const Component = integrations[integration] as React.FC<{
     data: IntegrationPropsMap[T];
+    url: string;
   }>;
   const [apiData, setApiData] = useState<IntegrationPropsMap[T] | null>(null);
 
@@ -80,5 +83,9 @@ export const ExternalIntegration = <T extends Integration>({
     getData();
   }, []);
 
-  return apiData ? <Component data={apiData} /> : <IntegrationLoader />;
+  return apiData ? (
+    <Component data={apiData} url={url} />
+  ) : (
+    <IntegrationLoader />
+  );
 };

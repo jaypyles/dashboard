@@ -1,46 +1,20 @@
 services:
-  frontend:
-    image: jpyles0524/server-dashboard:latest
+  app:
     build:
       context: .
-      dockerfile: ./docker/frontend/Dockerfile
-      args:
-        DOPPLER_TOKEN: ${DOPPLER_TOKEN}
-    container_name: server-dashboard
-    command: doppler run -- npm run start
+      dockerfile: ./docker/combined/Dockerfile
+    container_name: unified-app
+    environment:
+      - APP_LEVEL=PROD
+    command: bash /start.sh
     ports:
-      - 3030:3000
-    environment:
-      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
-    networks:
-      - webservice-network
-  backend:
-    image: jpyles0524/server-dashboard-api:latest
-    build:
-      context: .
-      dockerfile: ./docker/backend/Dockerfile
-      args:
-        DOPPLER_TOKEN: ${DOPPLER_TOKEN}
-    command: doppler run -- pdm run python -m uvicorn api.backend.app:app --reload --host 0.0.0.0 --port 8000
-    environment:
-      - DOPPLER_TOKEN=${DOPPLER_TOKEN}
-    volumes:
-      - ./configs:/project/configs
-      - /var/run/docker.sock:/var/run/docker.sock
-    container_name: server-dashboard-api
-    networks:
-      - webservice-network
-  worker:
-    image: jpyles0524/server-dashboard-api:latest
-    build:
-      context: .
-      dockerfile: ./docker/backend/Dockerfile
-    command: pdm run python -m api.backend.command_worker.worker
-    container_name: server-dashboard-worker
+      - 3000:3000
+      - 8000:8000
     volumes:
       - ./configs:/project/configs
     networks:
       - webservice-network
+
   mongo:
     container_name: manager-mongo
     image: mongo
@@ -52,6 +26,7 @@ services:
       - 27017:27017
     networks:
       - webservice-network
+
 networks:
   webservice-network:
     external:

@@ -27,6 +27,10 @@ export const RunningContainers = ({
     );
   }, [host]);
 
+  if (containerCount?.stderr || containerCount?.stdout === "0") {
+    return;
+  }
+
   return (
     <>
       {containerCount && (
