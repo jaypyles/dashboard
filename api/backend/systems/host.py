@@ -1,6 +1,9 @@
 # LOCAL
 import api.backend.systems.utils as utils
 from api.backend.systems.runner import MachineRunner
+import logging
+
+LOG = logging.getLogger(__name__)
 
 
 class Host:
@@ -13,4 +16,6 @@ class Host:
         self.runner.read_config(config_file)
 
     def refresh(self):
+        LOG.info(f"Refreshing host {self.name}")
+        LOG.info(f"Config file: {self.config_file}")
         self.runner.read_config(self.config_file)
