@@ -7,8 +7,12 @@
 }
 
 .previousCommands {
-  background-color: var(--paper-opaque-dark);
   padding: 0;
+  height: 100%;
+  background-image: none;
+  background-color: transparent;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .status {
@@ -32,4 +36,8 @@
 
 .running {
   background-color: var(--running);
+}
+
+.table {
+  height: 100%;
 }

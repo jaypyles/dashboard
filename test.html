@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Overview UI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .server-overview {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .widget {
+      padding: 20px;
+      background: #f9f9ff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .widget h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .status-item {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    .commands, .queue {
+      margin-bottom: 30px;
+    }
+    .commands h3, .queue h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .commands ul, .queue ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .commands li, .queue li {
+      padding: 10px 15px;
+      background: #e8f1ff;
+      border: 1px solid #cce0ff;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .commands button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .commands button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Server Overview Dashboard</div>
+
+    <!-- Server Overview Widget -->
+    <div class="server-overview">
+      <div class="widget">
+        <h3>Server Details</h3>
+        <div class="status-item">Name: <strong>Server-01</strong></div>
+        <div class="status-item">Uptime: <strong>14 days, 6 hrs</strong></div>
+        <div class="status-item">Docker Containers: <strong>4</strong></div>
+        <div class="status-item">RAM Usage: <strong>65%</strong></div>
+        <div class="status-item">Storage Usage: <strong>72%</strong></div>
+      </div>
+    </div>
+
+    <!-- Command List -->
+    <div class="commands">
+      <h3>Available Commands</h3>
+      <ul>
+        <li>
+          <span>Restart Docker</span>
+          <button>Add to Queue</button>
+        </li>
+        <li>
+          <span>Clear Cache</span>
+          <button>Add to Queue</button>
+        </li>
+        <li>
+          <span>Run Backup</span>
+          <button>Add to Queue</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Command Queue -->
+    <div class="queue">
+      <h3>Command Queue</h3>
+      <ul>
+        <li>
+          <span>Restart Docker</span>
+          <span>Status: Pending</span>
+        </li>
+        <li>
+          <span>Run Backup</span>
+          <span>Status: Running</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

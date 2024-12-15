@@ -16,6 +16,9 @@
   cursor: pointer;
 }
 
+.tableHead th {
+  background-color: transparent;
+}
 
 @media (max-width: 600px) {
   .responsive-table {
@@ -57,4 +60,10 @@
     font-weight: bold;
     white-space: nowrap;
   }
+}
+
+.tableContainer {
+  height: 100%;
+  background-color: transparent;
+  border-radius: 0;
 }

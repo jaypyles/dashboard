@@ -88,7 +88,7 @@ export const CommandQueue = ({
     <Paper className={classes.previousCommands} {...rest}>
       <CustomTable
         headers={["name", "command", "time_created", "status"]}
-        className={className}
+        className={clsx(classes.table, className)}
       >
         {commands.map((command, index) => (
           <CursorTooltip

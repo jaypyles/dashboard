@@ -31,17 +31,20 @@ export default function CustomTable({
   return (
     <Paper className={clsx(classes.customTable, className)}>
       {label}
-      <TableContainer component={Paper} {...restProps}>
+      <TableContainer
+        component={Paper}
+        className={classes.tableContainer}
+        {...restProps}
+      >
         <Table
           stickyHeader
           aria-label="simple table"
-          className={classes["responsive-table"]}
+          className={clsx(classes.table, classes["responsive-table"])}
           sx={{
             tableLayout: "fixed",
-            border: "2px solid black",
           }}
         >
-          <TableHead>
+          <TableHead className={classes.tableHead}>
             <TableRow>
               {headers.map((header, index) => (
                 <TableCell key={index} className={classes.header}>
