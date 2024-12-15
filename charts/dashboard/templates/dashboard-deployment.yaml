@@ -17,6 +17,9 @@ spec:
           image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
           command: ["bash", "/start.sh"]
           imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /project/configs
+              name: config-volume
           ports:
             - containerPort: 3000
           env:
@@ -25,9 +28,6 @@ spec:
           envFrom:
             - secretRef:
                 name: dashboard-doppler-secret
-          volumeMounts:
-            - mountPath: /project/configs
-              name: config-volume
       volumes:
         - name: config-volume
           persistentVolumeClaim:
