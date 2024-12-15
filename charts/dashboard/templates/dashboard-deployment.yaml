@@ -15,10 +15,13 @@ spec:
       containers:
         - name: {{ .Values.app.metadata.name }}
           image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
-          command: ["npm", "run", "start"]
+          command: bash /start.sh
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
+          env:
+            - name: APP_LEVEL
+              value: {{ .Values.app.APP_LEVEL }} 
           envFrom:
             - secretRef:
                 name: dashboard-doppler-secret

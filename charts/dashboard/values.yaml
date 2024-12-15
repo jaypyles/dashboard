@@ -9,6 +9,7 @@ app:
   backendImage: jpyles0524/server-dashboard-api
   backendServiceName: dashboard-backend-service
   backendPort: 8000
+  APP_LEVEL: PROD
 
 claim:
   name: nfs-pvc
