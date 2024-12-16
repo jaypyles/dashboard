@@ -1,9 +1,7 @@
 # LOCAL
 import api.backend.systems.utils as utils
 from api.backend.systems.runner import MachineRunner
-import logging
-
-LOG = logging.getLogger(__name__)
+from api.backend.logging import LOG
 
 
 class Host:

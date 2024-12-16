@@ -1,10 +1,8 @@
 # LOCAL
 from api.backend.systems.host import Host
 import os
-import logging
 
-LOG = logging.getLogger(__name__)
-
+from api.backend.logging import LOG
 
 config_files = [
     f"./configs/{config}"

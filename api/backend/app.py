@@ -1,6 +1,3 @@
-# STL
-import logging
-
 # PDM
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,13 +8,6 @@ from api.backend.routers.config import config_router
 from api.backend.routers.command import command_router
 from api.backend.routers.integration import integration_router
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler()],
-)
-
-LOG = logging.getLogger(__name__)
 
 app = FastAPI(title="api")
 
