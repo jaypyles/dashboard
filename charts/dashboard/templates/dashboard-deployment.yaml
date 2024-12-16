@@ -20,6 +20,7 @@ spec:
           revisionHistoryLimit: 1
           volumeMounts:
             - mountPath: /project/configs
+              subPath: {{ .Values.app.metadata.name }}
               name: config-volume
           ports:
             - containerPort: 3000
