@@ -25,14 +25,14 @@ jobs:
       - name: Update version of app
         uses: ./.github/actions/update-version
         with:
-          version: ${{ env.SEMANTIC_VERSION }}  
+          version: ${{ env.VERSION }}  
           gpat_token: ${{ secrets.GPAT_TOKEN }}
           helm_url: ${{ secrets.HELM_URL }}
 
       - name: Push Docker image
         uses: ./.github/actions/push-docker-image
         with:
-          version: ${{ env.SEMANTIC_VERSION }}
+          version: ${{ env.VERSION }}
           gpat_token: ${{ secrets.GPAT_TOKEN }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
