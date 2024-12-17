@@ -19,17 +19,20 @@ jobs:
         with:
           gpat_token: ${{ secrets.GPAT_TOKEN }}
 
+      - name: Set semantic version as environment variable
+        run: echo "SEMANTIC_VERSION=${{ steps.get_version.outputs.semantic_version }}" >> $GITHUB_ENV
+
       - name: Update version of app
         uses: ./.github/actions/update-version
         with:
-          version: ${{ steps.get_version.outputs.semantic_version }}  
+          version: ${{ env.SEMANTIC_VERSION }}  
           gpat_token: ${{ secrets.GPAT_TOKEN }}
           helm_url: ${{ secrets.HELM_URL }}
 
       - name: Push Docker image
         uses: ./.github/actions/push-docker-image
         with:
-          version: ${{ steps.get_version.outputs.semantic_version }}
+          version: ${{ env.SEMANTIC_VERSION }}
           gpat_token: ${{ secrets.GPAT_TOKEN }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
