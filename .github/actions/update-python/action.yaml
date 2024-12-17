@@ -1,0 +1,31 @@
+name: Update Python project version
+
+description: Updates the version in the pyproject.toml file
+
+inputs:
+  version:
+    description: The version to update the project to
+    required: true
+  gpat_token:
+    description: The GitHub PAT token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.gpat_token }}
+
+    - name: Update pyproject.toml
+      run: |
+        sed -i "s/^version:.*/version: ${{ inputs.version }}/" pyproject.toml
+      shell: bash
+
+    - name: Commit changes
+      run: |
+        git add pyproject.toml
+        git commit -m "Update version to ${{ inputs.version }} [skip ci]"
+        git push
+      shell: bash

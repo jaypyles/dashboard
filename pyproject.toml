@@ -1,10 +1,8 @@
 [project]
-name = "WebappTemplate"
+name = "Dashboard"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Jayden Pyles", email = "jpylesbuisness@gmail.com"},
-]
+authors = [{ name = "Jayden Pyles", email = "jpylesbuisness@gmail.com" }]
 dependencies = [
     "uvicorn>=0.29.0",
     "fastapi>=0.111.0",
@@ -19,15 +17,13 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 readme = "README.md"
-license = {text = "MIT"}
+license = { text = "MIT" }
 
 [tool.pdm]
 distribution = false
 
 [tool.pdm.dev-dependencies]
-dev = [
-    "ipython>=8.26.0",
-]
+dev = ["ipython>=8.26.0"]
 [tool.pyright]
 include = ["./api/backend/"]
 exclude = ["**/node_modules", "**/__pycache__"]

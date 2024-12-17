@@ -29,7 +29,7 @@ All example config files can be found in the `docs/integrations` folder.
 
 ## Adding Configs
 
-Configs must be placed underneath `/dashboard/configs` with the name `<name>.yaml`
+Configs must be placed underneath `/dashboard/configs` with the name `<name>.yaml` or you can mount a volume to `/project/configs`
 
 Example config:
 

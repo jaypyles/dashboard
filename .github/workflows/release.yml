@@ -21,3 +21,9 @@ jobs:
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           dockerhub_repo: ${{ secrets.DOCKERHUB_REPO }}
           helm_url: ${{ secrets.HELM_URL }} 
+
+      - name: Update pyproject.toml
+        uses: ./.github/actions/update-python
+        with:
+          version: $VERSION
+          gpat_token: ${{ secrets.GPAT_TOKEN }}

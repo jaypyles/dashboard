@@ -2,14 +2,13 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker/combined/Dockerfile
-    container_name: unified-app
+      dockerfile: Dockerfile
+    container_name: dashboard
     environment:
       - APP_LEVEL=PROD
     command: bash /start.sh
     ports:
       - 3000:3000
-      - 8000:8000
     volumes:
       - ./configs:/project/configs
     networks:
