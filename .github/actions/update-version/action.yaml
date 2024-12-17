@@ -1,0 +1,79 @@
+name: Update Python project version
+
+description: Updates the version in the pyproject.toml file
+
+inputs:
+  version:
+    description: The version to update the project to
+    required: true
+  gpat_token:
+    description: The GitHub PAT token
+    required: true
+  helm_url:
+    description: The Helm URL
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.gpat_token }}
+
+    - name: Cache Helm dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/helm
+        key: ${{ runner.os }}-helm-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-helm-
+
+    - name: Setup helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      shell: bash
+
+    - name: Update package versions
+      run: |
+        sed -i "s/^version = \".*/version = \"${{ inputs.version }}\"/" pyproject.toml
+        sed -i "s/^version:.*/version: ${{ env.VERSION }}/" charts/dashboard/Chart.yaml
+        sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ env.VERSION }}/" charts/dashboard/values.yaml
+      shell: bash
+
+    - name: Package Helm Chart
+      run: |
+        helm package ./charts/dashboard
+        mkdir -p artifacts
+        mv *.tgz artifacts/
+      shell: bash
+
+    - name: Update Helm repo index
+      run: |
+        helm repo index artifacts/ --url ${{ inputs.helm_url }}/main/charts/dashboard
+      shell: bash
+
+    - name: Commit and push changes to GitHub Helm repo
+      run: |
+        git clone https://${{ inputs.gpat_token }}@github.com/jaypyles/helm-charts.git
+        cd helm-charts
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        mkdir -p charts/dashboard
+        cp ../artifacts/*.tgz charts/dashboard/
+        cp ../artifacts/index.yaml charts/dashboard/
+        git add charts/
+        git commit -m "Add new dashboard chart version and update index.yaml"
+        git push origin main
+      shell: bash
+
+    - name: Commit version changes to repo
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "github-actions@github.com"
+        git add charts/dashboard/Chart.yaml charts/dashboard/values.yaml
+        git add pyproject.toml
+
+        git commit -m "Update version to ${{ env.VERSION }} [skip ci]"
+        git push origin master
+      shell: bash

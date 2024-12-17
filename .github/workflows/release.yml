@@ -13,17 +13,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build and push Helm charts
-        uses: ./.github/actions/update-helm
+      - name: Get semantic version
+        uses: ./.github/actions/get-semantic-version
         with:
+          gpat_token: ${{ secrets.GPAT_TOKEN }}
+
+      - name: Update version of app
+        uses: ./.github/actions/update-version
+        with:
+          version: $VERSION
+          gpat_token: ${{ secrets.GPAT_TOKEN }}
+          helm_url: ${{ secrets.HELM_URL }} 
+
+      - name: Push Docker image
+        uses: ./.github/actions/push-docker-image
+        with:
+          version: $VERSION
           gpat_token: ${{ secrets.GPAT_TOKEN }}
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
           dockerhub_repo: ${{ secrets.DOCKERHUB_REPO }}
-          helm_url: ${{ secrets.HELM_URL }} 
-
-      - name: Update pyproject.toml
-        uses: ./.github/actions/update-python
-        with:
-          version: $VERSION
-          gpat_token: ${{ secrets.GPAT_TOKEN }}

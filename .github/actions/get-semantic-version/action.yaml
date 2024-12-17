@@ -1,0 +1,55 @@
+name: Get semantic version
+
+description: Get the semantic version of the project
+
+inputs: 
+  gpat_token:
+    description: The GitHub PAT token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.gpat_token }}
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: "21"
+
+    - name: Cache Node.js dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules
+          ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    - name: Cache semantic-release dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          node_modules/semantic-release
+          node_modules/@semantic-release/*
+        key: ${{ runner.os }}-semantic-release-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-semantic-release-
+
+    - name: Install dependencies for semantic-release
+      run: npm install semantic-release @semantic-release/git @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog
+      shell: bash
+
+    - name: Get semantic version
+      id: semantic_version
+      run: |
+        VERSION=$(npx semantic-release | grep 'The next release version is' | sed 's/^.*is //')
+        echo "VERSION=$VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.gpat_token }}
