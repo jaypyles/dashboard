@@ -49,7 +49,6 @@ runs:
       run: |
         VERSION=$(npx semantic-release | grep 'The next release version is' | sed 's/^.*is //')
         echo "VERSION=$VERSION" >> $GITHUB_ENV
-        echo "semantic_version=$VERSION" >> $GITHUB_OUTPUT
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.gpat_token }}

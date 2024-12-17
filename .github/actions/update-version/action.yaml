@@ -37,8 +37,9 @@ runs:
     - name: Update package versions
       run: |
         sed -i "s/^version = \".*/version = \"${{ inputs.version }}\"/" pyproject.toml
-        sed -i "s/^version:.*/version: ${{ env.VERSION }}/" charts/dashboard/Chart.yaml
-        sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ env.VERSION }}/" charts/dashboard/values.yaml
+        sed -i 's/"version": "[^"]*"/"version": "${{ inputs.version }}"/' package.json
+        sed -i "s/^version:.*/version: ${{ inputs.version }}/" charts/dashboard/Chart.yaml
+        sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ inputs.version }}/" charts/dashboard/values.yaml
       shell: bash
 
     - name: Package Helm Chart
@@ -74,6 +75,6 @@ runs:
         git add charts/dashboard/Chart.yaml charts/dashboard/values.yaml
         git add pyproject.toml
 
-        git commit -m "Update version to ${{ env.VERSION }} [skip ci]"
+        git commit -m "Update version to ${{ inputs.version }} [skip ci]"
         git push origin master
       shell: bash

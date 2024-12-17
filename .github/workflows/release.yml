@@ -19,9 +19,6 @@ jobs:
         with:
           gpat_token: ${{ secrets.GPAT_TOKEN }}
 
-      - name: Set semantic version as environment variable
-        run: echo "SEMANTIC_VERSION=${{ steps.get_version.outputs.semantic_version }}" >> $GITHUB_ENV
-
       - name: Update version of app
         uses: ./.github/actions/update-version
         with:
