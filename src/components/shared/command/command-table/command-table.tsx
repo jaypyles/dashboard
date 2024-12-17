@@ -9,6 +9,7 @@ import { useContextMenu } from "@/lib/hooks/useContextMenu";
 import { toast } from "react-toastify";
 import { useToast } from "@/lib/hooks/useToast";
 import CursorTooltip from "@/components/shared/cursor-tooltip";
+import { TableLoader } from "@/components/dashboard/widgets/skeletons/table-loader";
 
 interface CommandTableProps {
   host: string;
@@ -74,6 +75,10 @@ const CommandTable = ({ host, refreshQueue, className }: CommandTableProps) => {
   useEffect(() => {
     fetchAndSet(`/api/${host}/commands`, setCommands);
   }, [host]);
+
+  if (commands.length === 0) {
+    return <TableLoader className={classes.loader} />;
+  }
 
   return (
     <>

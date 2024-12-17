@@ -41,3 +41,9 @@
 .table {
   height: 100%;
 }
+
+.loader {
+  height: 17.5rem;
+  background-color: transparent;
+  padding: 1rem;
+}

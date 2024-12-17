@@ -2,10 +2,10 @@ import puppeteer from "puppeteer";
 
 (async () => {
   const pages = [
-    { name: "./docs/main_page.png", path: "http://localhost:3030" },
+    { name: "./docs/main_page.png", path: "http://localhost:3000" },
     {
       name: "./docs/server_page.png",
-      path: "http://localhost:3030/host/optimus",
+      path: "http://localhost:3000/host/optimus",
     },
   ];
 

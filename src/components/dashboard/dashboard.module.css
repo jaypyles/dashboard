@@ -2,13 +2,23 @@
   padding: 20px;
 }
 
+.servers {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  width: 100%;
+}
+
+.overview {
+  width: 49% !important;
+  flex-grow: 1;
+}
+
 .overview:hover {
   background-color: var(--paper-hover-color);
   cursor: pointer;
-}
-
-.servers {
-  margin-bottom: 1rem;
 }
 
 .integrations {

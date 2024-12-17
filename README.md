@@ -21,11 +21,19 @@ Custom built server manager/dashboard. Easily configure hosts and commands using
 
 ![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
 
+## Integrations
+
+Integrates with several self-hosted apps such as: Arr stack, Jellyfin, etc. Used to report quick stats and link to external apps.
+
+All example config files can be found in the `docs/integrations` folder.
+
 ## Adding Configs
 
 Configs must be placed underneath `/dashboard/configs` with the name `<name>.yaml`
 
 Example config:
+
+Note: the name of the config file must match the name key in the config file.
 
 ```yaml
 host:

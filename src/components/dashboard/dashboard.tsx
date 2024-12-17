@@ -27,18 +27,14 @@ const Dashboard = () => {
     <>
       <Container maxWidth="lg" className={classes["server-manager-container"]}>
         <div className={classes.servers}>
-          <Grid container spacing={3}>
-            {hosts.map((host) => (
-              <Grid item xs={12} sm={6} md={6} key={host}>
-                <HostOverview
-                  key={host}
-                  host={host}
-                  onClick={() => handleClick(host)}
-                  className={classes.overview}
-                />
-              </Grid>
-            ))}
-          </Grid>
+          {hosts.map((host) => (
+            <HostOverview
+              key={host}
+              host={host}
+              onClick={() => handleClick(host)}
+              className={classes.overview}
+            />
+          ))}
         </div>
         <div className={classes.integrations}>
           {Object.values(integrations).map((integration) => (

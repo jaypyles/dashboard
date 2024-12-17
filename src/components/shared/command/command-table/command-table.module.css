@@ -9,3 +9,9 @@
 .row:hover {
   background-color: var(--paper-hover-color);
 }
+
+.loader {
+  height: 17.5rem;
+  background-color: transparent;
+  padding: 1rem;
+}

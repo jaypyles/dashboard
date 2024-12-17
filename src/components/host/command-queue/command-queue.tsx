@@ -10,6 +10,7 @@ import { deleteJob } from "@/lib/utils";
 import { toast } from "react-toastify";
 import ContextMenu from "@/components/shared/context-menu/context-menu";
 import CursorTooltip from "@/components/shared/cursor-tooltip";
+import { TableLoader } from "@/components/dashboard/widgets/skeletons/table-loader";
 
 interface CommandQueue extends PaperProps {
   commands: QueuedCommand[];
@@ -30,17 +31,19 @@ export const CommandQueue = ({
   refreshQueue,
   setOpen,
   ...rest
-}: CommandQueue): JSX.Element => {
+}: CommandQueue) => {
   const { contextMenuState, showContextMenu, hideContextMenu } =
     useContextMenu();
 
   const handleShowOutput = (command: QueuedCommand) => {
-    const combinedOutput = Object.values(command.output).reduce(
+    let combinedOutput = Object.values(command.output).reduce(
       (accumulator, current) => {
         return accumulator + current.stdout + "\n" + current.stderr + "\n";
       },
       ""
     );
+
+    combinedOutput = `$ ${command.commands[0].command}\n${combinedOutput}`;
     setViewedResult(combinedOutput);
     setOpen();
   };
@@ -83,6 +86,10 @@ export const CommandQueue = ({
       return () => clearInterval(intervalId);
     }
   }, [host]);
+
+  if (commands.length === 0) {
+    return <TableLoader className={classes.loader} />;
+  }
 
   return (
     <Paper className={classes.previousCommands} {...rest}>

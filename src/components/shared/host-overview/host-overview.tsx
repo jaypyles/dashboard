@@ -55,7 +55,7 @@ const HostOverview = ({
   }, [host]);
 
   if (isLoading) {
-    return <HostLoader />;
+    return <HostLoader className={clsx(classes.loader, className)} />;
   }
 
   return (
