@@ -2,7 +2,7 @@ name: Push Docker Image
 
 description: Push the Docker image to Docker Hub
 
-inputs: 
+inputs:
   gpat_token:
     description: The GitHub PAT token
     required: true
@@ -11,7 +11,7 @@ inputs:
     required: true
   dockerhub_token:
     description: The Docker Hub token
-    required: true  
+    required: true
   dockerhub_repo:
     description: The Docker Hub repo
     required: true
@@ -45,8 +45,13 @@ runs:
           ${{ runner.os }}-buildx-
 
     - name: Set tag for docker image
+      id: set_tag
       run: |
-        TAG=${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ inputs.version }}
+        if [ -z "${{ inputs.dockerhub_username }}" ] || [ -z "${{ inputs.dockerhub_repo }}" ] || [ -z "${{ inputs.version }}" ]; then
+          echo "Error: Missing required input values!"
+          exit 1
+        fi
+        TAG=${{ inputs.dockerhub_username }}/${{ inputs.dockerhub_repo }}:${{ inputs.version }}
         echo "TAG=$TAG" >> $GITHUB_ENV
         echo "Docker image tag is: $TAG"
       shell: bash
