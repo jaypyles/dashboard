@@ -50,3 +50,14 @@ commands:
       - flag: "-n"
         value: "100"
 ```
+
+### Adding Integrations
+
+Integrations must be placed underneath `/dashboard/configs/integrations` with the name `<name>.yml`
+
+Example integration:
+
+```yaml
+url: <url>
+api_key: <api_key>
+```
