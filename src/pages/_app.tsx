@@ -14,9 +14,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import { store } from "@/app";
+import { BackgroundChanger } from "@/components/dashboard/controls";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [backgroundImage, setBackgroundImage] =
+    useState<string>("/background.jpeg");
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -28,13 +31,20 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
       ).matches;
       setIsDarkMode(prefersDarkMode);
     }
-  }, []);
 
-  const toggleTheme = () => {
-    const newTheme = !isDarkMode;
-    setIsDarkMode(newTheme);
-    localStorage.setItem("theme", newTheme ? "dark" : "light");
-  };
+    const fetchBackgroundImage = async () => {
+      try {
+        const response = await fetch("/api/config/background");
+        const blob = await response.blob();
+        const imageUrl = URL.createObjectURL(blob);
+        setBackgroundImage(imageUrl);
+      } catch (error) {
+        console.error("Error fetching background image:", error);
+      }
+    };
+
+    fetchBackgroundImage();
+  }, [isDarkMode]);
 
   return (
     <>
@@ -46,9 +56,16 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
+            <BackgroundChanger className="background-changer" />
             <Box
               className="mainWrapper"
-              sx={{ bgcolor: "background.default", margin: 0, padding: 0 }}
+              sx={{
+                bgcolor: "background.default",
+                margin: 0,
+                padding: 0,
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+              }}
             >
               <ToastContainer />
               <Component {...pageProps} />

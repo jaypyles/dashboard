@@ -14,6 +14,7 @@ dependencies = [
     "uptime-kuma-api>=1.2.1",
     "qbittorrent-api>=2024.8.65",
     "aiohttp>=3.10.5",
+    "python-multipart>=0.0.20",
 ]
 requires-python = ">=3.10"
 readme = "README.md"

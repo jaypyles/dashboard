@@ -62,4 +62,6 @@ runs:
         context: .
         file: Dockerfile
         push: true
-        tags: ${{ env.TAG }}
+        tags: |
+          ${{ env.TAG }}
+          ${{ inputs.dockerhub_username }}/${{ inputs.dockerhub_repo }}:latest

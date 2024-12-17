@@ -1,16 +1,13 @@
-# STL
-import logging
-
 # PDM
-from fastapi import APIRouter
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, File, UploadFile
+from fastapi.responses import FileResponse, JSONResponse
 
 # LOCAL
 import api.backend.configs.commands as yaml_utils
+from api.backend.configs import utils as config_utils
 from api.backend.models import AddCommand, BuildConfigFile
 from api.backend.host_manager import HOST_MAP
-
-LOG = logging.getLogger(__name__)
+from api.backend.logging import LOG
 
 config_router = APIRouter()
 
@@ -26,9 +23,37 @@ async def create_config(build_config: BuildConfigFile):
         )
 
 
+@config_router.get("/api/config/background")
+async def get_background():
+    try:
+        LOG.info(f"Background path: {config_utils.BACKGROUND_PATH}")
+        return FileResponse(config_utils.BACKGROUND_PATH)
+    except Exception as e:
+        return JSONResponse(
+            {"message": f"Background could not be uploaded: {e}"}, status_code=500
+        )
+
+
+@config_router.post("/api/config/background")
+async def upload_background(file: UploadFile = File(...)):
+    try:
+        LOG.info(f"Form: {file}")
+        config_utils.upload_background(file)
+        return File({"message": "Background successfully uploaded."})
+    except Exception as e:
+        return JSONResponse(
+            {"message": f"Background could not be uploaded: {e}"}, status_code=500
+        )
+
+
 @config_router.get("/api/config/{host_name}")
 async def get_config(host_name: str):
-    return JSONResponse(yaml_utils.get_config_file_for_read(host_name).model_dump())
+    try:
+        return JSONResponse(yaml_utils.get_config_file_for_read(host_name).model_dump())
+    except Exception as e:
+        return JSONResponse(
+            {"message": f"Config could not be retrieved: {e}"}, status_code=500
+        )
 
 
 @config_router.post("/api/config/{host_name}/add-command")

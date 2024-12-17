@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: jpyles0524/server-dashboard:latest
     container_name: dashboard
     environment:
       - APP_LEVEL=PROD

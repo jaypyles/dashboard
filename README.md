@@ -61,3 +61,9 @@ Example integration:
 url: <url>
 api_key: <api_key>
 ```
+
+### Editing the Background
+
+You can click the file icon in the top right corner to change the background or you can upload a new image to the `/dashboard/configs/assets/background.jpeg` file.
+
+The background will be displayed on the dashboard and the server page.
