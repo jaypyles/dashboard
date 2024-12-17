@@ -25,6 +25,8 @@ runs:
 
     - name: Commit changes
       run: |
+        git config --global user.email "github-actions@github.com"
+        git config --global user.name "GitHub Actions"
         git add pyproject.toml
         git commit -m "Update version to ${{ inputs.version }} [skip ci]"
         git push
