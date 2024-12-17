@@ -1,5 +1,3 @@
-export DOPPLER_TOKEN=$(shell doppler configs tokens create dev --plain --max-age=900s)
-
 .DEFAULT_GOAL := help
 
 COMPOSE_DEV = docker compose -f docker-compose.yml -f docker-compose.dev.yml
@@ -33,18 +31,18 @@ deps:
 	npm run build
 
 build:
-	doppler run -- $(COMPOSE_DEV) build
+	$(COMPOSE_DEV) build
 
 pull:
 	docker compose pull
 
 up-prd:
 	export HOSTNAME=$(HOSTNAME_PROD) && \
-	doppler run -- $(COMPOSE_PROD) up -d --force-recreate
+	$(COMPOSE_PROD) up -d --force-recreate
 
 up-dev:
 	export HOSTNAME=$(HOSTNAME_DEV) && \
-	doppler run -- $(COMPOSE_DEV) up -d --force-recreate
+	$(COMPOSE_DEV) up -d --force-recreate
 
 down:
 	$(COMPOSE_DEV) down

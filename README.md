@@ -21,6 +21,12 @@ Custom built server manager/dashboard. Easily configure hosts and commands using
 
 ![server_page](https://github.com/jaypyles/dashboard/blob/master/docs/server_page.png)
 
+## Deployment
+
+To deploy the dashboard, you can use the `docker-compose.yml` file.
+
+Run the command: `make pull up`
+
 ## Integrations
 
 Integrates with several self-hosted apps such as: Arr stack, Jellyfin, etc. Used to report quick stats and link to external apps.
