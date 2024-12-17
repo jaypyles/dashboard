@@ -44,10 +44,17 @@ runs:
         restore-keys: |
           ${{ runner.os }}-buildx-
 
+    - name: Set tag for docker image
+      run: |
+        TAG=${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ inputs.version }}
+        echo "TAG=$TAG" >> $GITHUB_ENV
+        echo "Docker image tag is: $TAG"
+      shell: bash
+
     - name: Build and push image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: Dockerfile
         push: true
-        tags: ${{ inputs.dockerhub_username }}/${{inputs.dockerhub_repo}}:${{ inputs.version }}
+        tags: ${{ env.TAG }}
