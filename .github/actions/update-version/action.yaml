@@ -37,9 +37,11 @@ runs:
     - name: Update package versions
       run: |
         sed -i "s/^version = \".*/version = \"${{ inputs.version }}\"/" pyproject.toml
-        sed -i 's/"version": "[^"]*"/"version": \"${{ inputs.version }}\"/' package.json package-lock.json
+        sed -i 's/"version": "[^"]*"/"version": \"${{ inputs.version }}\"/' package.json
         sed -i "s/^version:.*/version: ${{ inputs.version }}/" charts/dashboard/Chart.yaml
         sed -i "s/APP_VERSION:.*/APP_VERSION: ${{ inputs.version }}/" charts/dashboard/values.yaml
+
+        npm install --package-lock-only
       shell: bash
 
     - name: Package Helm Chart
