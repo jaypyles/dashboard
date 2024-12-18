@@ -40,9 +40,6 @@ def create_config_file(filename: str, config: Schema):
     with open(f"./configs/{filename}.yml", "w") as f:
         yaml.dump(filtered_config, f, default_flow_style=False, sort_keys=False)
 
-    # change permissions so host can write
-    os.chmod(f"./configs/{filename}.yml", 0o777)
-
 
 def get_config_file_for_read(host: str):
     config = utils.read(f"./configs/{host}.yml")
@@ -62,6 +59,7 @@ def add_command_to_config(host: str, command: Command):
     create_config_file(host, config)
     return {"status": "success", "reason": "Command successfully created."}
 
+
 def remove_command_from_config(host: str, command: Command):
     config = utils.read(f"./configs/{host}.yml")
 
@@ -71,4 +69,3 @@ def remove_command_from_config(host: str, command: Command):
     config.commands.remove(command)
     create_config_file(host, config)
     return {"status": "success", "reason": "Command successfully deleted."}
-
