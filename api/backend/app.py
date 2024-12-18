@@ -7,7 +7,10 @@ from api.backend.routers.host import host_router
 from api.backend.routers.config import config_router
 from api.backend.routers.command import command_router
 from api.backend.routers.integration import integration_router
+from api.backend.database import create_database
 
+
+create_database()
 
 app = FastAPI(title="api")
 

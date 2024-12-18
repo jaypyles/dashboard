@@ -6,7 +6,6 @@ import { TableRow, TableCell } from "@mui/material";
 import classes from "./command-table.module.css";
 import ContextMenu from "../../context-menu/context-menu";
 import { useContextMenu } from "@/lib/hooks/useContextMenu";
-import { toast } from "react-toastify";
 import { useToast } from "@/lib/hooks/useToast";
 import CursorTooltip from "@/components/shared/cursor-tooltip";
 import { TableLoader } from "@/components/dashboard/widgets/skeletons/table-loader";
@@ -20,6 +19,7 @@ interface CommandTableProps {
 const CommandTable = ({ host, refreshQueue, className }: CommandTableProps) => {
   const toast = useToast();
   const [commands, setCommands] = useState<Command[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedCommand, setSelectedCommand] = useState<Command | null>(null);
   const { contextMenuState, showContextMenu, hideContextMenu } =
     useContextMenu();
@@ -74,9 +74,11 @@ const CommandTable = ({ host, refreshQueue, className }: CommandTableProps) => {
 
   useEffect(() => {
     fetchAndSet(`/api/${host}/commands`, setCommands);
+
+    setLoading(false);
   }, [host]);
 
-  if (commands.length === 0) {
+  if (loading && commands.length === 0) {
     return <TableLoader className={classes.loader} />;
   }
 

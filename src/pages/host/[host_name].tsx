@@ -23,10 +23,11 @@ const HostManager = () => {
   const [terminalOpen, setTerminalOpen] = useState<boolean>(false);
   const [configOpen, setConfigOpen] = useState<boolean>(false);
   const [commandOpen, setCommandOpen] = useState<boolean>(false);
-
+  const [loading, setLoading] = useState<boolean>(true);
   const getQueue = async (host_name: string) => {
     const commands = await getCommandQueue(host_name);
     setCommandQueueOutput(commands.reverse());
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -104,6 +105,7 @@ const HostManager = () => {
               />
               <div className={classes.commandQueue}>
                 <CommandQueue
+                  loading={loading}
                   commands={commandQueueOutput}
                   setViewedResult={setViewedResult}
                   host={host_name as string}

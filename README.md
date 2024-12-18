@@ -61,11 +61,14 @@ commands:
 
 Integrations must be placed underneath `/dashboard/configs/integrations` with the name `<name>.yml`
 
+The `display_url` is optional and is used if you want to display a different url than the `url` in the integration, for example: http://192.168.1.100:8096 is the jellyfin url, but you want to display the jellyfin dashboard url located https://yourdomain.com/jellyfin.
+
 Example integration:
 
 ```yaml
 url: <url>
 api_key: <api_key>
+display_url: <display_url> # optional
 ```
 
 ### Editing the Background

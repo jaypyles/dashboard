@@ -1,5 +1,6 @@
 # STL
 import logging
+from typing import Optional, TypedDict
 
 # PDM
 from fastapi import APIRouter
@@ -20,12 +21,23 @@ LOG = logging.getLogger(__name__)
 integration_router = APIRouter()
 
 
+class Integration(TypedDict):
+    name: str
+    url: str
+
+
 @integration_router.get("/api/integrations")
-async def get_integrations():
-    return [
-        {"name": integration.name, "url": integration.config["url"]}
-        for integration in INTEGRATIONS
-    ]
+async def get_integrations() -> list[Integration]:
+    integrations = []
+
+    for integration in INTEGRATIONS:
+        url = integration.config["url"]
+        if integration.config.get("display_url"):
+            url = integration.config["display_url"]
+
+        integrations.append(Integration(name=integration.name, url=url))
+
+    return integrations
 
 
 @integration_router.get("/api/integrations/uptime")

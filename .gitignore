@@ -188,3 +188,4 @@ cython_debug/
 .next
 
 configs/*
+data

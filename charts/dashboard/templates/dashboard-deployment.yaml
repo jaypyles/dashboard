@@ -22,6 +22,9 @@ spec:
             - mountPath: /project/configs
               subPath: {{ .Values.app.metadata.name }}/configs
               name: config-volume
+            - mountPath: /project/data
+              subPath: {{ .Values.app.metadata.name }}/data
+              name: data-volume
           ports:
             - containerPort: 3000
           env:

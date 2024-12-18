@@ -1,5 +1,5 @@
 import classes from "./command-queue.module.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, PaperProps, Typography } from "@mui/material";
 import CustomTable from "@/components/shared/table/table";
 import { TableRow, TableCell } from "@mui/material";
@@ -20,6 +20,7 @@ interface CommandQueue extends PaperProps {
   className?: string;
   refreshQueue: (host_name: string) => Promise<void>;
   setOpen: () => void;
+  loading: boolean;
 }
 
 export const CommandQueue = ({
@@ -30,6 +31,7 @@ export const CommandQueue = ({
   className,
   refreshQueue,
   setOpen,
+  loading,
   ...rest
 }: CommandQueue) => {
   const { contextMenuState, showContextMenu, hideContextMenu } =
@@ -87,8 +89,12 @@ export const CommandQueue = ({
     }
   }, [host]);
 
-  if (commands.length === 0) {
+  if (loading && commands.length === 0) {
     return <TableLoader className={classes.loader} />;
+  }
+
+  if (commands.length === 0) {
+    return null;
   }
 
   return (
