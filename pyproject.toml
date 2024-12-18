@@ -1,6 +1,6 @@
 [project]
 name = "Dashboard"
-version = "1.1.26"
+version = "1.1.27"
 description = ""
 authors = [{ name = "Jayden Pyles", email = "jpylesbuisness@gmail.com" }]
 dependencies = [
