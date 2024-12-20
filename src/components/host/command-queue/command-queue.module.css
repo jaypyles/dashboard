@@ -26,16 +26,20 @@
   font-weight: bold;
 }
 
-.done {
+.completed {
   background-color: var(--completed);
 }
 
-.queued {
+.pending {
   background-color: var(--queued);
 }
 
 .running {
   background-color: var(--running);
+}
+
+.failed {
+  background-color: var(--failed);
 }
 
 .table {

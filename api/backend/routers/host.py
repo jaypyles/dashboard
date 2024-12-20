@@ -10,6 +10,8 @@ from fastapi.responses import JSONResponse
 from api.backend.host_manager import HOST_MAP
 from api.backend.database.database_functions import delete_job
 
+from api.backend.command_queue import COMMAND_QUEUE
+
 LOG = logging.getLogger(__name__)
 
 host_router = APIRouter()
@@ -34,7 +36,7 @@ async def get_host_commands(_: Request, host_name: str):
 
 @host_router.delete("/api/{host_name}/job/{id}")
 async def delete_single_job(id: str):
-    _ = await delete_job(id)
+    _ = COMMAND_QUEUE.delete(id)
     return JSONResponse({"status": "success", "reason": "Job successfully deleted."})
 
 

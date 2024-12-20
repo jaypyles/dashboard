@@ -1,35 +1,28 @@
 # STL
-import asyncio
+from pytask.job import Job
+from pytask.worker import Worker
 
 # LOCAL
 from api.backend.host_manager import HOST_MAP
-from api.backend.database.database_functions import (
-    update_job,
-    get_queued_job,
-    update_job_status,
-)
+from api.backend.command_queue import COMMAND_QUEUE
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-async def main():
-    while True:
-        job = await get_queued_job()
+def worker_function(job: Job):
+    print(f"Running job {job.task_id}", flush=True)
+    host = HOST_MAP[job.data["host"]]
+    command = job.data["commands"][0]
+    stdout, stderr = host.runner.dispatch(command["name"])
+    job.data["output"][command["name"]] = {"stdout": stdout, "stderr": stderr}
 
-        if job:
-            host = HOST_MAP[job["host"]]
-            await update_job_status(job["id"], "running")
-            for command in job["commands"]:
-                print("running")
-                stdout, stderr = host.runner.dispatch(command["name"])
-                await update_job_status(job["id"], "done")
-                _ = await update_job(
-                    job["id"],
-                    command["name"],
-                    {"stdout": stdout, "stderr": stderr},
-                )
 
-            print("restarting loop")
-            await asyncio.sleep(5)
+def main():
+    print("Starting Worker...", flush=True)
+    worker = Worker(COMMAND_QUEUE, worker_function, logger=logger)
+    worker.run()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

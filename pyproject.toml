@@ -15,13 +15,15 @@ dependencies = [
     "qbittorrent-api>=2024.8.65",
     "aiohttp>=3.10.5",
     "python-multipart>=0.0.20",
+    "pyyaml>=6.0.2",
+    "pytask-queue==1.0.2",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
 license = { text = "MIT" }
 
 [tool.pdm]
-distribution = false
+distribution = true
 
 [tool.pdm.dev-dependencies]
 dev = ["ipython>=8.26.0"]
@@ -39,7 +41,7 @@ reportUnknownVariableType = false
 reportUnknownMemberType = false
 reportExplicitAny = false
 
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 pythonPlatform = "Linux"
 
 

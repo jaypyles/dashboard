@@ -16,30 +16,24 @@ COPY postcss.config.js /frontend/postcss.config.js
 
 RUN npm run build
 
-# Stage 2: Build the Python backend
-FROM python:3.10-slim AS backend-builder
+# Stage 2: Combine frontend and backend into a single final image with supervisor
+FROM python:3.10.5-slim as final-image
 
-WORKDIR /backend
+RUN apt update && apt install -y --no-install-recommends supervisor curl uvicorn docker.io && \
+    rm -rf /var/lib/apt/lists/* 
 
-RUN apt update && apt install -y uvicorn docker.io
+ENV NODE_VERSION=18.17.0
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN node --version
+RUN npm --version
+
 RUN python -m pip --no-cache-dir install pdm
-RUN pdm config python.use_venv false
-
-COPY pyproject.toml pdm.lock /backend/
-COPY ./api /backend/api/
-
-# Stage 3: Combine frontend and backend into a single final image with supervisor
-FROM alpine:latest
-
-# Install Supervisor
-RUN apk add --no-cache supervisor nodejs npm py3-pip pipx bash
-RUN pipx install pdm
-
-# Supervisor configuration directory
-RUN mkdir -p /etc/supervisor/conf.d
-
-ENV PATH="/root/.local/share/pipx/venvs/pdm/bin:$PATH"
-ENV PATH="/root/.local/bin:$PATH"
 
 # Frontend setup
 WORKDIR /app
@@ -55,10 +49,16 @@ COPY --from=frontend-builder /frontend/postcss.config.js ./postcss.config.js
 
 # Backend setup
 WORKDIR /project
-COPY --from=backend-builder /backend /project/
+COPY pyproject.toml pdm.lock /project/
+COPY ./api /project/api/
 
-RUN pdm install
+RUN pdm install && \
+    rm -rf /root/.cache/pip
 
 # Copy Supervisor configuration
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY start.sh /start.sh
+
+# Set up log function
+RUN echo "function logs() { tail -f /var/log/\$1.log; }" >> /root/.bashrc
+RUN echo "function logs_err() { tail -f /var/log/\$1_error.log; }" >> /root/.bashrc

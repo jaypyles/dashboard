@@ -19,6 +19,7 @@
   --paper-opaque-bg: rgba(33, 29, 29, 0.75);
   --paper-opaque-dark: rgba(0, 0, 0, 0.5);
   --paper-hover-color: rgba(61, 61, 61);
+  --failed: rgba(254, 2, 2, 0.25);
   font-size: 20px;
 }
 

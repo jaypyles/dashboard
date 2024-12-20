@@ -14,9 +14,7 @@ export default async function handler(
   const { host_name, command } = req.query;
 
   try {
-    const response = await api.get<ResponseData>(
-      `/${host_name}/command/queue`
-    );
+    const response = await api.get<ResponseData>(`/${host_name}/command/queue`);
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Error in API handler:", error);

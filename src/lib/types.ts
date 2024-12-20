@@ -24,6 +24,7 @@ export type Command = {
 
 export type QueuedCommand = {
   id?: string;
+  task_id?: string;
   host: string;
   commands: Command[];
   status: "queued" | "running" | "done";

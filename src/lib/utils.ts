@@ -50,7 +50,7 @@ export const fetchAndSetWithPayload = async (
 export const getCommandQueue = async (host: string) => {
   const response = await fetch(`/api/${host}/command/command-queue`);
   const json = await response.json();
-  return json["jobs"];
+  return json;
 };
 
 export const getConfigForPublicUse = async (host: string) => {

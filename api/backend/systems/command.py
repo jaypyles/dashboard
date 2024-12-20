@@ -41,7 +41,7 @@ class Command:
             "name": self.name,
             "command": self.command,
             "args": [arg.to_dict() for arg in self.args] if self.args else [],
-            "type": type,
+            "type": self.type,
         }
 
     @override

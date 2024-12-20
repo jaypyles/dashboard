@@ -1,6 +1,7 @@
 # STL
 import logging
-from typing import Optional, TypedDict
+from typing_extensions import TypedDict
+
 
 # PDM
 from fastapi import APIRouter

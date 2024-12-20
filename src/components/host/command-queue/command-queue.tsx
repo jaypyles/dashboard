@@ -59,9 +59,9 @@ export const CommandQueue = ({
         label: "Delete Job",
         onClick: async () => {
           if (command) {
-            setCommands(commands.filter((cmd) => cmd.id !== command.id));
+            setCommands(commands.filter((cmd) => cmd.task_id !== command.task_id));
             try {
-              const res = await deleteJob(host as string, command.id!);
+              const res = await deleteJob(host as string, command.task_id!);
               if (res.status === "success") {
                 toast.success(res.reason);
                 setTimeout(() => refreshQueue(host as string), 100);
