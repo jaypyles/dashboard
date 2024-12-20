@@ -3,7 +3,7 @@ import axios from "axios";
 
 const cacheApi = setupCache(
   axios.create({
-    baseURL: `http://localhost:8000/api`,
+    baseURL: `http://127.0.0.1:8000/api`,
     timeout: 20000,
     headers: {
       "Content-Type": "application/json",
@@ -15,7 +15,7 @@ const cacheApi = setupCache(
 );
 
 const api = axios.create({
-  baseURL: `http://localhost:8000/api`,
+  baseURL: `http://127.0.0.1:8000/api`,
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",
