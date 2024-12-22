@@ -2,7 +2,6 @@ import React from "react";
 import { Paper, Typography } from "@mui/material";
 import classes from "./integration.module.css";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { clsx } from "clsx";
 
 type IntegrationProps = {
@@ -20,11 +19,9 @@ const Integration = ({
   link,
   children,
 }: IntegrationProps) => {
-  const router = useRouter();
-
   const handleNavigate = () => {
     if (link) {
-      router.push(link);
+      window.open(link, "_blank");
     }
   };
 

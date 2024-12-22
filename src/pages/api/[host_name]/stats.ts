@@ -13,19 +13,10 @@ export default async function handler(
 ) {
   try {
     const { host_name } = req.query;
-    const data = { paths: ["/home", "/", "/mnt/nas"] };
-
-    if (!data?.paths || data.paths.length === 0) {
-      return res
-        .status(400)
-        .json({ message: "No paths provided in the request body" });
-    }
-
-    const paths = data.paths;
 
     const response = await api.get<ResponseData>(`/${host_name}/stats`);
     const json = await response.data;
-
+    const paths = json.storage_paths || [];
     const uptimeRegex = new RegExp(`(\\d+\\s+days,\\s+(?:\\d+:\\d+|\\d+))`);
 
     if (json.uptime) {

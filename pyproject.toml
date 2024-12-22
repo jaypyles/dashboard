@@ -40,6 +40,7 @@ reportAny = false
 reportUnknownVariableType = false
 reportUnknownMemberType = false
 reportExplicitAny = false
+reportCallInDefaultInitializer = false
 
 pythonVersion = "3.10"
 pythonPlatform = "Linux"

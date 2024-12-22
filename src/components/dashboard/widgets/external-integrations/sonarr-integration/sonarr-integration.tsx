@@ -1,6 +1,6 @@
 import React from "react";
-import Integration from "../../../../shared/integration/integration";
-import { SonarrData } from "../../../../../lib/services/external-integrations/sonarr/sonarr.types";
+import Integration from "@/components/shared/integration/integration";
+import { SonarrData } from "@/lib/services/external-integrations/sonarr/sonarr.types";
 
 type SonarrIntegrationProps = {
   data: SonarrData;

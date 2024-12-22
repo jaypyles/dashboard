@@ -8,8 +8,6 @@ from fastapi.responses import JSONResponse
 
 # LOCAL
 from api.backend.host_manager import HOST_MAP
-from api.backend.database.database_functions import delete_job
-
 from api.backend.command_queue import COMMAND_QUEUE
 
 LOG = logging.getLogger(__name__)
@@ -43,6 +41,7 @@ async def delete_single_job(id: str):
 @host_router.get("/api/{host_name}/stats")
 async def get_stats(host_name: str):
     host = HOST_MAP[host_name]
+
     try:
         storage = "".join(host.runner.dispatch("storage")[0])
         usage = "".join(host.runner.dispatch("cpu_usage")[0])
@@ -54,6 +53,7 @@ async def get_stats(host_name: str):
         return JSONResponse(
             {
                 "storage": storage,
+                "storage_paths": host.storage,
                 "usage": usage,
                 "cores": cores,
                 "threads": threads,

@@ -35,7 +35,9 @@ async def get_background():
 
 
 @config_router.post("/api/config/background")
-async def upload_background(file: UploadFile = File(...)):
+async def upload_background(
+    file: UploadFile = File(...),
+):
     try:
         LOG.info(f"Form: {file}")
         config_utils.upload_background(file)

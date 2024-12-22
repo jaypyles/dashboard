@@ -48,6 +48,8 @@ host:
   port: 22
   username: user
   password: password
+  storage:
+    - /path/to/storage/to/monitor
 
 commands:
   - name: "view app logs"

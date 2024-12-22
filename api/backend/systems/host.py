@@ -12,6 +12,7 @@ class Host:
         self.hostname: str = config.host.hostname
         self.runner: MachineRunner = MachineRunner()
         self.runner.read_config(config_file)
+        self.storage: list[str] | None = config.host.storage
 
     def refresh(self):
         LOG.info(f"Refreshing host {self.name}")

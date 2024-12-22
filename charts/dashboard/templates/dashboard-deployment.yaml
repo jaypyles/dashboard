@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.app.metadata.name }}
 spec:
   replicas: {{ .Values.app.replicas }}
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: {{ .Values.app.metadata.name }}
@@ -17,7 +18,6 @@ spec:
           image: {{ .Values.app.frontendImage }}:{{ .Values.app.APP_VERSION }}
           command: ["bash", "/start.sh"]
           imagePullPolicy: Always
-          revisionHistoryLimit: 1
           volumeMounts:
             - mountPath: /project/configs
               subPath: {{ .Values.app.metadata.name }}/configs

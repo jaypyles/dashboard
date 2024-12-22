@@ -1,4 +1,3 @@
-from typing import Optional
 from pydantic import BaseModel
 
 
@@ -8,17 +7,18 @@ class Host(BaseModel):
     port: int
     username: str
     password: str
+    storage: list[str] | None = None
 
 
 class Arg(BaseModel):
     flag: str
-    value: Optional[str] = None
+    value: str | None = None
 
 
 class Command(BaseModel):
     name: str
     command: str
-    args: Optional[list[Arg]] = None
+    args: list[Arg] | None = None
 
 
 class Schema(BaseModel):
