@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import HostOverview from "../../components/shared/host-overview/host-overview";
+import HostOverview from "@/components/shared/host-overview/host-overview";
 import classes from "./host_name.module.css";
-import CommandTable from "../../components/shared/command/command-table/command-table";
-import Terminal from "../../components/host/terminal/terminal";
-import { CommandQueue } from "../../components/host/command-queue/command-queue";
-import { getCommandQueue } from "../../lib/utils";
-import Config from "../../components/host/config/config";
+import CommandTable from "@/components/shared/command/command-table/command-table";
+import Terminal from "@/components/host/terminal/terminal";
+import { CommandQueue } from "@/components/host/command-queue/command-queue";
+import { getCommandQueue } from "@/lib/utils";
+import Config from "@/components/host/config/config";
 import { Button, Container, IconButton, Paper } from "@mui/material";
-import AddCommand from "../../components/host/add-command/add-command";
-import { QueuedCommand } from "../../lib/types";
+import AddCommand from "@/components/host/add-command/add-command";
+import { QueuedCommand } from "@/lib/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { clsx } from "clsx";
-import { useGetSettings } from "@/lib/hooks/useGetSettings";
+import { useSettings } from "@/lib/hooks/useSettings";
 
 const HostManager = () => {
   const router = useRouter();
@@ -25,7 +25,7 @@ const HostManager = () => {
   const [configOpen, setConfigOpen] = useState<boolean>(false);
   const [commandOpen, setCommandOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const settings = useGetSettings();
+  const { settings } = useSettings();
 
   const getQueue = async (host_name: string) => {
     const commands = await getCommandQueue(host_name);
@@ -56,82 +56,79 @@ const HostManager = () => {
   };
 
   return (
-    <>
-      {host_name && (
-        <>
-          <IconButton
-            className={classes.backButton}
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            <ArrowBackIcon />
-          </IconButton>
-          <Container
-            className={classes.container}
-            style={{ backgroundColor: settings.cardColor }}
-            maxWidth="lg"
-          >
-            <div className={`${classes.gridWrapper}`}>
-              <div className={classes.topRow}>
-                <Paper className={clsx(classes.overview, "h-full w-full")}>
-                  <div></div>
-                  <HostOverview
-                    host={host_name as string}
-                    className={classes.hostOverview}
-                    tagClassName={classes.tags}
-                  />
-                  <div className={classes.buttons}>
-                    <Button onClick={handleConfigOpen}>Open Config</Button>
-                    <Button
-                      onClick={() => {
-                        setCommandOpen(true);
-                      }}
-                    >
-                      Add Command
-                    </Button>
-                  </div>
-                  <Config
-                    host={host_name as string}
-                    open={configOpen}
-                    handleClose={handleConfigClose}
-                  />
-                  <AddCommand
-                    host={host_name as string}
-                    open={commandOpen}
-                    handleClose={() => {
-                      setCommandOpen(false);
+    host_name && (
+      <>
+        <IconButton
+          className={classes.backButton}
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        <Container
+          className={classes.container}
+          style={{ backgroundColor: settings.cardColor }}
+          maxWidth="lg"
+        >
+          <div className={`${classes.gridWrapper}`}>
+            <div className={classes.topRow}>
+              <Paper className={clsx(classes.overview, "h-full w-full")}>
+                <HostOverview
+                  host={host_name as string}
+                  className={classes.hostOverview}
+                  tagClassName={classes.tags}
+                />
+                <div className={classes.buttons}>
+                  <Button onClick={handleConfigOpen}>Open Config</Button>
+                  <Button
+                    onClick={() => {
+                      setCommandOpen(true);
                     }}
-                  />
-                </Paper>
-              </div>
-              <CommandTable
+                  >
+                    Add Command
+                  </Button>
+                </div>
+                <Config
+                  host={host_name as string}
+                  open={configOpen}
+                  handleClose={handleConfigClose}
+                />
+                <AddCommand
+                  host={host_name as string}
+                  open={commandOpen}
+                  handleClose={() => {
+                    setCommandOpen(false);
+                  }}
+                />
+              </Paper>
+            </div>
+            <CommandTable
+              host={host_name as string}
+              refreshQueue={getQueue}
+              className={classes.commandTable}
+            />
+            <div className={classes.commandQueue}>
+              <CommandQueue
+                loading={loading}
+                commands={commandQueueOutput}
+                setViewedResult={setViewedResult}
                 host={host_name as string}
                 refreshQueue={getQueue}
-                className={classes.commandTable}
+                setOpen={handleTerminalOpen}
+                setCommands={setCommandQueueOutput}
+                className={classes.commandQueue}
               />
-              <div className={classes.commandQueue}>
-                <CommandQueue
-                  loading={loading}
-                  commands={commandQueueOutput}
-                  setViewedResult={setViewedResult}
-                  host={host_name as string}
-                  refreshQueue={getQueue}
-                  setOpen={handleTerminalOpen}
-                  setCommands={setCommandQueueOutput}
-                  className={classes.commandQueue}
-                />
-                <Terminal
-                  open={terminalOpen}
-                  handleClose={handleTerminalClose}
-                  output={viewedResult}
-                />
-              </div>
+              <Terminal
+                open={terminalOpen}
+                handleClose={handleTerminalClose}
+                output={viewedResult}
+              />
             </div>
-          </Container>
-        </>
-      )}
-    </>
+          </div>
+        </Container>
+      </>
+    )
   );
 };
 

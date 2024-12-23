@@ -3,7 +3,7 @@ import { Paper, Typography } from "@mui/material";
 import classes from "./integration.module.css";
 import Image from "next/image";
 import { clsx } from "clsx";
-import { useGetSettings } from "@/lib/hooks/useGetSettings";
+import { useSettings } from "@/lib/hooks/useSettings";
 import { hexToRgba } from "@/lib/utils";
 
 type IntegrationProps = {
@@ -21,7 +21,7 @@ const Integration = ({
   link,
   children,
 }: IntegrationProps) => {
-  const settings = useGetSettings();
+  const { settings } = useSettings();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleNavigate = () => {

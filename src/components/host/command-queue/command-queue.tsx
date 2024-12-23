@@ -59,7 +59,9 @@ export const CommandQueue = ({
         label: "Delete Job",
         onClick: async () => {
           if (command) {
-            setCommands(commands.filter((cmd) => cmd.task_id !== command.task_id));
+            setCommands(
+              commands.filter((cmd) => cmd.task_id !== command.task_id)
+            );
             try {
               const res = await deleteJob(host as string, command.task_id!);
               if (res.status === "success") {
@@ -119,14 +121,17 @@ export const CommandQueue = ({
                   <p className={classes.name}>{com.name}</p>
                 ))}
               </TableCell>
+
               <TableCell component="th" scope="row">
                 {command.commands.map((com) => (
                   <p>{com.command}</p>
                 ))}
               </TableCell>
+
               <TableCell component="th" scope="row">
                 {command.time_created}
               </TableCell>
+
               <TableCell component="th" scope="row">
                 <Typography
                   className={clsx(classes.status, classes[command.status])}

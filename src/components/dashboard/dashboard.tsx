@@ -4,12 +4,9 @@ import { Container, Grid } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "@/components/shared/host-overview/host-overview";
 import { useRouter } from "next/router";
-import {
-  ExternalIntegration,
-  Integration,
-} from "@/components/dashboard/widgets/external-integrations/external-integration";
+import { ExternalIntegration } from "@/components/dashboard/widgets/external-integrations/external-integration";
 import useGetIntegrations from "@/lib/hooks/useGetIntegrations";
-
+import { Integration } from "@/components/dashboard/widgets/external-integrations/external-integration.types";
 const Dashboard = () => {
   const router = useRouter();
   const [hosts, setHosts] = useState<string[]>([]);

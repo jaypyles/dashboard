@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import classes from "./host-loader.module.css";
 import { Skeleton } from "@mui/material";
 import clsx from "clsx";
-import { useGetSettings } from "@/lib/hooks/useGetSettings";
+import { useSettings } from "@/lib/hooks/useSettings";
 
 export type HostLoaderProps = {
   className?: string;
 };
 
 export const HostLoader = ({ className }: HostLoaderProps) => {
-  const settings = useGetSettings();
+  const { settings } = useSettings();
   const [isHovered, setIsHovered] = useState(false);
 
   return (

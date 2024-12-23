@@ -1,41 +1,18 @@
-import { useState, useEffect } from "react";
-import { JellyfinData } from "../../../../lib/services/external-integrations/jellyfin/jellyfin.types";
+import { useState } from "react";
 import { JellyfinIntegration } from "./jellyfin-integration/jellyfin-integration";
-import { IntegrationLoader } from "../../widgets/skeletons";
-import { apiCaller } from "../../../../lib/services/api-caller/api-caller";
-import { QbittorrentData } from "../../../../lib/services/external-integrations/qbittorrent/qbittorrent.types";
+import { IntegrationLoader } from "@/components/dashboard/widgets/skeletons";
+import { apiCaller } from "@/lib/services/api-caller/api-caller";
 import { QbittorrentIntegration } from "./qbittorrent-integration/qbittorrent-integration";
 import { RadarrIntegration } from "./radarr-integration/radarr-integration";
-import { RadarrData } from "../../../../lib/services/external-integrations/radarr/radarr.types";
-import { SonarrData } from "../../../../lib/services/external-integrations/sonarr/sonarr.types";
 import { SonarrIntegration } from "./sonarr-integration/sonarr-integration";
-import { UptimeKumaData } from "../../../../lib/services/external-integrations/uptime-kuma/uptime-kuma.types";
 import { UptimeKumaIntegration } from "./uptime-kuma-integration/uptime-kuma-integration";
-import { ArgoCDData } from "@/lib/services/external-integrations/argocd/integration.types";
 import { ArgoCDIntegration } from "./argocd-integration";
-
-export type Integration =
-  | "jellyfin"
-  | "qbittorrent"
-  | "radarr"
-  | "sonarr"
-  | "kuma"
-  | "argocd";
-
-type IntegrationPropsMap = {
-  jellyfin: JellyfinData;
-  qbittorrent: QbittorrentData;
-  radarr: RadarrData;
-  sonarr: SonarrData;
-  kuma: UptimeKumaData;
-  argocd: ArgoCDData[];
-};
-
-type ExternalIntegrationProps<T extends Integration> = {
-  integration: T;
-  polling?: boolean;
-  url: string;
-};
+import { usePollingEffect } from "@/lib/hooks/usePollingEffect";
+import {
+  Integration,
+  IntegrationPropsMap,
+  ExternalIntegrationProps,
+} from "./external-integration.types";
 
 const integrations: {
   [K in Integration]: React.FC<{ data: IntegrationPropsMap[K]; url: string }>;
@@ -57,40 +34,22 @@ export const ExternalIntegration = <T extends Integration>({
     data: IntegrationPropsMap[T];
     url: string;
   }>;
-  const [apiData, setApiData] = useState<IntegrationPropsMap[T] | null>(null);
+  const [data, setData] = useState<IntegrationPropsMap[T] | null>(null);
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        if (polling) {
-          const data = (await apiCaller[
-            integration
-          ]()) as IntegrationPropsMap[T];
-          setApiData(data);
-
-          const interval = setInterval(async () => {
-            const data = (await apiCaller[
-              integration
-            ]()) as IntegrationPropsMap[T];
-            setApiData(data);
-          }, 20000);
-
-          return () => clearInterval(interval);
-        }
-
-        const data = (await apiCaller[integration]()) as IntegrationPropsMap[T];
-        setApiData(data);
-      } catch (error) {
-        console.error("Failed to fetch data", error);
-      }
-    };
-
-    getData();
-  }, []);
-
-  return apiData ? (
-    <Component data={apiData} url={url} />
-  ) : (
-    <IntegrationLoader />
+  usePollingEffect(
+    async () => {
+      const data = (await apiCaller[integration]()) as IntegrationPropsMap[T];
+      setData(data);
+    },
+    20000,
+    [],
+    true,
+    polling
   );
+
+  if (!data) {
+    return <IntegrationLoader />;
+  }
+
+  return <Component data={data} url={url} />;
 };

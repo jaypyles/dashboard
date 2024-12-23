@@ -2,6 +2,7 @@ import axios from "axios";
 import { setupCache, buildWebStorage } from "axios-cache-interceptor";
 import { AddCommand, Config } from "./types";
 import { AxiosCacheInstance } from "axios-cache-interceptor";
+
 export const apiGet = async (url: string, options?: object) => {
   const response = await fetch(url, options);
   const json = await response.json();
@@ -127,4 +128,10 @@ export const hexToRgba = (hex: string, opacity: number) => {
     hex.slice(3, 5),
     16
   )}, ${parseInt(hex.slice(5, 7), 16)}, ${opacity})`;
+};
+
+export const getHoverBackground = (isHovered: boolean, color: string) => {
+  return {
+    backgroundColor: isHovered ? hexToRgba(color, 1) : hexToRgba(color, 0.75),
+  };
 };

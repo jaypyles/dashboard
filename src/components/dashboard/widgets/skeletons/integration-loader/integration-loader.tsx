@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import classes from "./integration-loader.module.css";
-import { Skeleton, Stack } from "@mui/material";
-import { useGetSettings } from "@/lib/hooks/useGetSettings";
+import { Skeleton } from "@mui/material";
+import { useSettings } from "@/lib/hooks/useSettings";
 
 export const IntegrationLoader = () => {
-  const settings = useGetSettings();
+  const { settings } = useSettings();
   const [isHovered, setIsHovered] = useState(false);
 
   return (

@@ -15,6 +15,7 @@ export const RunningContainers = ({
   className,
 }: RunningContainersProps) => {
   const [containerCount, setContainerCount] = useState<CommandOutput>();
+
   const cacheApi = useMemo(() => {
     return createClientSideCacheApi();
   }, []);
@@ -32,24 +33,19 @@ export const RunningContainers = ({
   }
 
   return (
-    <>
-      {containerCount && (
-        <div className={`${classes.runningContainers} ${className}`}>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            component="p"
-            className={classes.containerCount}
-            display="inline"
-          >
-            <DirectionsBoatIcon
-              fontSize="inherit"
-              className={classes.shipIcon}
-            />
-            {containerCount.stdout}
-          </Typography>
-        </div>
-      )}
-    </>
+    containerCount && (
+      <div className={`${classes.runningContainers} ${className}`}>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          component="p"
+          className={classes.containerCount}
+          display="inline"
+        >
+          <DirectionsBoatIcon fontSize="inherit" className={classes.shipIcon} />
+          {containerCount.stdout}
+        </Typography>
+      </div>
+    )
   );
 };

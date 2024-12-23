@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { AddCommand as AddCommandType } from "../../../lib/types";
 import { addCommand } from "../../../lib/utils";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface AddCommandProps extends PaperProps {
   host: string;
@@ -94,106 +94,104 @@ const AddCommand = ({
   };
 
   return (
-    <>
-      <Dialog
-        onClose={() => {
-          handleClose();
-          setFormData(initialFormData);
-        }}
-        open={open}
-      >
-        <DialogContent>
-          <Paper
-            className={classes.addCommand}
-            component="form"
-            onSubmit={handleSubmit}
-            {...rest}
-          >
-            <FormControl fullWidth>
+    <Dialog
+      onClose={() => {
+        handleClose();
+        setFormData(initialFormData);
+      }}
+      open={open}
+    >
+      <DialogContent>
+        <Paper
+          className={classes.addCommand}
+          component="form"
+          onSubmit={handleSubmit}
+          {...rest}
+        >
+          <FormControl fullWidth>
+            <Box
+              display="flex"
+              alignItems="center"
+              className={classes.commandOption}
+            >
+              <Typography variant="body1" sx={{ mr: 2, minWidth: "100px" }}>
+                Command Name
+              </Typography>
+              <TextField
+                id="command-name"
+                variant="outlined"
+                name="name"
+                value={formData.command.name}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              className={classes.commandOption}
+            >
+              <Typography variant="body1" sx={{ mr: 2, minWidth: "100px" }}>
+                Command
+              </Typography>
+              <TextField
+                id="command"
+                variant="outlined"
+                name="command"
+                value={formData.command.command}
+                onChange={handleChange}
+                fullWidth
+                required
+              />
+            </Box>
+
+            {formData.command.args.map((arg, index) => (
               <Box
+                key={index}
                 display="flex"
                 alignItems="center"
                 className={classes.commandOption}
+                mt={2}
               >
                 <Typography variant="body1" sx={{ mr: 2, minWidth: "100px" }}>
-                  Command Name
+                  Arg
                 </Typography>
                 <TextField
-                  id="command-name"
+                  id={`flag-${index}`}
                   variant="outlined"
-                  name="name"
-                  value={formData.command.name}
-                  onChange={handleChange}
-                  fullWidth
-                  required
+                  name="flag"
+                  label="Flag"
+                  value={arg.flag}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleArgChange(index, e)
+                  }
+                  sx={{ mr: 2 }}
                 />
-              </Box>
-              <Box
-                display="flex"
-                alignItems="center"
-                className={classes.commandOption}
-              >
-                <Typography variant="body1" sx={{ mr: 2, minWidth: "100px" }}>
-                  Command
-                </Typography>
                 <TextField
-                  id="command"
+                  id={`value-${index}`}
                   variant="outlined"
-                  name="command"
-                  value={formData.command.command}
-                  onChange={handleChange}
-                  fullWidth
-                  required
+                  name="value"
+                  label="Value"
+                  value={arg.value}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    handleArgChange(index, e)
+                  }
                 />
               </Box>
+            ))}
 
-              {formData.command.args.map((arg, index) => (
-                <Box
-                  key={index}
-                  display="flex"
-                  alignItems="center"
-                  className={classes.commandOption}
-                  mt={2}
-                >
-                  <Typography variant="body1" sx={{ mr: 2, minWidth: "100px" }}>
-                    Arg
-                  </Typography>
-                  <TextField
-                    id={`flag-${index}`}
-                    variant="outlined"
-                    name="flag"
-                    label="Flag"
-                    value={arg.flag}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      handleArgChange(index, e)
-                    }
-                    sx={{ mr: 2 }}
-                  />
-                  <TextField
-                    id={`value-${index}`}
-                    variant="outlined"
-                    name="value"
-                    label="Value"
-                    value={arg.value}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      handleArgChange(index, e)
-                    }
-                  />
-                </Box>
-              ))}
+            <Button onClick={handleAddArg} sx={{ mt: 2 }}>
+              + Add Arg
+            </Button>
 
-              <Button onClick={handleAddArg} sx={{ mt: 2 }}>
-                + Add Arg
-              </Button>
-
-              <Button type="submit" sx={{ mt: 2 }}>
-                Submit
-              </Button>
-            </FormControl>
-          </Paper>
-        </DialogContent>
-      </Dialog>
-    </>
+            <Button type="submit" sx={{ mt: 2 }}>
+              Submit
+            </Button>
+          </FormControl>
+        </Paper>
+      </DialogContent>
+    </Dialog>
   );
 };
 
