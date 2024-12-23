@@ -12,6 +12,7 @@ import AddCommand from "../../components/host/add-command/add-command";
 import { QueuedCommand } from "../../lib/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { clsx } from "clsx";
+import { useGetSettings } from "@/lib/hooks/useGetSettings";
 
 const HostManager = () => {
   const router = useRouter();
@@ -24,6 +25,8 @@ const HostManager = () => {
   const [configOpen, setConfigOpen] = useState<boolean>(false);
   const [commandOpen, setCommandOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const settings = useGetSettings();
+
   const getQueue = async (host_name: string) => {
     const commands = await getCommandQueue(host_name);
     setCommandQueueOutput(commands.reverse());
@@ -64,7 +67,11 @@ const HostManager = () => {
           >
             <ArrowBackIcon />
           </IconButton>
-          <Container className={classes.container} maxWidth="lg">
+          <Container
+            className={classes.container}
+            style={{ backgroundColor: settings.cardColor }}
+            maxWidth="lg"
+          >
             <div className={`${classes.gridWrapper}`}>
               <div className={classes.topRow}>
                 <Paper className={clsx(classes.overview, "h-full w-full")}>

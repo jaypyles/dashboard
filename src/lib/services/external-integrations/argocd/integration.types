@@ -1,0 +1,4 @@
+export type ArgoCDIntegrationProps = {
+  data: ArgoCDData;
+  url: string;
+}; 

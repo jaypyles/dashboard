@@ -1,5 +1,5 @@
 import "@/styles/globals.css";
-
+import { SettingsControl } from "@/components/dashboard/controls/settings/settings-control";
 import React, { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -56,7 +56,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
-            <BackgroundChanger className="background-changer" />
+            <div className="global-controls">
+              <BackgroundChanger className="global-control" />
+              <SettingsControl className="global-control" />
+            </div>
             <Box
               className="mainWrapper"
               sx={{

@@ -33,6 +33,11 @@ const getIntegrationsData = async () => {
   return data;
 };
 
+const getArgoCDData = async () => {
+  const data = await externalIntegrations.argocd.applications();
+  return data;
+};
+
 export const apiCaller = {
   jellyfin: getJellyfinData,
   qbittorrent: getQbittorrrentData,
@@ -40,4 +45,5 @@ export const apiCaller = {
   sonarr: getSonarrData,
   kuma: getUptimeKumaData,
   integrations: getIntegrationsData,
+  argocd: getArgoCDData,
 };

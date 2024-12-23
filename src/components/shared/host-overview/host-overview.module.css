@@ -3,10 +3,6 @@
   align-self: flex-end;
 }
 
-.card {
-  background-color: var(--paper-opaque-bg);
-}
-
 .host-card {
   min-height: 12.25rem;
   display: flex;

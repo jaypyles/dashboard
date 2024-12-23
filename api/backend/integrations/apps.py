@@ -8,3 +8,4 @@ class Apps(Enum):
     SONARR = "sonarr"
     QBITTORRENT = "qbittorrent"
     KUMA = "kuma"
+    ARGOCD = "argocd"

@@ -52,3 +52,7 @@ export type Integration = {
   name: string;
   url: string;
 };
+
+export type Settings = {
+  cardColor: string;
+};

@@ -11,13 +11,16 @@ import { SonarrData } from "../../../../lib/services/external-integrations/sonar
 import { SonarrIntegration } from "./sonarr-integration/sonarr-integration";
 import { UptimeKumaData } from "../../../../lib/services/external-integrations/uptime-kuma/uptime-kuma.types";
 import { UptimeKumaIntegration } from "./uptime-kuma-integration/uptime-kuma-integration";
+import { ArgoCDData } from "@/lib/services/external-integrations/argocd/integration.types";
+import { ArgoCDIntegration } from "./argocd-integration";
 
 export type Integration =
   | "jellyfin"
   | "qbittorrent"
   | "radarr"
   | "sonarr"
-  | "kuma";
+  | "kuma"
+  | "argocd";
 
 type IntegrationPropsMap = {
   jellyfin: JellyfinData;
@@ -25,6 +28,7 @@ type IntegrationPropsMap = {
   radarr: RadarrData;
   sonarr: SonarrData;
   kuma: UptimeKumaData;
+  argocd: ArgoCDData[];
 };
 
 type ExternalIntegrationProps<T extends Integration> = {
@@ -41,6 +45,7 @@ const integrations: {
   radarr: RadarrIntegration,
   sonarr: SonarrIntegration,
   kuma: UptimeKumaIntegration,
+  argocd: ArgoCDIntegration,
 };
 
 export const ExternalIntegration = <T extends Integration>({

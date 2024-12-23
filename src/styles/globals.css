@@ -20,6 +20,8 @@
   --paper-opaque-dark: rgba(0, 0, 0, 0.5);
   --paper-hover-color: rgba(61, 61, 61);
   --failed: rgba(254, 2, 2, 0.25);
+  --synced: rgba(48, 254, 2, 0.75);
+  --outOfSync: rgba(238, 255, 0, 0.75);
   font-size: 20px;
 }
 
@@ -69,11 +71,17 @@ body,
   width: 100%;
 }
 
-.background-changer {
+.global-controls {
   position: absolute;
   top: 0;
   right: 0;
 
   margin-top: 0.5rem;
   margin-right: 1rem;
+}
+
+.circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
 }

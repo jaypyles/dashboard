@@ -15,6 +15,7 @@ from api.backend.integrations import (
     get_uptime,
     get_jellyfin_data,
     get_transfer_info,
+    get_argocd_data,
 )
 
 LOG = logging.getLogger(__name__)
@@ -64,3 +65,8 @@ async def get_radarr_movie_count():
 @integration_router.get("/api/integrations/sonarr/shows")
 async def get_sonarr_show_count():
     return await get_shows()
+
+
+@integration_router.get("/api/integrations/argocd/applications")
+def get_argocd_applications():
+    return get_argocd_data()

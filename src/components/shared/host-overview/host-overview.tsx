@@ -1,5 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { createClientSideCacheApi, fetchAndSetWithPayload } from "@/lib/utils";
+import {
+  createClientSideCacheApi,
+  fetchAndSetWithPayload,
+  hexToRgba,
+} from "@/lib/utils";
 import { Typography, Card, CardContent, CardProps } from "@mui/material";
 import classes from "./host-overview.module.css";
 import LinearProgressWithLabel from "@/components/shared/linear-progress-with-label/linearProgressWithLabel";
@@ -8,6 +12,7 @@ import { clsx } from "clsx";
 import { HostLoader } from "@/components/dashboard/widgets/skeletons";
 import { RamOverview } from "@/components/dashboard/widgets/ram-overview";
 import type { HostStatistics } from "./host-overview.types";
+import { useGetSettings } from "@/lib/hooks/useGetSettings";
 
 type HostProps = {
   host: string;
@@ -24,6 +29,8 @@ const HostOverview = ({
 }: HostProps & CardProps) => {
   const [statistics, setStatistics] = useState<HostStatistics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const settings = useGetSettings();
+  const [isHovered, setIsHovered] = useState(false);
 
   const cacheApi = useMemo(() => {
     return createClientSideCacheApi();
@@ -54,12 +61,24 @@ const HostOverview = ({
     return () => clearInterval(interval);
   }, [host]);
 
+  const cardColor = hexToRgba(settings.cardColor, 0.75);
+  const hoverCardColor = hexToRgba(settings.cardColor, 1);
+
   if (isLoading) {
     return <HostLoader className={clsx(classes.loader, className)} />;
   }
 
   return (
-    <Card className={clsx(classes.card, className)} onClick={onClick} {...rest}>
+    <Card
+      className={clsx(classes.card, className)}
+      onClick={onClick}
+      {...rest}
+      style={{
+        backgroundColor: isHovered ? hoverCardColor : cardColor,
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <CardContent className={classes["host-card"]}>
         <div>
           <Typography variant="h6" component="div">
