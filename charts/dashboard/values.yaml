@@ -1,5 +1,5 @@
 app:
-  APP_VERSION: 1.1.30
+  APP_VERSION: 1.1.31
   replicas: 1
   revisionHistoryLimit: 1
   metadata:
