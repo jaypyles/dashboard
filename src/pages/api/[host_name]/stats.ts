@@ -27,7 +27,7 @@ export default async function handler(
       }
     }
 
-    let storage: object[] = [];
+    const storage: object[] = [];
 
     paths.forEach((path: string) => {
       const storageSizeRegex = new RegExp(
@@ -44,7 +44,7 @@ export default async function handler(
             size: match[2],
             used: match[3],
             available: match[4],
-            usePercent: Number(match[5].replace("%", "")),
+            usePercent: Number(match[5]?.replace("%", "")),
           };
 
           storage.push(storageParts);

@@ -21,12 +21,14 @@ export const UptimeKumaIntegration = ({
           <Tooltip title={key} placement="top" key={key}>
             <div
               className={clsx(classes.uptime, {
-                [classes.up]: data.uptime[key].msg.includes("200"),
-                [classes.down]: !data.uptime[key].msg.includes("200"),
+                [classes.up as string]:
+                  data.uptime[key as string]?.msg.includes("200"),
+                [classes.down as string]:
+                  !data.uptime[key as string]?.msg.includes("200"),
               })}
             >
               <div className={classes.circle}></div>
-              <Typography>{data.uptime[key].ping}ms</Typography>
+              <Typography>{data.uptime[key as string]?.ping}ms</Typography>
             </div>
           </Tooltip>
         ))}
@@ -35,11 +37,7 @@ export const UptimeKumaIntegration = ({
   };
 
   return (
-    <Integration
-      title="uptime-kuma"
-      icon="/icons/kuma.png"
-      link={url}
-    >
+    <Integration title="uptime-kuma" icon="/icons/kuma.png" link={url}>
       <Uptimes />
     </Integration>
   );

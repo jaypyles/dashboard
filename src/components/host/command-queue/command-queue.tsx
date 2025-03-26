@@ -45,7 +45,7 @@ export const CommandQueue = ({
       ""
     );
 
-    combinedOutput = `$ ${command.commands[0].command}\n${combinedOutput}`;
+    combinedOutput = `$ ${command.commands[0]?.command}\n${combinedOutput}`;
     setViewedResult(combinedOutput);
     setOpen();
   };
@@ -89,6 +89,8 @@ export const CommandQueue = ({
 
       return () => clearInterval(intervalId);
     }
+
+    return;
   }, [host]);
 
   if (loading && commands.length === 0) {
@@ -108,7 +110,7 @@ export const CommandQueue = ({
         {commands.map((command, index) => (
           <CursorTooltip
             title="View Output"
-            key={`${command.commands[0].name}-${index}`}
+            key={`${command.commands[0]?.name}-${index}`}
           >
             <TableRow
               key={index}

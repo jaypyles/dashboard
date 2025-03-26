@@ -1,15 +1,14 @@
 .applications {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.5rem;
 }
 
 .application {
   background-color: var(--integration-bg-color);
-  padding: 0.125rem;
+  padding: 0.5rem;
   border-radius: 0.125rem;
 
-  width: 100%;
   text-align: center;
 
   display: flex;

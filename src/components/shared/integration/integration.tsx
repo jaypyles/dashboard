@@ -35,7 +35,7 @@ const Integration = ({
 
   return (
     <Paper
-      className={clsx(classes.integration, { [classes.link]: link })}
+      className={clsx(classes.integration, { [classes.link as string]: link })}
       onClick={handleNavigate}
       style={{
         backgroundColor: isHovered ? hoverCardColor : cardColor,

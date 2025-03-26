@@ -14,15 +14,19 @@ export const fetchAndSet = async (
   setter: (arg: any) => void,
   axios?: AxiosCacheInstance
 ) => {
-  if (axios) {
-    const response = await axios.get(url);
-    setter(response.data);
-    return;
-  }
+  try {
+    if (axios) {
+      const response = await axios.get(url);
+      setter(response.data);
+      return;
+    }
 
-  const response = await fetch(url);
-  const json = await response.json();
-  setter(json);
+    const response = await fetch(url);
+    const json = await response.json();
+    setter(json);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const fetchAndSetWithPayload = async (

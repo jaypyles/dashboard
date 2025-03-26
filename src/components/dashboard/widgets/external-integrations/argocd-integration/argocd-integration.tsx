@@ -27,8 +27,9 @@ const Applications = ({ applications }: { applications: ArgoCDData[] }) => {
             <span className={classes.applicationName}>{application.name}</span>
             <span
               className={clsx("circle", {
-                [classes.synced]: application.status.toLowerCase() === "synced",
-                [classes.outOfSync]:
+                [classes.synced as string]:
+                  application.status.toLowerCase() === "synced",
+                [classes.outOfSync as string]:
                   application.status.toLowerCase() === "outofsync",
               })}
             ></span>

@@ -32,20 +32,22 @@ export const RunningContainers = ({
     return null;
   }
 
+  if (!containerCount) {
+    return null;
+  }
+
   return (
-    containerCount && (
-      <div className={`${classes.runningContainers} ${className}`}>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          component="p"
-          className={classes.containerCount}
-          display="inline"
-        >
-          <DirectionsBoatIcon fontSize="inherit" className={classes.shipIcon} />
-          {containerCount.stdout}
-        </Typography>
-      </div>
-    )
+    <div className={`${classes.runningContainers} ${className}`}>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        component="p"
+        className={classes.containerCount}
+        display="inline"
+      >
+        <DirectionsBoatIcon fontSize="inherit" className={classes.shipIcon} />
+        {containerCount.stdout}
+      </Typography>
+    </div>
   );
 };
