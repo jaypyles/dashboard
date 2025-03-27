@@ -9,7 +9,17 @@ from api.backend.models import AddCommand, BuildConfigFile
 from api.backend.host_manager import HOST_MAP
 from api.backend.logging import LOG
 
+from api.backend.configs.models import AppConfig
+
 config_router = APIRouter()
+
+
+@config_router.get("/api/app-config")
+async def get_app_config():
+    config = yaml_utils.read_yaml_file("./configs/app-config/app-config.yml")
+    app_config = AppConfig(files_url=config["files_url"])
+
+    return JSONResponse(app_config.model_dump())
 
 
 @config_router.post("/api/config")

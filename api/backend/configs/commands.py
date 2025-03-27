@@ -41,6 +41,11 @@ def create_config_file(filename: str, config: Schema):
         yaml.dump(filtered_config, f, default_flow_style=False, sort_keys=False)
 
 
+def read_yaml_file(filename: str):
+    with open(filename, "r") as f:
+        return yaml.load(f, Loader=yaml.FullLoader)
+
+
 def get_config_file_for_read(host: str):
     config = utils.read(f"./configs/{host}.yml")
     config.host.username = "user"

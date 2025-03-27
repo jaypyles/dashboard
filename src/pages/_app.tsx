@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 import { store } from "@/app";
 import { BackgroundChanger } from "@/components/dashboard/controls";
+import { Files } from "@/components/dashboard/controls/files";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -59,6 +60,7 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
             <div className="global-controls">
               <BackgroundChanger className="global-control" />
               <SettingsControl className="global-control" />
+              <Files className="global-control" />
             </div>
             <Box
               className="mainWrapper"

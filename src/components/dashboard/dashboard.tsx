@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { fetchAndSet } from "@/lib/utils";
-import { Container, Grid } from "@mui/material";
+import { Container } from "@mui/material";
 import classes from "./dashboard.module.css";
 import HostOverview from "@/components/shared/host-overview/host-overview";
 import { useRouter } from "next/router";
