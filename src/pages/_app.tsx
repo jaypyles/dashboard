@@ -57,11 +57,6 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
             <CssBaseline />
-            <div className="global-controls">
-              <BackgroundChanger className="global-control" />
-              <SettingsControl className="global-control" />
-              <Files className="global-control" />
-            </div>
             <Box
               className="mainWrapper"
               sx={{

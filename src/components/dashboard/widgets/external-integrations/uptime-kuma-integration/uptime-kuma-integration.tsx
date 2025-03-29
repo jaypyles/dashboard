@@ -15,25 +15,21 @@ export const UptimeKumaIntegration = ({
   url,
 }: UptimeKumaIntegrationProps) => {
   const Uptimes = () => {
-    return (
-      <>
-        {Object.keys(data.uptime).map((key) => (
-          <Tooltip title={key} placement="top" key={key}>
-            <div
-              className={clsx(classes.uptime, {
-                [classes.up as string]:
-                  data.uptime[key as string]?.msg.includes("200"),
-                [classes.down as string]:
-                  !data.uptime[key as string]?.msg.includes("200"),
-              })}
-            >
-              <div className={classes.circle}></div>
-              <Typography>{data.uptime[key as string]?.ping}ms</Typography>
-            </div>
-          </Tooltip>
-        ))}
-      </>
-    );
+    return Object.keys(data.uptime).map((key) => (
+      <Tooltip title={key} placement="top" key={key}>
+        <div
+          className={clsx(classes.uptime, {
+            [classes.up as string]:
+              data.uptime[key as string]?.msg.includes("200"),
+            [classes.down as string]:
+              !data.uptime[key as string]?.msg.includes("200"),
+          })}
+        >
+          <div className={classes.circle}></div>
+          <Typography>{data.uptime[key as string]?.ping}ms</Typography>
+        </div>
+      </Tooltip>
+    ));
   };
 
   return (

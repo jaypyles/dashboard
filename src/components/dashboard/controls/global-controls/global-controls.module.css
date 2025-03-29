@@ -1,0 +1,24 @@
+.controls {
+  position: fixed;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  left: 50%;
+  z-index: 100;
+  background-color: var(--paper-opaque-bg);
+  padding: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.controlsGroup {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    display: none;
+  }
+}

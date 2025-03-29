@@ -24,9 +24,9 @@ const Integration = ({
   const { settings } = useSettings();
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleNavigate = () => {
+  const handleClick = () => {
     if (link) {
-      window.open(link, "_blank");
+      window.open(link, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -35,8 +35,10 @@ const Integration = ({
 
   return (
     <Paper
-      className={clsx(classes.integration, { [classes.link as string]: link })}
-      onClick={handleNavigate}
+      className={clsx(classes.integration, {
+        [classes.link as string]: link,
+      })}
+      onClick={handleClick}
       style={{
         backgroundColor: isHovered ? hoverCardColor : cardColor,
       }}

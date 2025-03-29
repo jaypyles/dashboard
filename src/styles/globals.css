@@ -71,15 +71,6 @@ body,
   width: 100%;
 }
 
-.global-controls {
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  margin-top: 0.5rem;
-  margin-right: 1rem;
-}
-
 .circle {
   width: 16px;
   height: 16px;

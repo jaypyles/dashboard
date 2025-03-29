@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { ExternalIntegration } from "@/components/dashboard/widgets/external-integrations/external-integration";
 import useGetIntegrations from "@/lib/hooks/useGetIntegrations";
 import { Integration } from "@/components/dashboard/widgets/external-integrations/external-integration.types";
+import { GlobalControls } from "./controls/global-controls";
+
 const Dashboard = () => {
   const router = useRouter();
   const [hosts, setHosts] = useState<string[]>([]);
@@ -21,30 +23,31 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <Container maxWidth="lg" className={classes["server-manager-container"]}>
-        <div className={classes.servers}>
-          {hosts.map((host) => (
-            <HostOverview
-              key={host}
-              host={host}
-              onClick={() => handleClick(host)}
-              className={classes.overview}
-            />
-          ))}
-        </div>
-        <div className={classes.integrations}>
-          {Object.values(integrations).map((integration) => (
-            <ExternalIntegration
-              key={integration.name}
-              integration={integration.name as Integration}
-              polling={integration.name === "qbittorrent"}
-              url={integration.url}
-            />
-          ))}
-        </div>
-      </Container>
-    </>
+    <Container maxWidth="md" className={classes["server-manager-container"]}>
+      <GlobalControls />
+
+      <div className={classes.servers}>
+        {hosts.map((host) => (
+          <HostOverview
+            key={host}
+            host={host}
+            onClick={() => handleClick(host)}
+            className={classes.overview}
+          />
+        ))}
+      </div>
+
+      <div className={classes.integrations}>
+        {Object.values(integrations).map((integration) => (
+          <ExternalIntegration
+            key={integration.name}
+            integration={integration.name as Integration}
+            polling={integration.name === "qbittorrent"}
+            url={integration.url}
+          />
+        ))}
+      </div>
+    </Container>
   );
 };
 

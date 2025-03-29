@@ -1,33 +1,109 @@
-.applications {
+.applicationsContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.statusSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statusLabel {
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.7rem;
+  margin-left: 0.25rem;
+}
+
+.applications {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 0.5rem;
+  width: 100%;
 }
 
 .application {
   background-color: var(--integration-bg-color);
   padding: 0.5rem;
-  border-radius: 0.125rem;
-
-  text-align: center;
-
+  border-radius: 6px;
   display: flex;
-  gap: 0.25rem;
-
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
 }
 
-.applicationStatus {
-  font-family: monospace;
-  padding: 0.125rem;
-  border-radius: 0.125rem;
+.application:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.applicationName {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
 }
 
 .synced {
+  border-color: var(--synced);
+}
+
+.synced .statusDot {
   background-color: var(--synced);
+  box-shadow: 0 0 6px var(--synced);
 }
 
 .outOfSync {
+  border-color: var(--outOfSync);
+}
+
+.outOfSync .statusDot {
   background-color: var(--outOfSync);
+  box-shadow: 0 0 6px var(--outOfSync);
+}
+
+@media (max-width: 768px) {
+  .applications {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.4rem;
+  }
+
+  .application {
+    padding: 0.4rem;
+  }
+
+  .applicationName {
+    font-size: 0.7rem;
+  }
+
+  .statusLabel {
+    font-size: 0.65rem;
+  }
 }

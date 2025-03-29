@@ -18,6 +18,8 @@
 
 .up {
   background-color: var(--kuma-status-up);
+  border: 1px solid darkgreen;
+  border-radius: 6px;
 }
 
 .up .circle {
