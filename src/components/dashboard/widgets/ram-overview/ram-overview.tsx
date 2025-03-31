@@ -1,3 +1,4 @@
+import React from "react";
 import { Typography } from "@mui/material";
 import styles from "./ram-overview.module.css";
 import MemoryIcon from "@mui/icons-material/Memory";

@@ -1,5 +1,5 @@
-export type Show = {};
+export type Show = object;
 
-export type RadarrResponseType = {
+export type SonarrResponseType = {
   shows: Show[];
 };

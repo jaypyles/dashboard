@@ -1,1 +1,1 @@
-export type QbittorrentData = {};
+export type QbittorrentData = object;

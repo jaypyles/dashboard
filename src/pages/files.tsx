@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useAppConfig } from "@/lib/hooks/use-app-config";
 
 const IframeComponent = () => {

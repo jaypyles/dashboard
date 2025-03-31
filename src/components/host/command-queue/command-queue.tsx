@@ -120,13 +120,17 @@ export const CommandQueue = ({
             >
               <TableCell component="th" scope="row">
                 {command.commands.map((com) => (
-                  <p className={classes.name}>{com.name}</p>
+                  <p key={com.name} className={classes.name}>
+                    {com.name}
+                  </p>
                 ))}
               </TableCell>
 
               <TableCell component="th" scope="row">
                 {command.commands.map((com) => (
-                  <p>{com.command}</p>
+                  <p key={com.command} className={classes.command}>
+                    {com.command}
+                  </p>
                 ))}
               </TableCell>
 

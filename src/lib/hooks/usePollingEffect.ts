@@ -3,9 +3,10 @@ import { useEffect } from "react";
 export const usePollingEffect = (
   fn: () => void,
   interval: number,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deps: any[],
-  callOnMount: boolean = true,
-  polling: boolean = true
+  callOnMount = true,
+  polling = true
 ) => {
   useEffect(() => {
     if (callOnMount) {

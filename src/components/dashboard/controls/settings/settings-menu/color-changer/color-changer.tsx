@@ -1,3 +1,4 @@
+import React from "react";
 import { useSettings } from "@/lib/hooks/useSettings";
 import { ColorResult, SketchPicker } from "react-color";
 import { useState } from "react";

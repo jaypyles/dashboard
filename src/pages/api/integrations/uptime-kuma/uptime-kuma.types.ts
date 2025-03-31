@@ -1,1 +1,1 @@
-export type UptimeKumaResponseType = {};
+export type UptimeKumaResponseType = object;

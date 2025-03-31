@@ -1,6 +1,6 @@
-import { RadarrResponseType } from "../../../../pages/api/integrations/sonarr/sonarr.types";
+import { SonarrResponseType } from "../../../../pages/api/integrations/sonarr/sonarr.types";
 
-export const getShows = async (): Promise<RadarrResponseType> => {
+export const getShows = async (): Promise<SonarrResponseType> => {
   const response = await fetch("/api/integrations/sonarr/shows", {
     method: "GET",
   });

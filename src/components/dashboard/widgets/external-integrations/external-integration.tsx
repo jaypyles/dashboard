@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { JellyfinIntegration } from "./jellyfin-integration/jellyfin-integration";
 import { IntegrationLoader } from "@/components/dashboard/widgets/skeletons";
