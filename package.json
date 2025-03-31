@@ -1,6 +1,6 @@
 {
   "name": "dashboard",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
