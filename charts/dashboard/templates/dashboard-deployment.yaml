@@ -25,6 +25,8 @@ spec:
             - mountPath: /project/data
               subPath: {{ .Values.app.metadata.name }}/data
               name: config-volume
+            - mountPath: /var/log
+              name: log-volume
           ports:
             - containerPort: 3000
           env:
@@ -37,6 +39,9 @@ spec:
         - name: config-volume
           persistentVolumeClaim:
             claimName: nfs-pvc
+        - name: log-volume
+          emptyDir: {}
+          
 ---
 apiVersion: v1
 kind: Service
