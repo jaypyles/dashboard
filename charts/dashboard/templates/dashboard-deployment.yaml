@@ -41,9 +41,8 @@ spec:
             claimName: nfs-pvc
         - name: shared-log-volume
           hostPath:
-            path: /var/log
-            type: Directory
-          
+            path: /var/log/containers/dashboard
+            type: DirectoryOrCreate
 ---
 apiVersion: v1
 kind: Service
