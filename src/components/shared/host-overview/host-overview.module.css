@@ -1,3 +1,7 @@
+.card {
+  cursor: pointer;
+}
+
 .manage-button {
   margin-top: 10px;
   align-self: flex-end;
